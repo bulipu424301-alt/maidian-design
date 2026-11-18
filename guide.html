@@ -129,6 +129,7 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 /* 開場 */
 #opening{position:fixed;inset:0;z-index:30;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 24px calc(24px + env(safe-area-inset-bottom));text-align:center;transition:opacity .6s}
 #opening.out{opacity:0;pointer-events:none}
+#opening[hidden]{display:none}
 #opening .skip{position:absolute;top:calc(16px + env(safe-area-inset-top));right:18px;font-family:var(--serif);font-size:14px;letter-spacing:.14em;opacity:.7}
 #opDot{width:min(78vw,340px);height:auto}
 .op-step{display:none;max-width:420px}
