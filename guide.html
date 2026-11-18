@@ -143,7 +143,7 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 .howto{list-style:none;margin-top:18px;display:grid;gap:12px;text-align:left}
 .howto li{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--edge);animation:rise .5s ease both}
 .howto li:nth-child(2){animation-delay:.08s}.howto li:nth-child(3){animation-delay:.16s}.howto li:nth-child(4){animation-delay:.24s}
-.howto svg,.howto kbd{flex:none}
+.howto svg,.howto kbd,.howto img{flex:none}
 .howto kbd{font-family:var(--mono);font-size:11px;min-width:30px;height:28px;display:inline-grid;place-items:center;border:1px solid var(--cream);border-radius:4px;padding:0 7px}
 .howto b{display:block;font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.08em}
 .howto span{font-size:13px;color:#cfc6b4}
@@ -271,7 +271,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 @media (max-width:999px){#bgm span{display:none}}
 #lucky{position:fixed;z-index:12;left:50%;top:calc(70px + env(safe-area-inset-top));transform:translate(-50%,-30px) scale(.8);display:flex;align-items:center;gap:14px;width:max-content;max-width:calc(100vw - 32px);padding:14px 22px 14px 16px;background:var(--parch);color:var(--ink2);border:3px solid var(--brown);border-radius:8px;box-shadow:0 8px 0 rgba(0,0,0,.25),0 0 40px rgba(246,196,69,.55);opacity:0;pointer-events:none;transition:opacity .35s,transform .5s cubic-bezier(.2,1.6,.4,1)}
 #lucky.on{opacity:1;transform:translate(-50%,0) scale(1);pointer-events:auto;cursor:pointer}
-#lucky svg{flex:none;animation:lspin 1.6s ease-in-out infinite}@keyframes lspin{50%{transform:scaleX(-1)}}
+#lucky img{flex:none;animation:lspin 1.6s ease-in-out infinite}@keyframes lspin{50%{transform:scaleX(-1)}}
 #lucky small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--brown)}
 #lucky b{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(19px,5vw,26px);letter-spacing:.04em;line-height:1.35;color:#2a1c10}
 #lucky span{display:block;font-family:var(--serif);font-weight:700;font-size:15px;color:var(--dot);margin-top:2px}
@@ -294,7 +294,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 <div id="keys"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd><em>方向鍵移動</em>・<kbd>Space</kbd><em>進入</em></div>
 <div id="zoom" aria-label="地圖縮放"><button type="button" data-z="in" aria-label="放大">＋</button><button type="button" data-z="out" aria-label="縮小">－</button></div>
 <div id="banner"><small></small><b></b></div>
-<div id="lucky" role="status" aria-live="polite"><svg width="44" height="44" viewBox="-22 -22 44 44" aria-hidden="true"><circle r="19" fill="#f6c445" stroke="#8a5a12" stroke-width="3"/><circle r="13" fill="none" stroke="#fff3c4" stroke-width="1.6" opacity=".8"/><circle r="6" fill="#ff4a1c"/></svg><div><small>金幣 ×1</small><b>你是全世界最幸運的人！</b><span>繼續探索吧</span></div></div>
+<div id="lucky" role="status" aria-live="polite"><img src="guide-assets/item-coin.webp" width="40" height="45" alt=""><div><small>金幣 ×1</small><b>你是全世界最幸運的人！</b><span>繼續探索吧</span></div></div>
 <aside id="panel" aria-live="polite">
   <button class="who" id="grab" type="button" aria-expanded="true"><svg id="portrait" viewBox="0 0 110 100" aria-hidden="true"></svg><div><b>小點</b><small id="loc">GUIDE · 賣點設計導覽員</small><span id="peek"></span></div><i class="chev" aria-hidden="true"></i></button>
   <p id="say"></p>
@@ -455,25 +455,21 @@ const QB={x:592,y:522,lift:60,hits:0,need:10,done:false,bump:0};
 const qbShadow=el('ellipse',{cx:QB.x,cy:QB.y,rx:13,ry:4,fill:'#000',opacity:.3},actors);
 const qbG=el('g',{id:'qb',style:'cursor:pointer'},actors);
 const qbBox=el('g',{},qbG);
-qbBox.innerHTML=`<defs><linearGradient id="qbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#e9a62a"/></linearGradient>
- <radialGradient id="qbglow"><stop offset="0" stop-color="#ffe08a" stop-opacity=".55"/><stop offset="1" stop-color="#ffe08a" stop-opacity="0"/></radialGradient></defs>
- <circle class="glow" cx="0" cy="-15" r="34" fill="url(#qbglow)"/>
- <rect class="face" x="-15" y="-30" width="30" height="30" rx="5" fill="url(#qbg)" stroke="#6b3f12" stroke-width="2.2"/>
- <rect x="-11" y="-26" width="22" height="22" rx="3" fill="none" stroke="#fff6d0" stroke-width="1.2" opacity=".7"/>
- <g fill="#6b3f12"><circle cx="-10.5" cy="-25.5" r="1.5"/><circle cx="10.5" cy="-25.5" r="1.5"/><circle cx="-10.5" cy="-4.5" r="1.5"/><circle cx="10.5" cy="-4.5" r="1.5"/></g>
- <circle class="mark" cx="0" cy="-15" r="6.2" fill="#ff4a1c" stroke="#7a1f08" stroke-width="1.2"/><ellipse cx="-2" cy="-17.5" rx="1.8" ry="1.2" fill="#fff" opacity=".85"/>`;
+qbBox.innerHTML=`<defs><radialGradient id="qbglow"><stop offset="0" stop-color="#ffe08a" stop-opacity=".5"/><stop offset="1" stop-color="#ffe08a" stop-opacity="0"/></radialGradient></defs>
+ <circle class="glow" cx="0" cy="-22" r="36" fill="url(#qbglow)"/>
+ <image class="face" href="guide-assets/item-qb.webp" x="-23" y="-47" width="46" height="47"/>`;
 const qbCount=el('g',{opacity:0},qbG);
-el('rect',{x:-22,y:-62,width:44,height:18,rx:9,fill:'#f4ead3',stroke:'#6b4a2b','stroke-width':1.4},qbCount);
-const qbN=el('text',{class:'qbn',x:0,y:-49,'text-anchor':'middle','font-size':11,fill:'#3b2a1c'},qbCount);
+el('rect',{x:-22,y:-74,width:44,height:18,rx:9,fill:'#f4ead3',stroke:'#6b4a2b','stroke-width':1.4},qbCount);
+const qbN=el('text',{class:'qbn',x:0,y:-61,'text-anchor':'middle','font-size':11,fill:'#3b2a1c'},qbCount);
 const fx=el('g',{},actors);
 function sparks(x,y,col='#ffe08a',n=6){for(let i=0;i<n;i++){const a=-Math.PI*(0.15+0.7*i/(n-1)),s=el('circle',{cx:x,cy:y,r:2.2,fill:col},fx);
   s.animate([{transform:'translate(0,0)',opacity:1},{transform:`translate(${Math.cos(a)*26}px,${Math.sin(a)*26}px)`,opacity:0}],{duration:520,easing:'ease-out'});setTimeout(()=>s.remove(),540)}}
 /* 金幣：金色圓、中間是賣點的紅點 */
-function coinSvg(parent){const c=el('g',{},parent);c.innerHTML='<circle r="11" fill="#f6c445" stroke="#8a5a12" stroke-width="2"/><circle r="7.5" fill="none" stroke="#fff3c4" stroke-width="1.2" opacity=".8"/><circle r="3.6" fill="#ff4a1c"/>';return c}
+function coinSvg(parent){const c=el('g',{},parent);c.innerHTML='<image href="guide-assets/item-coin.webp" x="-14" y="-16" width="28" height="31.5"/>';return c}
 function hitBlock(){if(QB.done)return;QB.hits++;if(QB.hits<QB.need)sfx('hit');QB.bump=1;sparks(QB.x,QB.y-QB.lift-30);
   qbN.textContent=QB.hits+' / '+QB.need;qbCount.setAttribute('opacity',1);
   if(QB.hits>=QB.need)setTimeout(getCoin,180)}
-function getCoin(){QB.done=true;sfx('coin');qbBox.querySelector('.face').setAttribute('fill','#a88a5c');qbBox.querySelector('.mark').setAttribute('fill','#7a6a55');qbBox.querySelector('.glow').setAttribute('opacity',0);qbCount.setAttribute('opacity',0);
+function getCoin(){QB.done=true;sfx('coin');qbBox.querySelector('.face').setAttribute('href','guide-assets/item-qb-used.webp');qbBox.querySelector('.glow').setAttribute('opacity',0);qbCount.setAttribute('opacity',0);
   const c=coinSvg(fx),x=QB.x,y0=QB.y-QB.lift-30;const t0=performance.now();
   const spin=now=>{const k=Math.min(1,(now-t0)/900),y=y0-70*Math.sin(k*Math.PI*.75)+(k>.75?0:0);c.setAttribute('transform',`translate(${x} ${y.toFixed(1)}) scale(${Math.cos(k*Math.PI*6).toFixed(2)} 1)`);c.setAttribute('opacity',k<.8?1:(1-k)*5);if(k<1)requestAnimationFrame(spin);else c.remove()};
   requestAnimationFrame(spin);sparks(x,y0-40,'#ffe08a',10);
@@ -486,19 +482,16 @@ qbG.addEventListener('click',e=>{e.stopPropagation();if(dragged){dragged=false;r
 /* ---------- 寶箱：七個章和金幣都拿到之後，出現在噴泉前面 ---------- */
 const CH={x:700,y:560,on:false,open:false};
 const chG=el('g',{id:'chest',style:'cursor:pointer;display:none'},actors);
-chG.innerHTML=`<ellipse cx="0" cy="1" rx="20" ry="5" fill="#000" opacity=".35"/>
- <circle class="cglow" cx="0" cy="-16" r="40" fill="url(#qbglow)"/>
- <rect x="-19" y="-22" width="38" height="22" rx="3" fill="#8a4f22" stroke="#3b2210" stroke-width="2"/>
- <rect x="-19" y="-14" width="38" height="4" fill="#e9a62a"/><rect x="-4" y="-22" width="8" height="22" fill="#e9a62a" stroke="#6b3f12" stroke-width="1"/>
- <g class="lid"><path d="M-19 -22v-8a19 9 0 0 1 38 0v8z" fill="#a8622c" stroke="#3b2210" stroke-width="2"/><rect x="-4" y="-38" width="8" height="16" fill="#e9a62a" stroke="#6b3f12" stroke-width="1"/></g>
- <rect x="-3.5" y="-20" width="7" height="8" rx="1.5" fill="#ff4a1c" stroke="#7a1f08" stroke-width="1"/>`;
-const chLid=chG.querySelector('.lid');chLid.style.transformBox='fill-box';chLid.style.transformOrigin='left bottom';chLid.style.transition='transform .5s cubic-bezier(.3,1.6,.5,1)';
+chG.innerHTML=`<circle class="cglow" cx="0" cy="-22" r="44" fill="url(#qbglow)"/>
+ <image class="shut" href="guide-assets/item-chest.webp" x="-28" y="-49.6" width="56" height="49.6"/>
+ <image class="open" href="guide-assets/item-chest-open.webp" x="-26" y="-58.8" width="52" height="58.8" style="display:none"/>`;
+
 function showChest(){if(CH.on)return;CH.on=true;chG.style.display='';chG.setAttribute('transform',`translate(${CH.x} ${CH.y})`);
   chG.animate([{transform:`translate(${CH.x}px,${CH.y-160}px)`},{transform:`translate(${CH.x}px,${CH.y}px)`,offset:.6},{transform:`translate(${CH.x}px,${CH.y-14}px)`,offset:.8},{transform:`translate(${CH.x}px,${CH.y}px)`}],{duration:900,easing:'ease-in'});
   setTimeout(()=>sparks(CH.x,CH.y-10,'#ffe08a',10),560);
   pan=[CH.x,CH.y-30];setTimeout(()=>pan=null,1800);
   say('咦？噴泉前面掉下來一個寶箱！\n'+(touch?'帶我走過去，點一下寶箱打開。':'帶我走過去，按空白鍵打開。'),()=>opts([{t:'帶我去開寶箱',cls:'main',fn:()=>{begin();autoAct=openChest;go([CH.x,CH.y+14])}}]))}
-function openChest(){if(!CH.on)return;CH.open=true;talk('下次再來找我玩唷！');chLid.style.transform='rotate(-70deg) translate(-4px,-2px)';sparks(CH.x,CH.y-28,'#fff3c4',12);
+function openChest(){if(!CH.on)return;CH.open=true;talk('下次再來找我玩唷！');chG.querySelector('.shut').style.display='none';chG.querySelector('.open').style.display='';chG.animate([{transform:`translate(${CH.x}px,${CH.y}px) scale(1)`},{transform:`translate(${CH.x}px,${CH.y}px) scale(1.15,.9)`,offset:.3},{transform:`translate(${CH.x}px,${CH.y}px) scale(1)`}],{duration:380,easing:'ease-out'});sparks(CH.x,CH.y-28,'#fff3c4',12);
   setTimeout(()=>{const tr=$('#treasure');tr.classList.add('on');tr.setAttribute('aria-hidden','false');tr.querySelector('.go').focus({preventScroll:true})},650)}
 function closeChest(){const tr=$('#treasure');tr.classList.remove('on');tr.setAttribute('aria-hidden','true')}
 $('#treasure .x').addEventListener('click',closeChest);$('#treasure').addEventListener('click',e=>{if(e.target.id==='treasure')closeChest()});
@@ -527,7 +520,7 @@ function talk(text,quiet){if(!text){let i;do{i=Math.floor(Math.random()*LINES.le
 let dotTapped=false,callN=0;const CALLS=['點我一下看看！','嘿，我在這裡，點我嘛！','點我會說話喔！'];
 setInterval(()=>{if(dotTapped||opOn||showing||bubOn||path.length||(!QB.done&&Math.hypot(me.x-QB.x,me.y-QB.y)<70)||$('#treasure').classList.contains('on'))return;talk(CALLS[callN++%CALLS.length],true)},7000);
 /* 音效（之後換成 Magnific 的檔案） */
-const SFX_SRC={hit:'guide-assets/sfx-coin-hit.mp3',coin:'guide-assets/sfx-coin.mp3'},SFX={},SFXB={};
+const SFX_SRC={hit:'guide-assets/sfx-coin-hit.mp3',coin:'guide-assets/sfx-coin.mp3',voice:'guide-assets/sfx-voice.mp3'},SFX={},SFXB={};
 for(const k in SFX_SRC){SFX[k]=new Audio(SFX_SRC[k]);SFX[k].preload='auto'}
 function sfxLoad(){if(!bgmCtx)return;for(const k in SFX_SRC)if(!SFXB[k]){SFXB[k]='…';fetch(SFX_SRC[k]).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,no)=>bgmCtx.decodeAudioData(b,ok,no))).then(buf=>SFXB[k]=buf).catch(()=>delete SFXB[k])}}
 function sfx(k){if($('#bgm').getAttribute('aria-pressed')!=='true')return;
@@ -642,7 +635,7 @@ function loop(dt,t){
     if(under&&me.jv>0&&pz<me.jz&&head<=QB.y-QB.lift-QB.bump*6){me.jz=me.y-33-(QB.y-QB.lift);me.jv=-60;hitBlock()}
     if(me.jz<=0){me.jz=0;me.jv=0}}
   QB.bump=Math.max(0,QB.bump-dt*5);
-  qbBox.setAttribute('transform',`translate(${QB.x} ${(QB.y-QB.lift-Math.sin(QB.bump*Math.PI)*8+(QB.done?0:Math.sin(t*2.4)*1.5)).toFixed(1)}) scale(1.25)`);
+  qbBox.setAttribute('transform',`translate(${QB.x} ${(QB.y-QB.lift-Math.sin(QB.bump*Math.PI)*8+(QB.done?0:Math.sin(t*2.4)*1.5)).toFixed(1)})`);
   qbCount.setAttribute('transform',`translate(${QB.x} ${QB.y-QB.lift})`);
   dot.draw(RUN.pose(me.jz>0?0.25:me.phase,me.jz>0?1:me.go),me.go);
   place(fig,me.x,me.y-me.jz,me.dir,SC);
@@ -809,8 +802,8 @@ const HOW=touch?[
   ['<svg width="30" height="34" viewBox="0 0 30 34"><path d="M10 3h10v9c0 3 6 5 6 10v3H4v-3c0-5 6-7 6-10z" fill="none" stroke="#efe6d4" stroke-width="1.6"/><rect x="2" y="27" width="26" height="5" fill="#ff4a1c"/></svg>','集滿 7 個章','整座小鎮會亮起來']];
 $('#howto').innerHTML=HOW.map(h=>`<li>${h[0]}<div><b>${h[1]}</b><span>${h[2]}</span></div></li>`).join('');
 /* 隱藏彩蛋：金幣方塊和寶箱 */
-const COIN_ICON='<svg width="34" height="34" viewBox="-17 -17 34 34"><rect x="-13" y="-13" width="26" height="26" rx="4" fill="#f6c445" stroke="#6b3f12" stroke-width="2"/><circle r="5.5" fill="#ff4a1c"/></svg>';
-const CHEST_ICON='<svg width="34" height="34" viewBox="-17 -20 34 34"><path d="M-14 -4v-5a14 7 0 0 1 28 0v5z" fill="#a8622c" stroke="#3b2210" stroke-width="1.6"/><rect x="-14" y="-4" width="28" height="16" rx="2" fill="#8a4f22" stroke="#3b2210" stroke-width="1.6"/><rect x="-3" y="-14" width="6" height="26" fill="#e9a62a"/><rect x="-2.5" y="-1" width="5" height="6" rx="1" fill="#ff4a1c"/></svg>';
+const COIN_ICON='<img src="guide-assets/item-qb.webp" width="40" height="41" alt="">';
+const CHEST_ICON='<img src="guide-assets/item-chest.webp" width="42" height="37" alt="">';
 $('#eggs').innerHTML=[
   [COIN_ICON,'金色方塊','活動會場前面浮著一個，'+(touch?'點方塊讓我在下面跳，':'站到下面按空白鍵跳，')+'撞滿 10 下會掉出金幣'],
   [CHEST_ICON,'神秘寶箱','七個章都蓋滿，再拿到金幣，噴泉前面會掉下一個寶箱']
