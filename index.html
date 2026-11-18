@@ -118,7 +118,7 @@ h1 u::after{content:"";position:absolute;right:-.2em;bottom:.2em;width:.13em;hei
 .hero-ct{position:absolute;right:var(--pad);bottom:calc(var(--pad) + 22px);z-index:2;color:#fff;font-family:var(--serif);font-size:18px;display:flex;align-items:center;gap:12px;pointer-events:none}
 .hero-ct i{width:46px;height:1px;background:#fff;opacity:.5}
 #hbar{position:absolute;left:0;bottom:0;height:4px;z-index:2;background:var(--dot);width:0;pointer-events:none}
-#hbar.run{animation:bar 7s linear forwards}
+#hbar.run{animation:bar 4.5s linear forwards}
 @keyframes bar{to{width:100%}}
 .ring{z-index:95!important}
 .tile,.wk{cursor:pointer}
@@ -827,10 +827,14 @@ function advance(x,y){
   const cap=$('.hero-cap'),bar=$('#hbar');cap.classList.remove('in');bar.classList.remove('run');void cap.offsetWidth;cap.classList.add('in');
   bar.style.background=curC;
   clearTimeout(hTimer);
-  if(!reduce){bar.classList.add('run');hTimer=setTimeout(()=>advance(hero.clientWidth/2,hero.clientHeight/2),7000)}
+  bar.classList.add('run');hTimer=setTimeout(autoNext,HOLD);
 }
+/* 自動換下一件：每 4.5 秒從畫面上隨機一個點展開，不用點 */
+const HOLD=4500;
+function autoNext(){const w=hero.clientWidth,h=hero.clientHeight;advance(w*(.25+Math.random()*.5),h*(.3+Math.random()*.4))}
 $('#htot').textContent=pad(FEAT.length);
-advance(innerWidth/2,innerHeight/2);
+/* 載入畫面跑到 100% 之後才開始輪播，第一件從畫面中間展開 */
+let heroOn=false;function startHero(){if(heroOn)return;heroOn=true;$('#tap').classList.add('gone');advance(hero.clientWidth/2,hero.clientHeight/2)}
 hero.addEventListener('click',e=>{
   if(e.target.closest('.hero-cap'))return openWork(WORKS.indexOf(FEAT[hi]),e.clientX,e.clientY);
   const r=hero.getBoundingClientRect();advance(e.clientX-r.left,e.clientY-r.top);$('#tap').classList.add('gone');
@@ -880,7 +884,7 @@ function closeWork(){
   if(!det.classList.contains('open'))return;
   det.classList.remove('open');det.setAttribute('aria-hidden','true');document.body.classList.remove('lock');
   $('#dStage').innerHTML='';clearTimeout(sTimer);history.replaceState(null,'',location.pathname);
-  if(!reduce){clearTimeout(hTimer);hTimer=setTimeout(()=>advance(hero.clientWidth/2,hero.clientHeight/2),7000)}
+  if(heroOn){clearTimeout(hTimer);hTimer=setTimeout(autoNext,HOLD)}
 }
 $$('.tile,.wk').forEach(el=>el.addEventListener('click',e=>openWork(+el.dataset.i,e.clientX,e.clientY)));
 $('#dClose').addEventListener('click',closeWork);
@@ -924,7 +928,7 @@ const ck=()=>$('#clock').textContent=new Date().toLocaleTimeString('zh-TW',{time
 (function(){const el=$('#pct'),ld=$('#loader'),t0=performance.now(),dur=reduce?200:1700;
   (function tick(now){const p=Math.min(1,(now-t0)/dur);el.textContent=Math.round((1-Math.pow(1-p,2))*100);
     if(p<1)return requestAnimationFrame(tick);
-    setTimeout(()=>{ld.classList.add('out');document.body.classList.remove('lock');document.body.classList.add('ready');setTimeout(()=>ld.remove(),1200)},250)})(t0)})();
+    setTimeout(()=>{startHero();ld.classList.add('out');document.body.classList.remove('lock');document.body.classList.add('ready');setTimeout(()=>ld.remove(),1200)},250)})(t0)})();
 /* 從導覽頁跳過來：#w=作品編號 直接開作品，#cat=類別 直接篩選作品區 */
 (()=>{const h=decodeURIComponent(location.hash);let m;
   if((m=h.match(/^#w=(.+)$/))){const i=WORKS.findIndex(w=>w.id===m[1]);if(i>=0)setTimeout(()=>openWork(i),1700)}
