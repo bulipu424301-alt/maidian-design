@@ -139,13 +139,13 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 .op-step small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--dot);margin-bottom:10px}
 .op-step h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,8vw,44px);letter-spacing:.1em;line-height:1.25}
 .op-step p{font-family:var(--serif);font-size:16px;line-height:1.9;letter-spacing:.06em;color:#cfc6b4;margin-top:14px}
-#howto{list-style:none;margin-top:18px;display:grid;gap:12px;text-align:left}
-#howto li{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--edge);animation:rise .5s ease both}
-#howto li:nth-child(2){animation-delay:.08s}#howto li:nth-child(3){animation-delay:.16s}#howto li:nth-child(4){animation-delay:.24s}
-#howto svg,#howto kbd{flex:none}
-#howto kbd{font-family:var(--mono);font-size:11px;min-width:30px;height:28px;display:inline-grid;place-items:center;border:1px solid var(--cream);border-radius:4px;padding:0 7px}
-#howto b{display:block;font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.08em}
-#howto span{font-size:13px;color:#cfc6b4}
+.howto{list-style:none;margin-top:18px;display:grid;gap:12px;text-align:left}
+.howto li{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--edge);animation:rise .5s ease both}
+.howto li:nth-child(2){animation-delay:.08s}.howto li:nth-child(3){animation-delay:.16s}.howto li:nth-child(4){animation-delay:.24s}
+.howto svg,.howto kbd{flex:none}
+.howto kbd{font-family:var(--mono);font-size:11px;min-width:30px;height:28px;display:inline-grid;place-items:center;border:1px solid var(--cream);border-radius:4px;padding:0 7px}
+.howto b{display:block;font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.08em}
+.howto span{font-size:13px;color:#cfc6b4}
 .op-foot{display:flex;align-items:center;gap:24px;margin-top:28px}
 .op-dots{display:flex;gap:8px}.op-dots i{width:8px;height:8px;border-radius:50%;border:1px solid var(--cream)}.op-dots i.on{background:var(--dot);border-color:var(--dot)}
 .op-next{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.14em;background:var(--dot);color:#fff;padding:12px 30px}
@@ -179,6 +179,23 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 #shGrid a:hover img{transform:scale(1.05)}
 #shGrid em{position:absolute;right:6px;top:6px;font-style:normal;font-size:10px;background:rgba(0,0,0,.65);border-radius:99px;padding:2px 7px}
 #shGrid p{font-size:13px;line-height:1.5;margin-top:7px;color:#e6dcc8}
+#quiz{margin-top:22px;background:var(--parch);color:var(--ink2);border:3px solid var(--brown);border-radius:6px;padding:22px 18px;animation:rise .45s ease both}
+#quiz .qn{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--brown)}
+#quiz .qn i{display:inline-block;width:22px;height:4px;border-radius:2px;background:var(--parch2);margin-left:6px;vertical-align:middle}#quiz .qn i.on{background:var(--dot)}
+#quiz h3{font-family:var(--serif);font-weight:900;font-size:22px;letter-spacing:.06em;line-height:1.45;margin:8px 0 14px;color:#2a1c10}
+#quiz .qo{display:grid;gap:10px}
+@media (min-width:760px){#quiz .qo{grid-template-columns:1fr 1fr}#quiz{padding:26px 28px}}
+#quiz .qo button{text-align:left;padding:13px 14px;background:#fffaf0;border:1.5px solid var(--parch2);border-radius:6px;font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.04em;color:var(--ink2);box-shadow:0 3px 0 var(--parch2);transition:transform .15s,border-color .2s}
+#quiz .qo button:hover{border-color:var(--dot)}#quiz .qo button:active{transform:translateY(2px);box-shadow:0 1px 0 var(--parch2)}
+#quiz .qo button small{display:block;font-family:var(--sans);font-weight:400;font-size:12px;color:var(--brown);margin-top:2px}
+#quiz .rec{display:grid;gap:12px}
+@media (min-width:760px){#quiz .rec{grid-template-columns:1fr 1fr}}
+#quiz .rc{display:flex;gap:12px;align-items:center;background:#fffaf0;border:1.5px solid var(--parch2);border-radius:6px;padding:10px}
+#quiz .rc img{width:84px;height:66px;object-fit:contain;flex:none;background:var(--navy);border-radius:4px}
+#quiz .rc b{display:block;font-family:var(--serif);font-weight:900;font-size:17px;color:#2a1c10}#quiz .rc b em{font-style:italic;color:var(--dot);margin-right:6px}
+#quiz .rc p{font-size:13px;line-height:1.6;color:var(--brown);margin:2px 0 8px}
+#quiz .rc button{font-family:var(--serif);font-weight:700;font-size:14px;color:#fff;background:var(--dot);padding:6px 14px;border-radius:4px}
+#quiz .note{font-family:var(--serif);font-size:14px;line-height:1.8;margin-top:14px;padding-top:12px;border-top:1px dashed var(--parch2)}
 #shOpts{margin-top:26px;display:flex;flex-direction:column}
 #shOpts .k{display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid var(--edge);font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.1em;text-align:left}
 #shOpts .k:first-child{border-top:1px solid var(--edge)}
@@ -271,8 +288,9 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
   <button class="skip" type="button">略過</button>
   <svg id="opDot" viewBox="0 0 240 150" aria-hidden="true"></svg>
   <div class="op-step on"><small>SERVICE MAP · 服務地圖</small><h2>嗨，我是小點</h2><p>賣點設計的導覽員。<br>這座小鎮的每一棟建築，都是我們能幫你做的事。</p></div>
-  <div class="op-step"><small>HOW TO PLAY · 怎麼玩</small><h2>跟著我逛一圈</h2><ul id="howto"></ul></div>
-  <div class="op-foot"><span class="op-dots"><i class="on"></i><i></i></span><button class="op-next" type="button">下一步</button></div>
+  <div class="op-step"><small>HOW TO PLAY · 怎麼玩</small><h2>跟著我逛一圈</h2><ul id="howto" class="howto"></ul></div>
+  <div class="op-step"><small>SECRET · 隱藏彩蛋</small><h2>小鎮裡藏了寶物</h2><ul id="eggs" class="howto"></ul></div>
+  <div class="op-foot"><span class="op-dots"><i class="on"></i><i></i><i></i></span><button class="op-next" type="button">下一步</button></div>
 </div>
 <div id="iris" aria-hidden="true"></div>
 <div id="treasure" role="dialog" aria-modal="true" aria-labelledby="trT" aria-hidden="true">
@@ -291,6 +309,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
   <div class="hero"><img id="shArt" alt=""><div class="cap"><small id="shEn"></small><h2 id="shTitle"></h2></div></div>
   <div class="body">
     <div class="guide"><svg id="shDot" viewBox="0 0 110 100" aria-hidden="true"></svg><p id="shSay"></p></div>
+    <div id="quiz" hidden></div>
     <div id="shGrid"></div>
     <div id="shOpts"></div>
   </div>
@@ -319,7 +338,7 @@ const B=[
   poly:[[510,240],[580,175],[665,175],[745,230],[745,330],[640,345],[525,320]],door:[655,362],tag:[0,0],pin:[0,0],route:[[655,470],[660,410]],
   say:'設計工作室負責海報、手冊、型錄、品牌識別、簡報和社群圖。我們會先聽你想說什麼，再決定怎麼設計。'},
  {k:'motion',no:'03',zh:'動畫放映室',en:'MOTION LAB',cat:'動畫影片',
-  poly:[[848,300],[905,255],[1060,258],[1082,320],[1072,382],[930,388],[848,352]],door:[930,400],tag:[0,0],pin:[0,0],route:[[720,465],[850,410]],
+  poly:[[848,300],[905,255],[1060,258],[1082,320],[1072,382],[930,388],[848,352]],door:[925,384],tag:[0,0],pin:[0,0],route:[[720,465],[850,410]],
   say:'動畫放映室做宣導動畫、產品動畫和活動開場影片，也可以幫你拍攝和剪輯。'},
  {k:'illus',no:'04',zh:'插畫小屋',en:'ILLUSTRATION',cat:'插畫',
   poly:[[805,470],[870,400],[960,398],[1012,470],[1002,560],[900,582],[812,556]],door:[842,598],tag:[0,0],pin:[0,0],route:[[740,560]],
@@ -330,15 +349,15 @@ const B=[
  {k:'gift',no:'06',zh:'贈品商店',en:'GIFT SHOP',cat:'包裝贈品',
   poly:[[525,698],[612,662],[732,680],[738,782],[640,812],[525,780]],door:[640,826],tag:[0,0],pin:[0,0],route:[[560,640],[500,720],[510,800]],
   say:'贈品商店做桌曆、提袋、文具和客製禮盒。從設計、打樣到成品，交到你手上。'},
- {k:'line',no:'07',zh:'聯絡站',en:'CONTACT',cat:'line',
+ {k:'line',no:'07',zh:'補給站',en:'REST STOP',cat:'line',
   poly:[[860,700],[920,652],[1052,658],[1066,720],[1060,800],[950,816],[858,790]],door:[905,826],tag:[0,0],pin:[0,0],route:[[700,690],[800,700],[810,820]],
-  say:'不確定要找哪一棟也沒關係，直接傳 LINE 給我們，先聊聊再決定。'}
+  say:'這裡是補給站，走累了先坐一下。我問你三個小問題，幫你挑最該先去看的那一棟。'}
 ];
 /* 小點只能走在石板路和廣場上（照底圖描的範圍） */
 const ROADS=[
  [[400,500],[470,488],[560,445],[600,412],[615,388],[690,388],[690,440],[658,462],[668,560],[600,575],[540,560],[470,545],[405,535]],
  [[590,330],[700,330],[720,348],[700,392],[600,396],[585,370]],
- [[690,335],[780,335],[800,370],[1000,380],[1000,415],[850,420],[780,405],[690,392]],
+ [[690,322],[850,322],[862,356],[1002,364],[1004,394],[860,392],[800,374],[700,374]],
  [[650,540],[760,545],[850,570],[990,585],[995,615],[870,622],[860,690],[800,705],[720,700],[700,640],[680,580],[650,572]],
  [[740,680],[835,680],[825,740],[815,805],[755,805],[762,740]],
  [[560,795],[1060,792],[1060,842],[560,846]],
@@ -442,7 +461,7 @@ function getCoin(){QB.done=true;qbBox.querySelector('.face').setAttribute('fill'
   requestAnimationFrame(spin);sparks(x,y0-40,'#ffe08a',10);
   const ci=$('#stD .coin');ci.classList.add('on');ci.title='金幣：拿到了';
   const bn=$('#banner');bn.querySelector('small').textContent='隱藏彩蛋！';bn.querySelector('b').textContent='金幣 ×1';bn.classList.remove('on');void bn.offsetWidth;bn.classList.add('on');
-  setTimeout(()=>{if(showing)return;if(got.size===7)showChest();else say('叮！跳了十下，拿到一枚金幣。\n聽說七個章都蓋滿以後，還有別的東西會出現喔。',()=>opts([{t:'繼續逛逛',cls:'main',fn:explore}]))},900)}
+  setTimeout(()=>{if(showing)return;if(got.size===7)showChest();else say('叮！你是全世界最幸運的人！\n繼續探索吧。',()=>opts([{t:'繼續探索',cls:'main',fn:explore}]))},900)}
 qbG.addEventListener('click',e=>{e.stopPropagation();if(dragged){dragged=false;return}begin();tour=-1;autoEnter=null;
   if(Math.hypot(me.x-QB.x,me.y-QB.y)<22){jump();return}autoAct=jump;go([QB.x,QB.y])});
 
@@ -659,6 +678,7 @@ function irisAt(x,y){const s=$('#iris').style;s.setProperty('--x',x+'px');s.setP
 function openShow(b){const sh=$('#show');
   $('#shArt').src='guide-assets/lit-'+b.k+'.webp';$('#shArt').alt=b.zh;$('#shEn').textContent=b.no+' · '+b.en;$('#shTitle').textContent=b.zh;
   $('#shSay').textContent=b.say;
+  $('#quiz').hidden=b.k!=='line';if(b.k==='line')quizStart();
   const list=worksFor(b,9);
   $('#shGrid').innerHTML=list.map((w,i)=>`<a href="index.html#w=${encodeURIComponent(w.id)}" style="animation-delay:${.35+i*.06}s"><div class="im"><img loading="lazy" src="${th(w.img)}" alt="">${w.vid?'<em>▶ 動畫</em>':''}</div><p>${w.nm.replace(/</g,'&lt;')}</p></a>`).join('');
   const o=[];
@@ -670,6 +690,26 @@ function openShow(b){const sh=$('#show');
   sh.scrollTop=0;sh.classList.add('on');sh.setAttribute('aria-hidden','false');sh.focus({preventScroll:true});
   setTimeout(()=>{const ir=$('#iris');ir.classList.add('inst');ir.classList.remove('on');void ir.offsetWidth;ir.classList.remove('inst')},420);
   setMin(true);say(b.say,()=>opts([{t:'再看一次作品',cls:'main',fn:()=>openShow(b)},{t:'換一棟看看',fn:explore}]))}
+/* ---------- 補給站：問三題，推薦先去哪兩棟 ---------- */
+const WHY={event:'開幕、論壇、展覽，從主視覺到現場佈置一次處理',design:'海報、手冊、品牌識別和社群圖',motion:'宣導動畫、產品動畫和活動開場影片',
+  illus:'繪本、手繪地圖和角色，讓內容更好記',print:'設計完直接印，大圖輸出和打樣都在這裡',gift:'桌曆、提袋和客製禮盒'};
+const QUIZ=[
+ {q:'這次想做什麼？',a:[['辦一場活動','開幕、尾牙、論壇、展覽',{event:3,print:1,gift:1}],['把東西設計得更好看','海報、手冊、品牌',{design:3,print:1}],['讓人看得懂、記得住','動畫、插畫、圖解',{motion:2,illus:2}],['做送人的東西','禮盒、桌曆、文具',{gift:3,design:1}],['還沒想好','先逛逛也可以',{design:1,event:1,illus:1}]]},
+ {q:'做好之後，主要用在哪裡？',a:[['活動現場','背板、展場、指示牌',{event:2,print:1}],['網路和社群','貼文、影片、網站',{motion:2,design:1,illus:1}],['印出來發給大家','手冊、DM、海報',{print:2,design:1}],['都會用到','',{design:1,event:1,motion:1}]]},
+ {q:'時間大概多趕？',a:[['一個月內就要','',{}],['一到三個月','',{}],['還沒決定','',{}]]}];
+let qStep=0,qScore={},qPick=[];
+function quizStart(){qStep=0;qScore={};qPick=[];quizDraw()}
+function quizDraw(){const z=$('#quiz');
+  if(qStep<QUIZ.length){const Q=QUIZ[qStep];
+    z.innerHTML=`<div class="qn">Q${qStep+1} / ${QUIZ.length}${QUIZ.map((_,i)=>`<i class="${i<=qStep?'on':''}"></i>`).join('')}</div><h3>${Q.q}</h3><div class="qo">${Q.a.map((a,i)=>`<button type="button" data-i="${i}">${a[0]}${a[1]?`<small>${a[1]}</small>`:''}</button>`).join('')}</div>`;
+    z.querySelectorAll('.qo button').forEach(bt=>bt.onclick=()=>{const a=Q.a[+bt.dataset.i];qPick.push(+bt.dataset.i);for(const k in a[2])qScore[k]=(qScore[k]||0)+a[2][k];qStep++;quizDraw()});
+    if(qStep)$('#shSay').textContent=['','第二題。','最後一題！'][qStep];else $('#shSay').textContent=B.find(x=>x.k==='line').say;return}
+  const top=Object.entries(qScore).sort((a,b)=>b[1]-a[1]).slice(0,2).map(e=>e[0]);
+  const note=['時間比較趕的話，直接傳 LINE 最快，我們先幫你看排程。','有一到三個月，可以先從企劃和草稿開始。','還沒決定時間也沒關係，先去看看作品找感覺。'][qPick[2]];
+  z.innerHTML=`<div class="qn">RESULT · 推薦路線</div><h3>我建議你先去這兩棟</h3><div class="rec">${top.map(k=>{const b=B.find(x=>x.k===k);return`<div class="rc"><img src="guide-assets/lit-${k}.webp" alt=""><div><b><em>${b.no}</em>${b.zh}</b><p>${WHY[k]}</p><button type="button" data-k="${k}">帶我去</button></div></div>`}).join('')}</div><p class="note">${note}</p>`;
+  z.querySelectorAll('.rc button').forEach(bt=>bt.onclick=()=>{tour=-1;closeShow(()=>walkTo(bt.dataset.k))});
+  $('#shSay').textContent='補給完畢！照這條路線走，最快找到你要的。想直接問人，就傳 LINE 給我們。';
+  const o=$('#shOpts');if(!o.querySelector('.again')){const r=document.createElement('button');r.type='button';r.className='k again';r.textContent='重新回答';r.onclick=quizStart;o.insertBefore(r,o.lastChild)}}
 function closeShow(after){const b=showing;if(!b)return;const sh=$('#show'),ir=$('#iris');
   const pt=new DOMPoint(b.door[0],b.door[1]).matrixTransform(svg.getScreenCTM());irisAt(pt.x,pt.y);
   ir.classList.add('inst','on');void ir.offsetWidth;ir.classList.remove('inst');
@@ -689,7 +729,7 @@ function intro(){home();$('#loc').textContent='GUIDE · 賣點設計導覽員';p
     {t:'帶我逛一圈',cls:'main wide',fn:startTour},
     {t:'辦一場活動',fn:()=>walkTo('event')},{t:'做設計',fn:()=>walkTo('design')},{t:'做動畫或影片',fn:()=>walkTo('motion')},
     {t:'畫插畫',fn:()=>walkTo('illus')},{t:'印刷',fn:()=>walkTo('print')},{t:'做贈品',fn:()=>walkTo('gift')},
-    {t:'我也不確定',cls:'wide',fn:()=>walkTo('line')}],true))}
+    {t:'我也不確定，幫我推薦',cls:'wide',fn:()=>walkTo('line')}],true))}
 
 /* 作品資料從首頁讀（index.html?data） */
 $('#src').addEventListener('load',()=>{const f=$('#src').contentWindow;let n=0;const wait=()=>{if(f.__PUBLIC){WORKS=f.__PUBLIC;$('#src').remove()}else if(n++<40)setTimeout(wait,150)};wait()});
@@ -697,7 +737,7 @@ $('#src').addEventListener('load',()=>{const f=$('#src').contentWindow;let n=0;c
 /* ---------- 開場：小點跑進來自我介紹，再說明怎麼玩 ---------- */
 const getS=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
 const setS=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
-let opOn=!q.has('debug')&&(!getS('guideSeen')||q.has('intro')),opStep=0;
+let opOn=!q.has('debug'),opStep=0;
 const opSvg=$('#opDot');opSvg.style.color='#efe6d4';opSvg.style.setProperty('--paper','#0b0b0b');
 {const s2=document.createElementNS('http://www.w3.org/2000/svg','style');s2.textContent='.pp{fill:var(--paper)}';opSvg.appendChild(s2)}
 el('ellipse',{cx:120,cy:131,rx:70,ry:4,fill:'#1d1b18'},opSvg);
@@ -723,7 +763,15 @@ const HOW=touch?[
   ['<kbd>滾輪</kbd>','滾輪或＋－','放大縮小，按住拖曳移動地圖'],
   ['<svg width="30" height="34" viewBox="0 0 30 34"><path d="M10 3h10v9c0 3 6 5 6 10v3H4v-3c0-5 6-7 6-10z" fill="none" stroke="#efe6d4" stroke-width="1.6"/><rect x="2" y="27" width="26" height="5" fill="#ff4a1c"/></svg>','集滿 7 個章','整座小鎮會亮起來']];
 $('#howto').innerHTML=HOW.map(h=>`<li>${h[0]}<div><b>${h[1]}</b><span>${h[2]}</span></div></li>`).join('');
-function opNext(){if(opStep===0){opStep=1;document.querySelectorAll('.op-step').forEach((s,i)=>s.classList.toggle('on',i===1));document.querySelectorAll('.op-dots i').forEach((s,i)=>s.classList.toggle('on',i===1));$('.op-next').textContent='開始探索'}else opClose()}
+/* 隱藏彩蛋：金幣方塊和寶箱 */
+const COIN_ICON='<svg width="34" height="34" viewBox="-17 -17 34 34"><rect x="-13" y="-13" width="26" height="26" rx="4" fill="#f6c445" stroke="#6b3f12" stroke-width="2"/><circle r="5.5" fill="#ff4a1c"/></svg>';
+const CHEST_ICON='<svg width="34" height="34" viewBox="-17 -20 34 34"><path d="M-14 -4v-5a14 7 0 0 1 28 0v5z" fill="#a8622c" stroke="#3b2210" stroke-width="1.6"/><rect x="-14" y="-4" width="28" height="16" rx="2" fill="#8a4f22" stroke="#3b2210" stroke-width="1.6"/><rect x="-3" y="-14" width="6" height="26" fill="#e9a62a"/><rect x="-2.5" y="-1" width="5" height="6" rx="1" fill="#ff4a1c"/></svg>';
+$('#eggs').innerHTML=[
+  [COIN_ICON,'金色方塊','活動會場前面浮著一個，'+(touch?'點方塊讓我在下面跳，':'站到下面按空白鍵跳，')+'撞滿 10 下會掉出金幣'],
+  [CHEST_ICON,'神秘寶箱','七個章都蓋滿，再拿到金幣，噴泉前面會掉下一個寶箱']
+].map(h=>`<li>${h[0]}<div><b>${h[1]}</b><span>${h[2]}</span></div></li>`).join('');
+const OP_N=document.querySelectorAll('.op-step').length;
+function opNext(){if(opStep<OP_N-1){opStep++;document.querySelectorAll('.op-step').forEach((s,i)=>s.classList.toggle('on',i===opStep));document.querySelectorAll('.op-dots i').forEach((s,i)=>s.classList.toggle('on',i===opStep));$('.op-next').textContent=opStep===OP_N-1?'開始探索':'下一步'}else opClose()}
 function opClose(){if(!opOn)return;setS('guideSeen','1');const o=$('#opening');o.classList.add('out');setTimeout(()=>{o.hidden=true;opOn=false},600);intro()}
 $('.op-next').addEventListener('click',opNext);$('#opening .skip').addEventListener('click',opClose);
 const shSvg=$('#shDot');shSvg.style.color='#efe6d4';shSvg.style.setProperty('--paper','#0b0b0b');
