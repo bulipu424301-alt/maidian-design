@@ -68,6 +68,7 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 #banner small::before{content:"＼ "}#banner small::after{content:" ／"}
 #banner b{display:inline-block;font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.2vw,40px);letter-spacing:.12em;color:#fff;background:var(--dot);padding:10px 44px 12px;clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%);white-space:nowrap}
 #banner.on{animation:ban 2.6s ease forwards}
+#banner.long{padding:0 34px}#banner.long b{font-size:clamp(17px,4.8vw,34px);padding:9px 22px 11px;letter-spacing:.05em}
 @keyframes ban{0%{opacity:0;transform:translate(-50%,-10px) scale(.96)}10%{opacity:1;transform:translate(-50%,0) scale(1.03)}16%{transform:translate(-50%,0) scale(1)}82%{opacity:1}100%{opacity:0}}
 #panel{position:fixed;z-index:7;right:20px;top:76px;bottom:20px;width:var(--panel);background:rgba(11,11,11,.95);border:1px solid var(--edge);display:flex;flex-direction:column;padding:26px 28px 22px;overflow-y:auto;scrollbar-width:thin}
 #panel::before{content:"";position:absolute;inset:7px;border:1px solid rgba(58,55,50,.6);pointer-events:none}
@@ -260,13 +261,28 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 #treasure .x{position:absolute;right:10px;top:8px;width:36px;height:36px;font-size:22px;color:var(--brown)}
 #treasure .lol{font-family:var(--serif);font-size:13px;color:var(--brown);margin-top:12px}
 @media (max-width:999px){#treasure img{display:none}}
+#treasure .bye{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--parch2)}
+#treasure .bye svg{width:70px;height:64px;flex:none;color:#3b2a1c}
+#treasure .bye span{position:relative;font-family:var(--serif);font-weight:900;font-size:17px;color:#2a1c10;background:#fffaf0;border:2px solid var(--brown);border-radius:10px;padding:8px 12px}
+#treasure .bye span::before{content:"";position:absolute;left:-9px;top:50%;margin-top:-6px;border:6px solid transparent;border-right:8px solid var(--brown);border-left:0}
+#bgm{display:flex;align-items:center;gap:6px;font-family:var(--serif);font-size:14px;letter-spacing:.14em;color:inherit;opacity:.75}
+#bgm .w{display:none}#bgm[aria-pressed="true"]{opacity:1;color:var(--warm)}#bgm[aria-pressed="true"] .w{display:inline}#bgm[aria-pressed="true"] .x{display:none}
+#bgm[aria-pressed="true"] svg{animation:bgmp 1.2s ease-in-out infinite}@keyframes bgmp{50%{transform:scale(1.12)}}
+@media (max-width:999px){#bgm span{display:none}}
+#lucky{position:fixed;z-index:12;left:50%;top:calc(70px + env(safe-area-inset-top));transform:translate(-50%,-30px) scale(.8);display:flex;align-items:center;gap:14px;width:max-content;max-width:calc(100vw - 32px);padding:14px 22px 14px 16px;background:var(--parch);color:var(--ink2);border:3px solid var(--brown);border-radius:8px;box-shadow:0 8px 0 rgba(0,0,0,.25),0 0 40px rgba(246,196,69,.55);opacity:0;pointer-events:none;transition:opacity .35s,transform .5s cubic-bezier(.2,1.6,.4,1)}
+#lucky.on{opacity:1;transform:translate(-50%,0) scale(1);pointer-events:auto;cursor:pointer}
+#lucky svg{flex:none;animation:lspin 1.6s ease-in-out infinite}@keyframes lspin{50%{transform:scaleX(-1)}}
+#lucky small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--brown)}
+#lucky b{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(19px,5vw,26px);letter-spacing:.04em;line-height:1.35;color:#2a1c10}
+#lucky span{display:block;font-family:var(--serif);font-weight:700;font-size:15px;color:var(--dot);margin-top:2px}
+@media (min-width:1000px){#lucky{left:calc((100% - var(--panel) - 40px)/2)}}
 </style>
 </head>
 <body>
 <header class="top">
   <a class="logo" href="index.html">賣點設計<i></i></a>
   <span class="mid">Service Map</span>
-  <nav class="nav"><a href="index.html">回首頁</a><s></s><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></nav>
+  <nav class="nav"><button id="bgm" type="button" aria-pressed="false" aria-label="配樂：關" title="配樂"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"/><path class="w" d="M13 7c1.2 1.5 1.2 4.5 0 6M15.5 5c2.4 2.8 2.4 7.2 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="x" d="M13 7.5l5 5M18 7.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>配樂</span></button><s></s><a href="index.html">回首頁</a><s></s><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></nav>
 </header>
 <svg id="map" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice" role="img" aria-label="賣點設計服務小鎮地圖"></svg>
 <div id="title"><h1>服務地圖<i></i></h1><p>賣點設計的服務小鎮・走進每一棟看看</p></div>
@@ -278,6 +294,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 <div id="keys"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd><em>方向鍵移動</em>・<kbd>Space</kbd><em>進入</em></div>
 <div id="zoom" aria-label="地圖縮放"><button type="button" data-z="in" aria-label="放大">＋</button><button type="button" data-z="out" aria-label="縮小">－</button></div>
 <div id="banner"><small></small><b></b></div>
+<div id="lucky" role="status" aria-live="polite"><svg width="44" height="44" viewBox="-22 -22 44 44" aria-hidden="true"><circle r="19" fill="#f6c445" stroke="#8a5a12" stroke-width="3"/><circle r="13" fill="none" stroke="#fff3c4" stroke-width="1.6" opacity=".8"/><circle r="6" fill="#ff4a1c"/></svg><div><small>金幣 ×1</small><b>你是全世界最幸運的人！</b><span>繼續探索吧</span></div></div>
 <aside id="panel" aria-live="polite">
   <button class="who" id="grab" type="button" aria-expanded="true"><svg id="portrait" viewBox="0 0 110 100" aria-hidden="true"></svg><div><b>小點</b><small id="loc">GUIDE · 賣點設計導覽員</small><span id="peek"></span></div><i class="chev" aria-hidden="true"></i></button>
   <p id="say"></p>
@@ -302,6 +319,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
     <img src="logos/line-qr.png" alt="賣點設計 LINE QR Code" width="150" height="150">
     <a class="go" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">加入賣點設計 LINE</a>
     <p class="lol">加好友時跟我們說「我開到寶箱了」</p>
+    <div class="bye"><svg id="trDot" viewBox="0 0 110 100" aria-hidden="true"></svg><span>下次再來找我玩唷！</span></div>
   </div>
 </div>
 <section id="show" aria-hidden="true" tabindex="-1">
@@ -452,16 +470,16 @@ function sparks(x,y,col='#ffe08a',n=6){for(let i=0;i<n;i++){const a=-Math.PI*(0.
   s.animate([{transform:'translate(0,0)',opacity:1},{transform:`translate(${Math.cos(a)*26}px,${Math.sin(a)*26}px)`,opacity:0}],{duration:520,easing:'ease-out'});setTimeout(()=>s.remove(),540)}}
 /* 金幣：金色圓、中間是賣點的紅點 */
 function coinSvg(parent){const c=el('g',{},parent);c.innerHTML='<circle r="11" fill="#f6c445" stroke="#8a5a12" stroke-width="2"/><circle r="7.5" fill="none" stroke="#fff3c4" stroke-width="1.2" opacity=".8"/><circle r="3.6" fill="#ff4a1c"/>';return c}
-function hitBlock(){if(QB.done)return;QB.hits++;QB.bump=1;sparks(QB.x,QB.y-QB.lift-30);
+function hitBlock(){if(QB.done)return;QB.hits++;if(QB.hits<QB.need)sfx('hit');QB.bump=1;sparks(QB.x,QB.y-QB.lift-30);
   qbN.textContent=QB.hits+' / '+QB.need;qbCount.setAttribute('opacity',1);
   if(QB.hits>=QB.need)setTimeout(getCoin,180)}
-function getCoin(){QB.done=true;qbBox.querySelector('.face').setAttribute('fill','#a88a5c');qbBox.querySelector('.mark').setAttribute('fill','#7a6a55');qbBox.querySelector('.glow').setAttribute('opacity',0);qbCount.setAttribute('opacity',0);
+function getCoin(){QB.done=true;sfx('coin');qbBox.querySelector('.face').setAttribute('fill','#a88a5c');qbBox.querySelector('.mark').setAttribute('fill','#7a6a55');qbBox.querySelector('.glow').setAttribute('opacity',0);qbCount.setAttribute('opacity',0);
   const c=coinSvg(fx),x=QB.x,y0=QB.y-QB.lift-30;const t0=performance.now();
   const spin=now=>{const k=Math.min(1,(now-t0)/900),y=y0-70*Math.sin(k*Math.PI*.75)+(k>.75?0:0);c.setAttribute('transform',`translate(${x} ${y.toFixed(1)}) scale(${Math.cos(k*Math.PI*6).toFixed(2)} 1)`);c.setAttribute('opacity',k<.8?1:(1-k)*5);if(k<1)requestAnimationFrame(spin);else c.remove()};
   requestAnimationFrame(spin);sparks(x,y0-40,'#ffe08a',10);
   const ci=$('#stD .coin');ci.classList.add('on');ci.title='金幣：拿到了';
-  const bn=$('#banner');bn.querySelector('small').textContent='隱藏彩蛋！';bn.querySelector('b').textContent='金幣 ×1';bn.classList.remove('on');void bn.offsetWidth;bn.classList.add('on');
-  setTimeout(()=>{if(showing)return;if(got.size===7)showChest();else say('叮！你是全世界最幸運的人！\n繼續探索吧。',()=>opts([{t:'繼續探索',cls:'main',fn:explore}]))},900)}
+  const lk=$('#lucky');lk.classList.add('on');clearTimeout(lk._t);lk._t=setTimeout(()=>lk.classList.remove('on'),5200);lk.onclick=()=>lk.classList.remove('on');
+  setTimeout(()=>{if(showing)return;if(got.size===7)showChest();else peek('你是全世界最幸運的人！繼續探索吧');if(got.size!==7)say('叮！你是全世界最幸運的人！\n繼續探索吧。',()=>opts([{t:'繼續探索',cls:'main',fn:explore}]))},900)}
 qbG.addEventListener('click',e=>{e.stopPropagation();if(dragged){dragged=false;return}begin();tour=-1;autoEnter=null;
   if(Math.hypot(me.x-QB.x,me.y-QB.y)<22){jump();return}autoAct=jump;go([QB.x,QB.y])});
 
@@ -480,7 +498,7 @@ function showChest(){if(CH.on)return;CH.on=true;chG.style.display='';chG.setAttr
   setTimeout(()=>sparks(CH.x,CH.y-10,'#ffe08a',10),560);
   pan=[CH.x,CH.y-30];setTimeout(()=>pan=null,1800);
   say('咦？噴泉前面掉下來一個寶箱！\n'+(touch?'帶我走過去，點一下寶箱打開。':'帶我走過去，按空白鍵打開。'),()=>opts([{t:'帶我去開寶箱',cls:'main',fn:()=>{begin();autoAct=openChest;go([CH.x,CH.y+14])}}]))}
-function openChest(){if(!CH.on)return;CH.open=true;chLid.style.transform='rotate(-70deg) translate(-4px,-2px)';sparks(CH.x,CH.y-28,'#fff3c4',12);
+function openChest(){if(!CH.on)return;CH.open=true;talk('下次再來找我玩唷！');chLid.style.transform='rotate(-70deg) translate(-4px,-2px)';sparks(CH.x,CH.y-28,'#fff3c4',12);
   setTimeout(()=>{const tr=$('#treasure');tr.classList.add('on');tr.setAttribute('aria-hidden','false');tr.querySelector('.go').focus({preventScroll:true})},650)}
 function closeChest(){const tr=$('#treasure');tr.classList.remove('on');tr.setAttribute('aria-hidden','true')}
 $('#treasure .x').addEventListener('click',closeChest);$('#treasure').addEventListener('click',e=>{if(e.target.id==='treasure')closeChest()});
@@ -490,6 +508,31 @@ actors.appendChild(tip);
 
 /* 跳：在地上才能起跳，頭撞到方塊就算一下 */
 function jump(){if(me.jz>0||me.jv)return;me.jv=240}
+
+/* ---------- 點小點：頭上冒對話框，說一句話、發出小聲音 ---------- */
+const LINES=['今天想去哪裡呢？','想做什麼風格的設計呢？','嘿嘿，被你發現了！','點我做什麼啦，好癢！','我今天也很圓喔！','想不到去哪？我帶你逛一圈','不知道選哪個，就去補給站問問看','聽說會場前面有個金色方塊','走累了嗎？我還可以再跑十圈！','你喜歡可愛的還是簡約的？'];
+const bub=el('g',{opacity:0,style:'pointer-events:none'},actors);
+const bubIn=el('g',{},bub);
+const bubR=el('rect',{y:-46,height:34,rx:10,fill:'#f4ead3',stroke:'#6b4a2b','stroke-width':2},bubIn);
+el('path',{d:'M-7 -13.5L0 -4L7 -13.5Z',fill:'#f4ead3',stroke:'#6b4a2b','stroke-width':2,'stroke-linejoin':'round'},bubIn);
+el('rect',{x:-6,y:-16,width:12,height:4,fill:'#f4ead3'},bubIn);
+const bubT=el('text',{y:-23.5,'text-anchor':'middle','font-size':15,'font-family':'Noto Serif TC,serif','font-weight':700,fill:'#3b2a1c'},bubIn);
+let bubOn=false,bubTimer=null,lastLine=-1,bubScale=1;
+function talk(text,quiet){if(!text){let i;do{i=Math.floor(Math.random()*LINES.length)}while(i===lastLine&&LINES.length>1);lastLine=i;text=LINES[i];
+    if(near&&near!==inside)text='要進去'+near.zh+'看看嗎？'}
+  bubT.textContent=text;const w=Math.max(70,text.length*15.5+26);bubR.setAttribute('x',-w/2);bubR.setAttribute('width',w);
+  bub.setAttribute('opacity',1);bubIn.animate([{transform:'scale(.4)',opacity:0},{transform:'scale(1.08)',opacity:1,offset:.6},{transform:'scale(1)'}],{duration:320,easing:'ease-out'});
+  bubOn=true;clearTimeout(bubTimer);bubTimer=setTimeout(()=>{bub.setAttribute('opacity',0);bubOn=false},2600);if(!quiet)sfx('voice')}
+/* 還沒被點過：小點每隔一陣子主動喊一聲，讓大家知道可以點他 */
+let dotTapped=false,callN=0;const CALLS=['點我一下看看！','嘿，我在這裡，點我嘛！','點我會說話喔！'];
+setInterval(()=>{if(dotTapped||opOn||showing||bubOn||path.length||(!QB.done&&Math.hypot(me.x-QB.x,me.y-QB.y)<70)||$('#treasure').classList.contains('on'))return;talk(CALLS[callN++%CALLS.length],true)},7000);
+/* 音效（之後換成 Magnific 的檔案） */
+const SFX_SRC={hit:'guide-assets/sfx-coin-hit.mp3',coin:'guide-assets/sfx-coin.mp3'},SFX={},SFXB={};
+for(const k in SFX_SRC){SFX[k]=new Audio(SFX_SRC[k]);SFX[k].preload='auto'}
+function sfxLoad(){if(!bgmCtx)return;for(const k in SFX_SRC)if(!SFXB[k]){SFXB[k]='…';fetch(SFX_SRC[k]).then(r=>r.arrayBuffer()).then(b=>new Promise((ok,no)=>bgmCtx.decodeAudioData(b,ok,no))).then(buf=>SFXB[k]=buf).catch(()=>delete SFXB[k])}}
+function sfx(k){if($('#bgm').getAttribute('aria-pressed')!=='true')return;
+  const buf=SFXB[k];if(bgmCtx&&buf&&typeof buf!=='string'){const s=bgmCtx.createBufferSource(),g=bgmCtx.createGain();g.gain.value=.55;s.buffer=buf;s.connect(g);g.connect(bgmCtx.destination);s.start();return}
+  const a=SFX[k];if(!a)return;try{const c=a.cloneNode();c.volume=.55;c.play().catch(()=>{})}catch(e){}}
 /* 右側欄的大張小點：站著揮手 */
 const pt=$('#portrait');pt.style.color='#efe6d4';pt.style.setProperty('--paper','#0b0b0b');
 const pst=document.createElementNS('http://www.w3.org/2000/svg','style');pst.textContent='.pp{fill:var(--paper)}';pt.appendChild(pst);
@@ -565,7 +608,7 @@ document.querySelectorAll('#zoom button').forEach(b=>b.addEventListener('click',
 svg.addEventListener('click',e=>{
   if(dragged){dragged=false;return}
   const t=e.target.closest('.tag');if(t){walkTo(t.dataset.k);return}
-  const p=toMap(e);if(Math.hypot(p.x-me.x,p.y-(me.y-20))<22){begin();jump();return}const hit=B.find(b=>inPoly(p.x,p.y,b.poly));
+  const p=toMap(e);if(Math.hypot(p.x-me.x,p.y-(me.y-20))<28){begin();dotTapped=true;if(!QB.done&&Math.hypot(me.x-QB.x,me.y-QB.y)<70){jump();return}talk();jump();return}const hit=B.find(b=>inPoly(p.x,p.y,b.poly));
   if(hit){if(near===hit&&inside!==hit){enter(hit);return}walkTo(hit.k);return}
   const c=free(p.x,p.y)?[p.x,p.y]:(()=>{const n=nearestFree(p.x,p.y,5);return n&&[n[0]*CELL+4,n[1]*CELL+4]})();if(!c)return;
   autoEnter=null;autoAct=null;tour=-1;begin();if(go(c))ripple(c[0],c[1])});
@@ -605,23 +648,25 @@ function loop(dt,t){
   place(fig,me.x,me.y-me.jz,me.dir,SC);
   shadow.setAttribute('cx',me.x);shadow.setAttribute('cy',me.y+1);shadow.setAttribute('rx',(15-me.jz*.15).toFixed(1));
   tip.setAttribute('transform',`translate(${me.x.toFixed(1)} ${(me.y-66-me.jz).toFixed(1)})`);
+  bub.setAttribute('transform',`translate(${me.x.toFixed(1)} ${(me.y-44-me.jz).toFixed(1)}) scale(${bubScale})`);
   /* 走到門口：建築點亮、地上出現光圈 */
   let nb=null,best=46;for(const b of B){const d=Math.hypot(b.door[0]-me.x,b.door[1]-me.y);if(d<best){best=d;nb=b}}
   if(nb!==near){near=nb;B.forEach(b=>['L-','T-'].forEach(p=>$('#'+p+b.k).classList.toggle('near',b===near)));
     const r=$('#ring');if(near){r.setAttribute('transform',`translate(${near.door[0]} ${near.door[1]})`);r.classList.add('show')}else r.classList.remove('show')}
-  const atQB=!QB.done&&Math.hypot(me.x-QB.x,me.y-QB.y)<22&&!path.length,atCH=CH.on&&Math.hypot(me.x-CH.x,me.y-CH.y)<36&&!path.length;
+  const atQB=!QB.done&&!QB.hits&&Math.hypot(me.x-QB.x,me.y-QB.y)<22&&!path.length,atCH=CH.on&&Math.hypot(me.x-CH.x,me.y-CH.y)<36&&!path.length;
   if(atQB){setTip(touch?'TAP':'Space',touch?'點方塊跳一下':'按空白鍵跳');tip.setAttribute('transform',`translate(${QB.x} ${QB.y-QB.lift-62})`)}
   else if(atCH)setTip(touch?'TAP':'Space',touch?'點寶箱打開':'按空白鍵打開');else setTip(touch?'TAP':'Space',touch?'點一下進入':'按空白鍵進入');
-  tip.setAttribute('opacity',(near&&near!==inside&&!autoEnter)||atQB||(atCH&&!CH.open)?1:0);
+  tip.setAttribute('opacity',!bubOn&&((near&&near!==inside&&!autoEnter)||atQB||(atCH&&!CH.open))?1:0);
   if(inside&&Math.hypot(inside.door[0]-me.x,inside.door[1]-me.y)>90){inside=null;B.forEach(b=>['L-','T-'].forEach(p=>$('#'+p+b.k).classList.remove('on')));if(tour<0)explore()}
   for(const m of motes){m.y-=m.v*dt;if(m.y<60){m.y=980;m.x=120+Math.random()*1300}m.c.setAttribute('cx',(m.x+Math.sin(t*.6+m.ph)*14).toFixed(1));m.c.setAttribute('cy',m.y.toFixed(1));m.c.setAttribute('opacity',(m.a*(.6+.4*Math.sin(t*2+m.ph))).toFixed(2))}
   pdot.draw(RUN.pose(0,0),0,Math.sin(t*5)*22);
   if(opOn)opLoop(dt,t);
   if(showing)shDot.draw(RUN.pose(0,0),0,Math.sin(t*5)*22);
+  if(CH.open)trDot.draw(RUN.pose(0,0),0,Math.sin(t*6)*24);
   if(!PHONE())mini();
   const tg=followBox();const k=Math.min(1,dt*3.2);let mv=0;vb=vb.map((v,i)=>{const d=(tg[i]-v)*k;mv+=Math.abs(d);return v+d});if(mv>0.04||!vbSet){vbSet=true;svg.setAttribute('viewBox',vb.map(n=>n.toFixed(2)).join(' '))}
   /* 建築名稱在螢幕上維持固定大小，不跟著鏡頭縮放 */
-  const ls=(vb[2]/innerWidth*(innerWidth<1000?0.78:0.92)).toFixed(3);if(ls!==lastLs){lastLs=ls;document.querySelectorAll('.ti').forEach(g=>g.setAttribute('transform',`scale(${ls})`))}
+  const ls=(vb[2]/innerWidth*(innerWidth<1000?0.78:0.92)).toFixed(3);if(ls!==lastLs){lastLs=ls;bubScale=+ls*1.3;document.querySelectorAll('.ti').forEach(g=>g.setAttribute('transform',`scale(${ls})`))}
 }
 /* ---------- 鏡頭：地圖放在上方列和右側欄（手機是下方卡片）以外的空間 ---------- */
 function area(){const ph=PHONE(),pn=$('#panel');const top=58,bot=ph?innerHeight-(pn.classList.contains('min')?74:pn.offsetHeight):innerHeight,right=ph?innerWidth:innerWidth-pn.offsetWidth-40;return{top,bot,left:0,right}}
@@ -772,12 +817,27 @@ $('#eggs').innerHTML=[
 ].map(h=>`<li>${h[0]}<div><b>${h[1]}</b><span>${h[2]}</span></div></li>`).join('');
 const OP_N=document.querySelectorAll('.op-step').length;
 function opNext(){if(opStep<OP_N-1){opStep++;document.querySelectorAll('.op-step').forEach((s,i)=>s.classList.toggle('on',i===opStep));document.querySelectorAll('.op-dots i').forEach((s,i)=>s.classList.toggle('on',i===opStep));$('.op-next').textContent=opStep===OP_N-1?'開始探索':'下一步'}else opClose()}
-function opClose(){if(!opOn)return;setS('guideSeen','1');const o=$('#opening');o.classList.add('out');setTimeout(()=>{o.hidden=true;opOn=false},600);intro()}
+/* ---------- 配樂：Whimsy March（MudiG，Magnific 授權）。瀏覽器不准自動出聲，所以按「開始探索」才開始；喇叭按鈕可關，選擇會記住 ---------- */
+const bgm=new Audio('guide-assets/bgm-whimsy-march.mp3');bgm.loop=true;bgm.preload='none';bgm.volume=0;
+let bgmCtx=null,bgmGain=null,bgmOff=null;const BGM_VOL=.32;
+function bgmGraph(){if(bgmCtx)return;const AC=window.AudioContext||window.webkitAudioContext;if(!AC){bgm.volume=BGM_VOL;return}
+  try{bgmCtx=new AC();const src=bgmCtx.createMediaElementSource(bgm);bgmGain=bgmCtx.createGain();bgmGain.gain.value=0;src.connect(bgmGain);bgmGain.connect(bgmCtx.destination);bgm.volume=1}catch(e){bgmCtx=null;bgm.volume=BGM_VOL}}
+function bgmSet(on,save=true){const b=$('#bgm');b.setAttribute('aria-pressed',String(on));b.setAttribute('aria-label','配樂：'+(on?'開':'關'));if(save)setS('bgm',on?'1':'0');
+  clearTimeout(bgmOff);bgmGraph();sfxLoad();const g=bgmGain&&bgmGain.gain,now=bgmCtx?bgmCtx.currentTime:0;
+  if(on){if(bgmCtx)bgmCtx.resume();bgm.play().then(()=>{if(g){g.cancelScheduledValues(now);g.setValueAtTime(g.value,now);g.linearRampToValueAtTime(BGM_VOL,now+1.5)}}).catch(()=>b.setAttribute('aria-pressed','false'))}
+  else{if(g){g.cancelScheduledValues(now);g.setValueAtTime(g.value,now);g.linearRampToValueAtTime(0,now+.5)}bgmOff=setTimeout(()=>bgm.pause(),g?520:0)}}
+$('#bgm').addEventListener('click',()=>bgmSet($('#bgm').getAttribute('aria-pressed')!=='true'));
+document.addEventListener('visibilitychange',()=>{if(document.hidden)bgm.pause();else if($('#bgm').getAttribute('aria-pressed')==='true')bgm.play().catch(()=>{})});
+/* 沒開場（?debug）時，第一次點畫面才開始 */
+const bgmFirst=()=>{if(getS('bgm')!=='0'&&$('#bgm').getAttribute('aria-pressed')!=='true')bgmSet(true,false)};
+function opClose(){if(!opOn)return;bgmFirst();setTimeout(()=>{if(!dotTapped&&!bubOn)talk(CALLS[callN++%CALLS.length],true)},2200);setS('guideSeen','1');const o=$('#opening');o.classList.add('out');setTimeout(()=>{o.hidden=true;opOn=false},600);intro()}
 $('.op-next').addEventListener('click',opNext);$('#opening .skip').addEventListener('click',opClose);
 const shSvg=$('#shDot');shSvg.style.color='#efe6d4';shSvg.style.setProperty('--paper','#0b0b0b');
 {const s3=document.createElementNS('http://www.w3.org/2000/svg','style');s3.textContent='.pp{fill:var(--paper)}';shSvg.appendChild(s3)}
 const shDot=makeDot(el('g',{transform:'translate(14 -32) scale(1.05)'},shSvg));
-window.__g={me,walkTo,enter,B,got,closeShow,opNext,opClose,QB,CH,jump,go,findPath,free,showChest,openChest,stamp};
+const trSvg=$('#trDot');trSvg.style.setProperty('--paper','#f4ead3');{const s4=document.createElementNS('http://www.w3.org/2000/svg','style');s4.textContent='.pp{fill:var(--paper)}';trSvg.appendChild(s4)}
+const trDot=makeDot(el('g',{transform:'translate(14 -32) scale(1.05)'},trSvg));
+window.__g={talk,me,walkTo,enter,B,got,closeShow,opNext,opClose,QB,CH,jump,go,findPath,free,showChest,openChest,stamp};
 if(q.has('debug')){let tt=0;loop(1/60,0);window.__step=(sec=1)=>{for(let i=0,n=Math.round(sec*60);i<n;i++){tt+=1/60;loop(1/60,tt)}return tt}}
 else{const t0=performance.now();let prev=t0;const tick=now=>{loop(Math.min(0.05,(now-prev)/1000),(now-t0)/1000);prev=now;requestAnimationFrame(tick)};requestAnimationFrame(tick)}
 if(opOn)$('#opening').hidden=false;else intro();
