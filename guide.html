@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0b0b0b;--navy2:#161616;--edge:#3a3732;--cream:#efe6d4;--dot:#ff4a1c;--warm:#ffc978;--cool:#bfe8ff;--lg:#06c755;
+:root{--navy:#10203a;--navy2:#17294a;--edge:#34507a;--cream:#ffffff;--parch:#f4ead3;--parch2:#e8d9b8;--ink2:#3b2a1c;--brown:#6b4a2b;--dot:#ff4a1c;--warm:#ffc978;--cool:#bfe8ff;--lg:#06c755;
   --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--serif:"Noto Serif TC",serif;--sans:"Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--panel:430px}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
@@ -29,12 +29,13 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 .lit.seen{opacity:.55}.lit.near,.lit.on{opacity:1;animation:breathe 2.2s ease-in-out infinite}
 @keyframes breathe{50%{opacity:.78}}
 .tag{cursor:pointer}
-.tag text{font-family:var(--serif);fill:var(--cream);paint-order:stroke;stroke:#0b0b0b;stroke-width:7px;stroke-linejoin:round}
-.tag .no{font-style:italic;font-size:22px;font-weight:500;fill:var(--dot)}
-.tag .zh{font-size:21px;font-weight:700;letter-spacing:.1em}
-.tag .bar{fill:var(--dot);opacity:0;transition:opacity .3s,transform .3s;transform-box:fill-box;transform-origin:center;transform:scaleX(.3)}
-.tag.near .bar,.tag.on .bar{opacity:1;transform:scaleX(1)}
-.tag.near .zh,.tag.on .zh{fill:#fff}
+.tag .pill{fill:var(--parch);stroke:var(--brown);stroke-width:1.5}
+.tag .tail{fill:var(--parch);stroke:var(--brown);stroke-width:1.5}
+.tag text{font-family:var(--serif)}
+.tag .no{font-style:italic;font-size:21px;font-weight:700;fill:var(--dot)}
+.tag .zh{font-size:19px;font-weight:700;letter-spacing:.08em;fill:var(--ink2)}
+.tag.near .pill,.tag.on .pill,.tag.near .tail,.tag.on .tail{fill:var(--dot);stroke:#7a1f08}
+.tag.near .zh,.tag.on .zh,.tag.near .no,.tag.on .no{fill:#fff}
 .ring{fill:none;stroke:var(--warm);stroke-width:2.5;opacity:0;transition:opacity .3s}
 .ring.show{opacity:1}
 .ring.show .r2{animation:ringp 1.4s ease-out infinite}
@@ -185,7 +186,63 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 #shOpts .k::after{content:"→";margin-left:auto;font-family:var(--sans);font-weight:300;opacity:.7}
 #shOpts .main{color:var(--dot)}#shOpts .main::before{opacity:1}
 #shOpts .lg::before{color:var(--lg);opacity:1}
+/* ===== 彩色遊戲版外觀（羊皮紙、緞帶） ===== */
+#panel{background:var(--parch);background-image:radial-gradient(120% 80% at 50% 0,rgba(255,255,255,.55),transparent 60%),radial-gradient(100% 70% at 50% 100%,rgba(160,120,70,.18),transparent 70%);color:var(--ink2);border:2px solid var(--brown);border-radius:8px;box-shadow:0 14px 40px rgba(0,0,0,.55)}
+#panel::before{inset:6px;border:1.5px solid rgba(107,74,43,.45);border-radius:5px}
+.who b{display:inline-block;background:#4a3423;color:var(--parch);font-size:22px;letter-spacing:.2em;padding:6px 18px 7px 22px;border-radius:3px;box-shadow:inset 0 0 0 2px #4a3423,inset 0 0 0 3px #c9a877}
+.who b::after{display:none}
+.who small{color:#8a6a4a}
+#say{color:var(--ink2);border:1.5px solid rgba(107,74,43,.55);border-radius:6px;padding:14px 16px;background:rgba(255,255,255,.35)}
+#say .cur{background:var(--dot)}
+#strip a{border:1.5px solid var(--brown);border-radius:4px;background:#d9c9a5}
+#opts .k{color:var(--ink2);border-color:rgba(107,74,43,.35)}
+#opts .k:first-child,#opts.grid .k:nth-child(2){border-top-color:rgba(107,74,43,.35)}
+#opts .k::before{color:var(--ink2)}
+#opts .k:hover{color:#000}
+#opts .k.main{background:var(--dot);color:#fff;border:0;margin:4px 0 6px;padding:13px 18px;clip-path:polygon(0 0,96% 0,100% 50%,96% 100%,0 100%,2.5% 50%)}
+#opts .k.main::before{color:#fff}
+#opts .k.main:hover{background:#ff6236;padding-left:24px}
+#opts .lg::before{color:#079a45}
+#peek{color:#6b4a2b}
+.chev{border-color:var(--ink2)}
+.who::before{background:#b99a6c}
+@media (max-width:999px){.who{background:var(--parch)}}
+#stamps{background:rgba(20,16,12,.92);border:1.5px solid var(--parch);outline:1px solid rgba(244,234,211,.35)}
+#banner b{box-shadow:0 6px 0 #a82a0c,0 14px 30px rgba(0,0,0,.45)}
+#banner small{color:#fff}
+#zoom{border-color:var(--parch);background:rgba(20,16,12,.85)}
+#keys kbd{border-color:var(--parch)}
+.op-next{clip-path:polygon(0 0,94% 0,100% 50%,94% 100%,0 100%,6% 50%);padding:12px 38px}
+#shOpts .k.main{background:var(--dot);color:#fff;border:0;clip-path:polygon(0 0,97% 0,100% 50%,97% 100%,0 100%,1.5% 50%);padding:15px 18px}
+#shOpts .k.main::before{color:#fff}
+/* 設計稿 C：深藍藍圖底、月桂葉緞帶 */
+body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140,175,230,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(140,175,230,.07) 1px,transparent 1px);background-size:36px 36px}
+.top{background-color:rgba(16,32,58,.94)}
+#banner small::before,#banner small::after{content:""}
+#banner{padding:0 52px}
+#banner::before,#banner::after{content:"";position:absolute;bottom:4px;width:34px;height:44px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='44' viewBox='0 0 34 44'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M28 42C12 34 8 20 14 4'/%3E%3Cpath d='M15 10c-5-1-8-4-8-8 5 1 8 4 8 8zM13 18c-6 0-9-3-10-7 5 0 9 3 10 7zM14 26c-5 1-9-1-11-5 5-1 9 1 11 5zM18 33c-4 2-9 1-11-3 4-1 9 0 11 3z'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain}
+#banner::before{left:0}#banner::after{right:0;transform:scaleX(-1)}
+#opening,#show,#iris{background-color:var(--navy)}
+#stamps{background:rgba(16,32,58,.94)}
+#zoom{background:rgba(16,32,58,.9)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* 金幣方塊、寶箱 */
+#stamps i.coin{border-style:dashed;border-color:#f6c445}
+#stamps i.coin.on{background:#f6c445;border:1.5px solid #fff3c4;box-shadow:0 0 12px rgba(246,196,69,.9)}
+.qbn{font-family:var(--mono);font-weight:700}
+#treasure{position:fixed;inset:0;z-index:30;display:grid;place-items:center;padding:16px;background:rgba(6,12,24,.72);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .4s}
+#treasure.on{opacity:1;pointer-events:auto}
+#treasure .card{position:relative;width:min(380px,100%);background:var(--parch);color:var(--ink2);border:3px solid var(--brown);outline:1.5px solid var(--parch);outline-offset:4px;border-radius:6px;padding:30px 24px 24px;text-align:center;transform:scale(.7) translateY(30px);transition:transform .55s cubic-bezier(.2,1.6,.4,1)}
+#treasure.on .card{transform:none}
+#treasure small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--brown)}
+#treasure h2{font-family:var(--serif);font-weight:900;font-size:26px;letter-spacing:.08em;line-height:1.4;margin:8px 0 10px;color:#2a1c10}
+#treasure p{font-family:var(--serif);font-size:15px;line-height:1.85;letter-spacing:.04em}
+#treasure img{display:block;width:150px;height:150px;margin:16px auto 6px;border:6px solid #fff;border-radius:6px;box-shadow:0 4px 0 var(--parch2)}
+#treasure .go{display:block;margin-top:16px;padding:14px;background:var(--lg);color:#fff;font-family:var(--serif);font-weight:900;font-size:18px;letter-spacing:.12em;border-radius:6px;box-shadow:0 5px 0 #048a3b}
+#treasure .go:active{transform:translateY(3px);box-shadow:0 2px 0 #048a3b}
+#treasure .x{position:absolute;right:10px;top:8px;width:36px;height:36px;font-size:22px;color:var(--brown)}
+#treasure .lol{font-family:var(--serif);font-size:13px;color:var(--brown);margin-top:12px}
+@media (max-width:999px){#treasure img{display:none}}
 </style>
 </head>
 <body>
@@ -218,6 +275,17 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
   <div class="op-foot"><span class="op-dots"><i class="on"></i><i></i></span><button class="op-next" type="button">下一步</button></div>
 </div>
 <div id="iris" aria-hidden="true"></div>
+<div id="treasure" role="dialog" aria-modal="true" aria-labelledby="trT" aria-hidden="true">
+  <div class="card">
+    <button class="x" type="button" aria-label="關閉">×</button>
+    <small>TREASURE · 隱藏寶箱</small>
+    <h2 id="trT">寶箱打開了！<br>裡面是我們的 LINE</h2>
+    <p>逛完七棟、還跳到金幣，你是真的有在玩。<br>最後的寶物就是直接找到我們，哈哈哈。</p>
+    <img src="logos/line-qr.png" alt="賣點設計 LINE QR Code" width="150" height="150">
+    <a class="go" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">加入賣點設計 LINE</a>
+    <p class="lol">加好友時跟我們說「我開到寶箱了」</p>
+  </div>
+</div>
 <section id="show" aria-hidden="true" tabindex="-1">
   <button class="back" type="button">← 回到小鎮</button>
   <div class="hero"><img id="shArt" alt=""><div class="cap"><small id="shEn"></small><h2 id="shTitle"></h2></div></div>
@@ -237,39 +305,50 @@ const $=s=>document.querySelector(s);
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const touch=matchMedia('(pointer:coarse)').matches;
 const q=new URLSearchParams(location.search);
-const IMG='guide-assets/map-k.jpg',MW=1536,MH=1024;
+const IMG='guide-assets/map-d.jpg',MW=1536,MH=1024;
 const svg=$('#map');
 
 /* ---------- 七棟建築：座標都是底圖 1536×1024 上的像素 ----------
    poly：建築佔的地（小點走不進去）；door：門口；tag／pin：標籤和引線指到的點；route：從廣場沿路走過去的轉折點 */
-const PLAZA=[620,590];
+const PLAZA=[630,535];
 const B=[
  {k:'event',no:'01',zh:'活動會場',en:'EVENT HALL',cat:'場地佈置',
-  poly:[[100,300],[240,200],[600,190],[690,380],[560,450],[420,450],[240,525],[95,440]],door:[505,492],tag:[150,232],pin:[250,330],lx:90,ly:95,route:[[560,525]],
+  poly:[[150,330],[260,250],[420,240],[530,320],[535,440],[380,480],[250,500],[135,465]],door:[470,510],tag:[0,0],pin:[0,0],route:[[500,530]],
   say:'這裡是活動會場。開幕、尾牙、論壇、典禮和展覽，從企劃、主視覺、背板，到活動當天的現場佈置，我們都會到場處理。'},
  {k:'design',no:'02',zh:'設計工作室',en:'DESIGN STUDIO',cat:'平面設計',
-  poly:[[650,262],[700,92],[1030,112],[1030,250],[860,352],[762,348]],door:[716,362],tag:[600,96],pin:[760,190],route:[[560,525],[660,455],[752,388]],
+  poly:[[510,240],[580,175],[665,175],[745,230],[745,330],[640,345],[525,320]],door:[655,362],tag:[0,0],pin:[0,0],route:[[655,470],[660,410]],
   say:'設計工作室負責海報、手冊、型錄、品牌識別、簡報和社群圖。我們會先聽你想說什麼，再決定怎麼設計。'},
  {k:'motion',no:'03',zh:'動畫放映室',en:'MOTION LAB',cat:'動畫影片',
-  poly:[[1090,250],[1130,170],[1350,130],[1420,210],[1400,400],[1290,420],[1130,372]],door:[1150,390],tag:[1120,104],pin:[1200,180],route:[[790,630],[1010,690],[1300,560],[1300,462]],
+  poly:[[848,300],[905,255],[1060,258],[1082,320],[1072,382],[930,388],[848,352]],door:[930,400],tag:[0,0],pin:[0,0],route:[[720,465],[850,410]],
   say:'動畫放映室做宣導動畫、產品動畫和活動開場影片，也可以幫你拍攝和剪輯。'},
  {k:'illus',no:'04',zh:'插畫小屋',en:'ILLUSTRATION',cat:'插畫',
-  poly:[[800,472],[930,372],[1060,372],[1170,482],[1160,580],[1000,630],[800,562]],door:[905,614],tag:[880,316],pin:[950,420],route:[[790,630]],
+  poly:[[805,470],[870,400],[960,398],[1012,470],[1002,560],[900,582],[812,556]],door:[842,598],tag:[0,0],pin:[0,0],route:[[740,560]],
   say:'插畫小屋畫繪本、手繪地圖、角色和活動主視覺，從草稿一路畫到完稿。'},
  {k:'print',no:'05',zh:'印刷廠',en:'PRINT WORKS',cat:null,
-  poly:[[160,720],[230,620],[380,560],[560,662],[540,800],[430,850],[330,862],[160,800]],door:[520,862],tag:[60,560],pin:[200,650],route:[[605,760],[565,840]],
+  poly:[[220,580],[285,532],[400,538],[452,600],[452,690],[360,705],[228,672]],door:[500,690],tag:[0,0],pin:[0,0],route:[[560,640]],
   say:'印刷廠接在設計之後。印刷、大圖輸出和打樣都由我們處理，不用另外找廠商對稿。'},
  {k:'gift',no:'06',zh:'贈品商店',en:'GIFT SHOP',cat:'包裝贈品',
-  poly:[[642,700],[790,650],[930,712],[920,880],[780,930],[642,880]],door:[612,800],tag:[470,610],pin:[690,700],route:[[612,700]],
+  poly:[[525,698],[612,662],[732,680],[738,782],[640,812],[525,780]],door:[640,826],tag:[0,0],pin:[0,0],route:[[560,640],[500,720],[510,800]],
   say:'贈品商店做桌曆、提袋、文具和客製禮盒。從設計、打樣到成品，交到你手上。'},
  {k:'line',no:'07',zh:'聯絡站',en:'CONTACT',cat:'line',
-  poly:[[1080,742],[1160,662],[1360,662],[1410,742],[1400,880],[1270,912],[1102,880]],door:[1058,872],tag:[1180,600],pin:[1240,690],route:[[790,630],[1000,700],[1020,800]],
+  poly:[[860,700],[920,652],[1052,658],[1066,720],[1060,800],[950,816],[858,790]],door:[905,826],tag:[0,0],pin:[0,0],route:[[700,690],[800,700],[810,820]],
   say:'不確定要找哪一棟也沒關係，直接傳 LINE 給我們，先聊聊再決定。'}
 ];
-const ISLAND=[[60,420],[300,140],[700,50],[1300,90],[1490,320],[1490,820],[1260,975],[600,975],[60,870]];
+/* 小點只能走在石板路和廣場上（照底圖描的範圍） */
+const ROADS=[
+ [[400,500],[470,488],[560,445],[600,412],[615,388],[690,388],[690,440],[658,462],[668,560],[600,575],[540,560],[470,545],[405,535]],
+ [[590,330],[700,330],[720,348],[700,392],[600,396],[585,370]],
+ [[690,335],[780,335],[800,370],[1000,380],[1000,415],[850,420],[780,405],[690,392]],
+ [[650,540],[760,545],[850,570],[990,585],[995,615],[870,622],[860,690],[800,705],[720,700],[700,640],[680,580],[650,572]],
+ [[740,680],[835,680],[825,740],[815,805],[755,805],[762,740]],
+ [[560,795],[1060,792],[1060,842],[560,846]],
+ [[445,640],[575,640],[565,730],[535,800],[620,800],[620,846],[500,846],[452,760]],
+ [[515,555],[612,555],[602,645],[515,645]]];
+/* 噴泉和旁邊的草地不能走 */
+const BLOCK=[[[700,630],[740,598],[810,596],[845,625],[840,690],[760,700],[700,670]]];
 /* 點亮後的建築圖（預先算好），[左, 上, 右, 下] */
-const LITBOX={"event": [69, 164, 712, 548], "design": [628, 67, 1059, 379], "motion": [1067, 107, 1446, 445], "illus": [773, 344, 1196, 654], "print": [133, 538, 585, 888], "gift": [614, 627, 957, 954], "line": [1056, 634, 1436, 937]};
-const LAMPS=[[660,470],[925,640],[1266,502]];
+const LITBOX={"event": [113, 216, 561, 524], "design": [489, 148, 773, 370], "motion": [824, 229, 1106, 414], "illus": [781, 373, 1036, 605], "print": [197, 507, 480, 729], "gift": [499, 639, 763, 835], "line": [832, 627, 1092, 840]};
+const LAMPS=[[690,408],[490,612],[850,665],[765,228],[1310,326],[1280,526]];
 const TOUR=['event','design','motion','illus','print','gift','line'];
 
 /* ---------- 畫地圖 ---------- */
@@ -280,14 +359,14 @@ svg.innerHTML=`<defs>
 </defs>
 <rect x="-2000" y="-2000" width="${MW+4000}" height="${MH+4000}" fill="#0b0b0b"/>
 <image href="${IMG}" width="${MW}" height="${MH}"/>
-<rect id="dim" x="-2000" y="-2000" width="${MW+4000}" height="${MH+4000}" fill="#000" opacity=".34"/>
+<rect id="dim" x="-2000" y="-2000" width="${MW+4000}" height="${MH+4000}" fill="#061020" opacity=".22"/>
 ${B.map(b=>{const r=LITBOX[b.k];return`<image class="lit" id="L-${b.k}" href="guide-assets/lit-${b.k}.webp" x="${r[0]}" y="${r[1]}" width="${r[2]-r[0]}" height="${r[3]-r[1]}"/>`}).join('')}
 ${LAMPS.map((p,i)=>`<circle class="lamp" id="lamp${i}" cx="${p[0]}" cy="${p[1]}" r="46" fill="url(#lampg)"/>`).join('')}
 <g id="motes"></g>
 <g id="ring" class="ring"><ellipse rx="34" ry="13"/><ellipse class="r2" rx="34" ry="13" style="transform-box:fill-box;transform-origin:center"/></g>
 <g id="actors"></g>
 ${B.map(b=>{const xs=b.poly.map(p=>p[0]),cx=(Math.min(...xs)+Math.max(...xs))/2+(b.lx||0),ty=Math.min(...b.poly.map(p=>p[1]))-18+(b.ly||0),w=b.zh.length*23+36;
-  return`<g class="tag" id="T-${b.k}" data-k="${b.k}" transform="translate(${cx} ${ty})"><g class="ti"><text text-anchor="middle"><tspan class="no">${b.no}</tspan><tspan class="zh" dx="8">${b.zh}</tspan></text><rect class="bar" x="${-w/2}" y="9" width="${w}" height="3"/></g></g>`}).join('')}`;
+  return`<g class="tag" id="T-${b.k}" data-k="${b.k}" transform="translate(${cx} ${ty})"><g class="ti"><rect class="pill" x="${-w/2-6}" y="-25" width="${w+12}" height="34" rx="5"/><path class="tail" d="M-7 8.5L0 17L7 8.5Z"/><rect x="${-9}" y="7" width="18" height="3" fill="var(--parch)"/><text text-anchor="middle"><tspan class="no">${b.no}</tspan><tspan class="zh" dx="8">${b.zh}</tspan></text></g></g>`}).join('')}`;
 svg.style.color='#efe6d4';svg.style.setProperty('--paper','#0b0b0b');
 const ink=inkDefs(svg);
 const st=document.createElementNS('http://www.w3.org/2000/svg','style');st.textContent='.pp{fill:var(--paper)}';svg.appendChild(st);
@@ -321,7 +400,7 @@ function makeDot(parent){
   }};
 }
 const RUN=gait({kind:'run',thigh:10,shin:10,stride:20,lift:7,heelKick:2.5,period:0.36,ankleY:118,ground:120,toe:3});
-const SC=0.8;
+const SC=0.62;
 const actors=$('#actors');
 const shadow=el('ellipse',{rx:15,ry:5,fill:'#000',opacity:.42},actors);
 const LITE=touch||innerWidth<1000;
@@ -332,6 +411,66 @@ el('rect',{x:-82,y:-28,width:52,height:20,rx:3,fill:'#efe6d4'},tip);
 const k1=el('text',{x:-56,y:-13.5,'text-anchor':'middle','font-size':11,'font-family':'JetBrains Mono,monospace',fill:'#0b0b0b','font-weight':500},tip);k1.textContent=touch?'TAP':'Space';
 const k2=el('text',{x:24,y:-12.5,'text-anchor':'middle','font-size':14,'font-family':'Noto Serif TC,serif','font-weight':700,fill:'#efe6d4'},tip);k2.textContent=touch?'點一下進入':'按空白鍵進入';
 el('path',{d:'M-6 -2L0 6L6 -2Z',fill:'#efe6d4'},tip);
+const setTip=(a,b)=>{if(k1.textContent!==a)k1.textContent=a;if(k2.textContent!==b)k2.textContent=b};
+
+/* ---------- 金幣方塊：活動會場和噴泉中間，小點在下面跳 10 下就掉出金幣 ---------- */
+const QB={x:592,y:522,lift:60,hits:0,need:10,done:false,bump:0};
+const qbShadow=el('ellipse',{cx:QB.x,cy:QB.y,rx:13,ry:4,fill:'#000',opacity:.3},actors);
+const qbG=el('g',{id:'qb',style:'cursor:pointer'},actors);
+const qbBox=el('g',{},qbG);
+qbBox.innerHTML=`<defs><linearGradient id="qbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#e9a62a"/></linearGradient>
+ <radialGradient id="qbglow"><stop offset="0" stop-color="#ffe08a" stop-opacity=".55"/><stop offset="1" stop-color="#ffe08a" stop-opacity="0"/></radialGradient></defs>
+ <circle class="glow" cx="0" cy="-15" r="34" fill="url(#qbglow)"/>
+ <rect class="face" x="-15" y="-30" width="30" height="30" rx="5" fill="url(#qbg)" stroke="#6b3f12" stroke-width="2.2"/>
+ <rect x="-11" y="-26" width="22" height="22" rx="3" fill="none" stroke="#fff6d0" stroke-width="1.2" opacity=".7"/>
+ <g fill="#6b3f12"><circle cx="-10.5" cy="-25.5" r="1.5"/><circle cx="10.5" cy="-25.5" r="1.5"/><circle cx="-10.5" cy="-4.5" r="1.5"/><circle cx="10.5" cy="-4.5" r="1.5"/></g>
+ <circle class="mark" cx="0" cy="-15" r="6.2" fill="#ff4a1c" stroke="#7a1f08" stroke-width="1.2"/><ellipse cx="-2" cy="-17.5" rx="1.8" ry="1.2" fill="#fff" opacity=".85"/>`;
+const qbCount=el('g',{opacity:0},qbG);
+el('rect',{x:-22,y:-62,width:44,height:18,rx:9,fill:'#f4ead3',stroke:'#6b4a2b','stroke-width':1.4},qbCount);
+const qbN=el('text',{class:'qbn',x:0,y:-49,'text-anchor':'middle','font-size':11,fill:'#3b2a1c'},qbCount);
+const fx=el('g',{},actors);
+function sparks(x,y,col='#ffe08a',n=6){for(let i=0;i<n;i++){const a=-Math.PI*(0.15+0.7*i/(n-1)),s=el('circle',{cx:x,cy:y,r:2.2,fill:col},fx);
+  s.animate([{transform:'translate(0,0)',opacity:1},{transform:`translate(${Math.cos(a)*26}px,${Math.sin(a)*26}px)`,opacity:0}],{duration:520,easing:'ease-out'});setTimeout(()=>s.remove(),540)}}
+/* 金幣：金色圓、中間是賣點的紅點 */
+function coinSvg(parent){const c=el('g',{},parent);c.innerHTML='<circle r="11" fill="#f6c445" stroke="#8a5a12" stroke-width="2"/><circle r="7.5" fill="none" stroke="#fff3c4" stroke-width="1.2" opacity=".8"/><circle r="3.6" fill="#ff4a1c"/>';return c}
+function hitBlock(){if(QB.done)return;QB.hits++;QB.bump=1;sparks(QB.x,QB.y-QB.lift-30);
+  qbN.textContent=QB.hits+' / '+QB.need;qbCount.setAttribute('opacity',1);
+  if(QB.hits>=QB.need)setTimeout(getCoin,180)}
+function getCoin(){QB.done=true;qbBox.querySelector('.face').setAttribute('fill','#a88a5c');qbBox.querySelector('.mark').setAttribute('fill','#7a6a55');qbBox.querySelector('.glow').setAttribute('opacity',0);qbCount.setAttribute('opacity',0);
+  const c=coinSvg(fx),x=QB.x,y0=QB.y-QB.lift-30;const t0=performance.now();
+  const spin=now=>{const k=Math.min(1,(now-t0)/900),y=y0-70*Math.sin(k*Math.PI*.75)+(k>.75?0:0);c.setAttribute('transform',`translate(${x} ${y.toFixed(1)}) scale(${Math.cos(k*Math.PI*6).toFixed(2)} 1)`);c.setAttribute('opacity',k<.8?1:(1-k)*5);if(k<1)requestAnimationFrame(spin);else c.remove()};
+  requestAnimationFrame(spin);sparks(x,y0-40,'#ffe08a',10);
+  const ci=$('#stD .coin');ci.classList.add('on');ci.title='金幣：拿到了';
+  const bn=$('#banner');bn.querySelector('small').textContent='隱藏彩蛋！';bn.querySelector('b').textContent='金幣 ×1';bn.classList.remove('on');void bn.offsetWidth;bn.classList.add('on');
+  setTimeout(()=>{if(showing)return;if(got.size===7)showChest();else say('叮！跳了十下，拿到一枚金幣。\n聽說七個章都蓋滿以後，還有別的東西會出現喔。',()=>opts([{t:'繼續逛逛',cls:'main',fn:explore}]))},900)}
+qbG.addEventListener('click',e=>{e.stopPropagation();if(dragged){dragged=false;return}begin();tour=-1;autoEnter=null;
+  if(Math.hypot(me.x-QB.x,me.y-QB.y)<22){jump();return}autoAct=jump;go([QB.x,QB.y])});
+
+/* ---------- 寶箱：七個章和金幣都拿到之後，出現在噴泉前面 ---------- */
+const CH={x:700,y:560,on:false,open:false};
+const chG=el('g',{id:'chest',style:'cursor:pointer;display:none'},actors);
+chG.innerHTML=`<ellipse cx="0" cy="1" rx="20" ry="5" fill="#000" opacity=".35"/>
+ <circle class="cglow" cx="0" cy="-16" r="40" fill="url(#qbglow)"/>
+ <rect x="-19" y="-22" width="38" height="22" rx="3" fill="#8a4f22" stroke="#3b2210" stroke-width="2"/>
+ <rect x="-19" y="-14" width="38" height="4" fill="#e9a62a"/><rect x="-4" y="-22" width="8" height="22" fill="#e9a62a" stroke="#6b3f12" stroke-width="1"/>
+ <g class="lid"><path d="M-19 -22v-8a19 9 0 0 1 38 0v8z" fill="#a8622c" stroke="#3b2210" stroke-width="2"/><rect x="-4" y="-38" width="8" height="16" fill="#e9a62a" stroke="#6b3f12" stroke-width="1"/></g>
+ <rect x="-3.5" y="-20" width="7" height="8" rx="1.5" fill="#ff4a1c" stroke="#7a1f08" stroke-width="1"/>`;
+const chLid=chG.querySelector('.lid');chLid.style.transformBox='fill-box';chLid.style.transformOrigin='left bottom';chLid.style.transition='transform .5s cubic-bezier(.3,1.6,.5,1)';
+function showChest(){if(CH.on)return;CH.on=true;chG.style.display='';chG.setAttribute('transform',`translate(${CH.x} ${CH.y})`);
+  chG.animate([{transform:`translate(${CH.x}px,${CH.y-160}px)`},{transform:`translate(${CH.x}px,${CH.y}px)`,offset:.6},{transform:`translate(${CH.x}px,${CH.y-14}px)`,offset:.8},{transform:`translate(${CH.x}px,${CH.y}px)`}],{duration:900,easing:'ease-in'});
+  setTimeout(()=>sparks(CH.x,CH.y-10,'#ffe08a',10),560);
+  pan=[CH.x,CH.y-30];setTimeout(()=>pan=null,1800);
+  say('咦？噴泉前面掉下來一個寶箱！\n'+(touch?'帶我走過去，點一下寶箱打開。':'帶我走過去，按空白鍵打開。'),()=>opts([{t:'帶我去開寶箱',cls:'main',fn:()=>{begin();autoAct=openChest;go([CH.x,CH.y+14])}}]))}
+function openChest(){if(!CH.on)return;CH.open=true;chLid.style.transform='rotate(-70deg) translate(-4px,-2px)';sparks(CH.x,CH.y-28,'#fff3c4',12);
+  setTimeout(()=>{const tr=$('#treasure');tr.classList.add('on');tr.setAttribute('aria-hidden','false');tr.querySelector('.go').focus({preventScroll:true})},650)}
+function closeChest(){const tr=$('#treasure');tr.classList.remove('on');tr.setAttribute('aria-hidden','true')}
+$('#treasure .x').addEventListener('click',closeChest);$('#treasure').addEventListener('click',e=>{if(e.target.id==='treasure')closeChest()});
+chG.addEventListener('click',e=>{e.stopPropagation();if(dragged){dragged=false;return}begin();tour=-1;autoEnter=null;
+  if(Math.hypot(me.x-CH.x,me.y-CH.y)<36){openChest();return}autoAct=openChest;go([CH.x,CH.y+14])});
+actors.appendChild(tip);
+
+/* 跳：在地上才能起跳，頭撞到方塊就算一下 */
+function jump(){if(me.jz>0||me.jv)return;me.jv=240}
 /* 右側欄的大張小點：站著揮手 */
 const pt=$('#portrait');pt.style.color='#efe6d4';pt.style.setProperty('--paper','#0b0b0b');
 const pst=document.createElementNS('http://www.w3.org/2000/svg','style');pst.textContent='.pp{fill:var(--paper)}';pt.appendChild(pst);
@@ -340,12 +479,36 @@ el('path',{d:'M86 8l6-6M92 17l8-3M80 4l1-8',stroke:'#ff4a1c','stroke-width':2.2,
 
 /* ---------- 碰撞 ---------- */
 const inPoly=(x,y,poly)=>{let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const[xi,yi]=poly[i],[xj,yj]=poly[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c};
-const free=(x,y)=>inPoly(x,y,ISLAND)&&!B.some(b=>inPoly(x,y,b.poly));
-const clear=(a,b)=>{const n=Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/12);for(let i=1;i<=n;i++){const t=i/n;if(!free(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t))return false}return true};
+const free=(x,y)=>(ROADS.some(r=>inPoly(x,y,r))||B.some(b=>Math.hypot(b.door[0]-x,b.door[1]-y)<16))&&!BLOCK.some(q=>inPoly(x,y,q));
+const clear=(a,b)=>{const n=Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/5);for(let i=1;i<=n;i++){const t=i/n;if(!free(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t))return false}return true};
+
+/* ---------- 尋路：把地圖切成 8px 格子，用 A* 沿路找，再把轉角拉直 ---------- */
+const CELL=8,GW=Math.ceil(MW/CELL),GH=Math.ceil(MH/CELL),WALK=new Uint8Array(GW*GH);
+for(let j=0;j<GH;j++)for(let i=0;i<GW;i++)WALK[j*GW+i]=free(i*CELL+4,j*CELL+4)?1:0;
+function nearestFree(x,y,maxR=10){const ci=Math.floor(x/CELL),cj=Math.floor(y/CELL);let best=null,bd=1e9;
+  for(let r=0;r<=maxR&&!best;r++)for(let j=cj-r;j<=cj+r;j++)for(let i=ci-r;i<=ci+r;i++){if(i<0||j<0||i>=GW||j>=GH||!WALK[j*GW+i])continue;const d=Math.hypot(i-ci,j-cj);if(d<bd){bd=d;best=[i,j]}}
+  return best}
+function findPath(a,b){const s=nearestFree(a[0],a[1]),g=nearestFree(b[0],b[1]);if(!s||!g)return null;
+  const S=s[1]*GW+s[0],G=g[1]*GW+g[0],gs=new Float32Array(GW*GH).fill(1e9),from=new Int32Array(GW*GH).fill(-1),done=new Uint8Array(GW*GH);
+  const heap=[];const push=(n,f)=>{heap.push([f,n]);let i=heap.length-1;while(i){const p=(i-1)>>1;if(heap[p][0]<=heap[i][0])break;[heap[p],heap[i]]=[heap[i],heap[p]];i=p}};
+  const pop=()=>{const top=heap[0],last=heap.pop();if(heap.length){heap[0]=last;let i=0;for(;;){const l=2*i+1,r=l+1;let m=i;if(l<heap.length&&heap[l][0]<heap[m][0])m=l;if(r<heap.length&&heap[r][0]<heap[m][0])m=r;if(m===i)break;[heap[m],heap[i]]=[heap[i],heap[m]];i=m}}return top[1]};
+  const h=n=>{const dx=Math.abs(n%GW-g[0]),dy=Math.abs(((n/GW)|0)-g[1]);return Math.max(dx,dy)+.414*Math.min(dx,dy)};
+  gs[S]=0;push(S,h(S));
+  while(heap.length){const n=pop();if(done[n])continue;done[n]=1;if(n===G)break;const x=n%GW,y=(n/GW)|0;
+    for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){if(!dx&&!dy)continue;const nx=x+dx,ny=y+dy;if(nx<0||ny<0||nx>=GW||ny>=GH)continue;const m=ny*GW+nx;if(!WALK[m]||done[m])continue;
+      if(dx&&dy&&(!WALK[y*GW+nx]||!WALK[ny*GW+x]))continue;const c=gs[n]+(dx&&dy?1.414:1);if(c<gs[m]){gs[m]=c;from[m]=n;push(m,c+h(m))}}}
+  if(!done[G])return null;
+  const cells=[];for(let n=G;n!==-1;n=from[n])cells.push([(n%GW)*CELL+4,((n/GW)|0)*CELL+4]);cells.reverse();
+  const end=free(b[0],b[1])?[b[0],b[1]]:cells[cells.length-1];cells[cells.length-1]=end;
+  /* 拉直：從目前的點往後找最遠、中間沒有障礙的點 */
+  const out=[];let cur=[a[0],a[1]],i=0;
+  while(i<cells.length){let j=cells.length-1;while(j>i&&!clear(cur,cells[j]))j--;out.push(cells[j]);cur=cells[j];i=j+1}
+  return out}
+const go=(target)=>{const p=findPath([me.x,me.y],target);path=p||[];return!!p};
 
 /* ---------- 狀態與操作 ---------- */
-const me={x:PLAZA[0],y:PLAZA[1],dir:1,phase:0,go:0};
-let path=[],autoEnter=null,near=null,inside=null,follow=false,tour=-1,started=false;
+const me={x:PLAZA[0],y:PLAZA[1],dir:1,phase:0,go:0,jz:0,jv:0};
+let path=[],autoEnter=null,autoAct=null,near=null,inside=null,follow=false,tour=-1,started=false;
 const got=new Set(),keys=new Set();
 const KMAP={ArrowUp:'u',KeyW:'u',ArrowDown:'d',KeyS:'d',ArrowLeft:'l',KeyA:'l',ArrowRight:'r',KeyD:'r'};
 const PHONE=()=>innerWidth<1000;
@@ -358,7 +521,9 @@ addEventListener('keydown',e=>{
   if(showing){if(e.key==='Escape')closeShow();return}
   if(KMAP[e.code]){keys.add(KMAP[e.code]);path=[];autoEnter=null;tour=-1;begin();e.preventDefault();return}
   const tagN=document.activeElement&&document.activeElement.tagName;
+  if($('#treasure').classList.contains('on')){if(e.key==='Escape')closeChest();return}
   if((e.code==='Space'||e.code==='Enter')&&near&&near!==inside&&tagN!=='BUTTON'&&tagN!=='A'){e.preventDefault();enter(near);return}
+  if(e.code==='Space'&&tagN!=='BUTTON'&&tagN!=='A'){e.preventDefault();begin();if(CH.on&&Math.hypot(me.x-CH.x,me.y-CH.y)<36)openChest();else jump();return}
   const n=+e.key;if(n>=1&&n<=9){const o=$('#opts').children[n-1];if(o)o.click()}
   if(e.key==='Escape')explore()});
 addEventListener('keyup',e=>{if(KMAP[e.code])keys.delete(KMAP[e.code])});
@@ -381,17 +546,14 @@ document.querySelectorAll('#zoom button').forEach(b=>b.addEventListener('click',
 svg.addEventListener('click',e=>{
   if(dragged){dragged=false;return}
   const t=e.target.closest('.tag');if(t){walkTo(t.dataset.k);return}
-  const p=toMap(e);const hit=B.find(b=>inPoly(p.x,p.y,b.poly));
+  const p=toMap(e);if(Math.hypot(p.x-me.x,p.y-(me.y-20))<22){begin();jump();return}const hit=B.find(b=>inPoly(p.x,p.y,b.poly));
   if(hit){if(near===hit&&inside!==hit){enter(hit);return}walkTo(hit.k);return}
-  if(!free(p.x,p.y))return;
-  path=[[p.x,p.y]];autoEnter=null;tour=-1;begin();ripple(p.x,p.y)});
+  const c=free(p.x,p.y)?[p.x,p.y]:(()=>{const n=nearestFree(p.x,p.y,5);return n&&[n[0]*CELL+4,n[1]*CELL+4]})();if(!c)return;
+  autoEnter=null;autoAct=null;tour=-1;begin();if(go(c))ripple(c[0],c[1])});
 function ripple(x,y){const r=el('ellipse',{cx:x,cy:y,rx:6,ry:2.4,fill:'none',stroke:'#ffc978','stroke-width':2},$('#actors'));
   r.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(5)'}],{duration:700,easing:'ease-out'});r.style.transformBox='fill-box';r.style.transformOrigin='center';setTimeout(()=>r.remove(),720)}
 /* 走到某一棟：能直走就直走，不然先回廣場再沿路走 */
-function walkTo(k){const b=B.find(x=>x.k===k);begin();autoEnter=k;
-  if(clear([me.x,me.y],b.door)){path=[b.door];return}
-  const c=inside||near;const back=c?[...c.route].reverse():[];
-  path=[...back,PLAZA,...b.route,b.door]}
+function walkTo(k){const b=B.find(x=>x.k===k);begin();autoEnter=k;autoAct=null;go(b.door)}
 
 /* ---------- 主迴圈 ---------- */
 let vb=[0,0,MW,MH],camT=null,lastLs='',vbSet=false;
@@ -399,7 +561,8 @@ function loop(dt,t){
   let sx=0,sy=0;
   if(keys.has('u'))sy-=1;if(keys.has('d'))sy+=1;if(keys.has('l'))sx-=1;if(keys.has('r'))sx+=1;
   if(!sx&&!sy&&path.length){const tg=path[0];const dx=tg[0]-me.x,dy=tg[1]-me.y,d=Math.hypot(dx,dy);
-    if(d<3){path.shift();if(!path.length&&autoEnter){const k=autoEnter;autoEnter=null;enter(B.find(b=>b.k===k))}}
+    if(d<3){path.shift();if(!path.length&&autoEnter){const k=autoEnter;autoEnter=null;enter(B.find(b=>b.k===k))}
+      if(!path.length&&autoAct){const f=autoAct;autoAct=null;f()}}
     else{sx=dx/d;sy=dy/d}}
   const l=Math.hypot(sx,sy),moving=l>0;
   if(moving){sx/=l;sy/=l;
@@ -411,15 +574,26 @@ function loop(dt,t){
     if(Math.abs(sx)>0.2)me.dir=sx>0?1:-1}
   me.go+=((moving?1:0)-me.go)*Math.min(1,dt*9);
   me.phase+=dt/RUN.period*Math.max(me.go,0.0001);
-  dot.draw(RUN.pose(me.phase,me.go),me.go);
-  place(fig,me.x,me.y,me.dir,SC);
-  shadow.setAttribute('cx',me.x);shadow.setAttribute('cy',me.y+1);
-  tip.setAttribute('transform',`translate(${me.x.toFixed(1)} ${(me.y-66).toFixed(1)})`);
+  /* 跳躍 */
+  if(me.jv||me.jz>0){const pz=me.jz;me.jz+=me.jv*dt;me.jv-=900*dt;
+    const head=me.y-33-me.jz,under=Math.abs(me.x-QB.x)<20&&Math.abs(me.y-QB.y)<16;
+    if(under&&me.jv>0&&pz<me.jz&&head<=QB.y-QB.lift-QB.bump*6){me.jz=me.y-33-(QB.y-QB.lift);me.jv=-60;hitBlock()}
+    if(me.jz<=0){me.jz=0;me.jv=0}}
+  QB.bump=Math.max(0,QB.bump-dt*5);
+  qbBox.setAttribute('transform',`translate(${QB.x} ${(QB.y-QB.lift-Math.sin(QB.bump*Math.PI)*8+(QB.done?0:Math.sin(t*2.4)*1.5)).toFixed(1)}) scale(1.25)`);
+  qbCount.setAttribute('transform',`translate(${QB.x} ${QB.y-QB.lift})`);
+  dot.draw(RUN.pose(me.jz>0?0.25:me.phase,me.jz>0?1:me.go),me.go);
+  place(fig,me.x,me.y-me.jz,me.dir,SC);
+  shadow.setAttribute('cx',me.x);shadow.setAttribute('cy',me.y+1);shadow.setAttribute('rx',(15-me.jz*.15).toFixed(1));
+  tip.setAttribute('transform',`translate(${me.x.toFixed(1)} ${(me.y-66-me.jz).toFixed(1)})`);
   /* 走到門口：建築點亮、地上出現光圈 */
   let nb=null,best=46;for(const b of B){const d=Math.hypot(b.door[0]-me.x,b.door[1]-me.y);if(d<best){best=d;nb=b}}
   if(nb!==near){near=nb;B.forEach(b=>['L-','T-'].forEach(p=>$('#'+p+b.k).classList.toggle('near',b===near)));
     const r=$('#ring');if(near){r.setAttribute('transform',`translate(${near.door[0]} ${near.door[1]})`);r.classList.add('show')}else r.classList.remove('show')}
-  tip.setAttribute('opacity',near&&near!==inside&&!autoEnter?1:0);
+  const atQB=!QB.done&&Math.hypot(me.x-QB.x,me.y-QB.y)<22&&!path.length,atCH=CH.on&&Math.hypot(me.x-CH.x,me.y-CH.y)<36&&!path.length;
+  if(atQB){setTip(touch?'TAP':'Space',touch?'點方塊跳一下':'按空白鍵跳');tip.setAttribute('transform',`translate(${QB.x} ${QB.y-QB.lift-62})`)}
+  else if(atCH)setTip(touch?'TAP':'Space',touch?'點寶箱打開':'按空白鍵打開');else setTip(touch?'TAP':'Space',touch?'點一下進入':'按空白鍵進入');
+  tip.setAttribute('opacity',(near&&near!==inside&&!autoEnter)||atQB||(atCH&&!CH.open)?1:0);
   if(inside&&Math.hypot(inside.door[0]-me.x,inside.door[1]-me.y)>90){inside=null;B.forEach(b=>['L-','T-'].forEach(p=>$('#'+p+b.k).classList.remove('on')));if(tour<0)explore()}
   for(const m of motes){m.y-=m.v*dt;if(m.y<60){m.y=980;m.x=120+Math.random()*1300}m.c.setAttribute('cx',(m.x+Math.sin(t*.6+m.ph)*14).toFixed(1));m.c.setAttribute('cy',m.y.toFixed(1));m.c.setAttribute('opacity',(m.a*(.6+.4*Math.sin(t*2+m.ph))).toFixed(2))}
   pdot.draw(RUN.pose(0,0),0,Math.sin(t*5)*22);
@@ -444,7 +618,7 @@ function home(){follow=true;if(PHONE())return;pan=[MW/2+120,MH/2];Z=cover()/base
 addEventListener('resize',()=>setZ(Z));
 
 /* ---------- 小地圖、集章、橫幅 ---------- */
-$('#stD').innerHTML=B.map(b=>`<i data-k="${b.k}" title="${b.zh}"></i>`).join('');
+$('#stD').innerHTML=B.map(b=>`<i data-k="${b.k}" title="${b.zh}"></i>`).join('')+'<i class="coin" title="金幣：還沒找到"></i>';
 const MS=150/MW,MX=88-MW*MS/2,MY=88-MH*MS/2;
 $('#mini').innerHTML=`<defs><clipPath id="miniC"><circle cx="88" cy="88" r="80"/></clipPath></defs><circle cx="88" cy="88" r="86" fill="#0b0b0b" stroke="#efe6d4" stroke-width="1.5"/><g clip-path="url(#miniC)"><image href="${IMG}" x="${MX}" y="${MY}" width="${MW*MS}" height="${MH*MS}" opacity=".7"/>${B.map(b=>`<circle id="mk-${b.k}" cx="${MX+b.door[0]*MS}" cy="${MY+b.door[1]*MS}" r="3.4" fill="none" stroke="#efe6d4" stroke-width="1.2"/>`).join('')}<path id="mMe" d="M0 -7L5 5L0 2L-5 5Z" fill="#ff4a1c"/></g><circle cx="88" cy="88" r="80" fill="none" stroke="#efe6d4" stroke-width=".8" opacity=".6"/><text x="88" y="20" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="12" fill="#efe6d4">N</text>`;
 let lastX=me.x,lastY=me.y,heading=0;
@@ -507,6 +681,8 @@ function explore(){$('#loc').textContent='EXPLORING · 自由逛逛';strip([]);p
   say('想去哪一棟？可以自己走過去，或從下面選，我帶你跑過去。',()=>opts([...B.map(b=>({t:b.no+' '+b.zh,fn:()=>walkTo(b.k)})),{t:'帶我逛一圈',cls:'main wide',fn:startTour}],true))}
 function startTour(){tour=0;walkTo(TOUR[0])}
 function finale(){$('#loc').textContent='ALL STAMPS · 集滿了';strip([]);setMin(false);peek('七個章集滿了・加 LINE 聊聊');
+  if(QB.done){showChest();return}
+  if(!QB.done)return say('七個章都蓋滿了，整座小鎮都亮起來了！\n不過還差一樣：活動會場前面有個金色方塊，在下面跳十下看看。',()=>opts([{t:'帶我去方塊下面',cls:'main',fn:()=>{begin();autoAct=jump;go([QB.x,QB.y])}},{t:'加 LINE 聊聊',cls:'lg',href:LINE,ext:true},{t:'再逛逛',fn:explore}]));
   say('七個章都蓋滿了，整座小鎮都亮起來了！謝謝你逛完。有想做的事，傳個 LINE 給我們聊聊吧。',()=>opts([{t:'加 LINE 聊聊',cls:'lg',href:LINE,ext:true},{t:'回首頁看作品',href:'index.html#works'},{t:'再逛逛',fn:explore}]))}
 function intro(){home();$('#loc').textContent='GUIDE · 賣點設計導覽員';peek('點地圖走走看・點這裡選目的地');setMin(true);
   say(touch?'嗨，我是小點，賣點設計的導覽員。\n點地圖我就會走過去，走到門口點一下就能進去。每一棟都是我們能幫你做的事。':'嗨，我是小點，賣點設計的導覽員。\n用方向鍵或 WASD 帶我走，走到門口按空白鍵就能進去。每一棟都是我們能幫你做的事。',()=>opts([
@@ -553,7 +729,7 @@ $('.op-next').addEventListener('click',opNext);$('#opening .skip').addEventListe
 const shSvg=$('#shDot');shSvg.style.color='#efe6d4';shSvg.style.setProperty('--paper','#0b0b0b');
 {const s3=document.createElementNS('http://www.w3.org/2000/svg','style');s3.textContent='.pp{fill:var(--paper)}';shSvg.appendChild(s3)}
 const shDot=makeDot(el('g',{transform:'translate(14 -32) scale(1.05)'},shSvg));
-window.__g={me,walkTo,enter,B,got,closeShow,opNext,opClose};
+window.__g={me,walkTo,enter,B,got,closeShow,opNext,opClose,QB,CH,jump,go,findPath,free,showChest,openChest,stamp};
 if(q.has('debug')){let tt=0;loop(1/60,0);window.__step=(sec=1)=>{for(let i=0,n=Math.round(sec*60);i<n;i++){tt+=1/60;loop(1/60,tt)}return tt}}
 else{const t0=performance.now();let prev=t0;const tick=now=>{loop(Math.min(0.05,(now-prev)/1000),(now-t0)/1000);prev=now;requestAnimationFrame(tick)};requestAnimationFrame(tick)}
 if(opOn)$('#opening').hidden=false;else intro();
