@@ -1,0 +1,935 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>賣點設計｜新竹 活動企劃・佈置・平面・動畫・影片・印刷</title>
+<meta name="description" content="賣點設計是位於新竹的設計與活動企劃公司，服務包含活動企劃與執行、活動佈置、平面設計、動畫、插畫、影片剪輯與印刷。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0b0b0b; --paper:#f6f4ef; --white:#fff; --line:rgba(255,255,255,.16); --line-d:rgba(0,0,0,.14);
+  --mute:#8a8780; --dot:#ff4a1c;
+  --serif:"EB Garamond","Noto Serif TC",serif; --sans:"Noto Sans TC",-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;
+  --pad:clamp(20px,4.2vw,64px);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);font-weight:300;color:var(--ink);background:var(--ink);line-height:1.8;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.serif{font-family:var(--serif);font-weight:500}
+.en{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:.02em}
+section{position:relative;padding:clamp(80px,12vw,180px) var(--pad)}
+.dark{background:var(--ink);color:var(--white)}
+.light{background:var(--paper);color:var(--ink)}
+.label{display:flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.18em;margin-bottom:clamp(28px,4vw,56px)}
+.label::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--dot)}
+.label .en{font-size:16px;letter-spacing:.04em;opacity:.6}
+
+/* loader */
+#loader{position:fixed;inset:0;z-index:100;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;clip-path:circle(150% at 50% 50%);transition:clip-path 1.1s var(--ease),background .5s}
+#loader.out{clip-path:circle(0% at 50% 50%);background:var(--dot)}
+#loader .mark{font-family:var(--serif);font-size:clamp(30px,5vw,54px);letter-spacing:.3em;padding-left:.3em;font-weight:500}
+#loader .mark i{display:inline-block;width:.24em;height:.24em;border-radius:50%;background:var(--dot);margin-left:.1em}
+#loader .pct{position:absolute;left:var(--pad);bottom:var(--pad);font-family:var(--serif);font-size:clamp(44px,7vw,84px);line-height:1}
+#loader .pct small{font-size:.28em;margin-left:6px;opacity:.7}
+
+/* cursor */
+#cursor{position:fixed;left:0;top:0;z-index:90;pointer-events:none;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--dot);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;letter-spacing:.1em;white-space:nowrap;transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),opacity .3s;opacity:0}
+#cursor span{opacity:0;transition:opacity .2s}
+#cursor.big{width:84px;height:84px;margin:-42px 0 0 -42px}
+#cursor.big span{opacity:1}
+#cursor.hide{opacity:0!important}
+@media (hover:none){#cursor{display:none}}
+
+/* header */
+header{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:18px var(--pad);mix-blend-mode:difference;color:#fff}
+.logo{font-family:var(--serif);font-weight:500;font-size:20px;letter-spacing:.24em;display:flex;align-items:center;gap:6px}
+.logo i{width:7px;height:7px;border-radius:50%;background:#fff}
+.hd-r{display:flex;align-items:center;gap:22px;font-size:14px;letter-spacing:.1em}
+.hd-r .cta{display:flex;align-items:center;gap:10px}
+.hd-r .cta b{width:24px;height:24px;border-radius:50%;border:1px solid #fff;display:grid;place-items:center;font-weight:300;font-size:12px;transition:.3s}
+.hd-r .cta:hover b{background:#fff;color:#000}
+#burger{width:34px;height:34px;display:flex;flex-direction:column;justify-content:center;gap:7px;align-items:flex-end}
+#burger s{display:block;height:1px;background:#fff;width:26px;transition:.4s var(--ease)}
+#burger s:last-child{width:16px}
+body.menu #burger s:first-child{transform:translateY(4px) rotate(45deg)}
+body.menu #burger s:last-child{width:26px;transform:translateY(-4px) rotate(-45deg)}
+
+#menu{position:fixed;inset:0;z-index:50;background:var(--ink);color:#fff;display:flex;flex-direction:column;justify-content:center;padding:0 var(--pad);clip-path:circle(0% at calc(100% - var(--pad) - 17px) 35px);transition:clip-path .9s var(--ease);visibility:hidden}
+body.menu #menu{clip-path:circle(150% at calc(100% - var(--pad) - 17px) 35px);visibility:visible}
+#menu a{font-family:var(--serif);font-size:clamp(24px,3.6vw,44px);line-height:1.35;display:flex;align-items:baseline;gap:18px;width:max-content;opacity:.45;transition:opacity .3s,transform .5s var(--ease)}
+#menu a:hover{opacity:1;transform:translateX(18px)}
+#menu a em{font-size:.3em;font-style:italic;opacity:.7}
+
+/* hero */
+#hero{min-height:100svh;padding-top:120px;padding-bottom:var(--pad);display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}
+#dots{position:absolute;inset:0;width:100%;height:100%}
+.hero-in{position:relative;pointer-events:none}
+h1{font-family:var(--serif);font-weight:500;font-size:clamp(34px,10vw,160px);line-height:1.16;letter-spacing:.02em}
+h1 .ln{display:block;overflow:hidden}
+h1 .ln>span{display:inline-block;transform:translateY(110%);transition:transform 1.2s var(--ease)}
+body.ready h1 .ln>span{transform:none}
+h1 .ln:nth-child(2)>span{transition-delay:.12s}
+h1 u{text-decoration:none;position:relative}
+h1 u::after{content:"";position:absolute;right:-.2em;bottom:.2em;width:.13em;height:.13em;border-radius:50%;background:var(--dot)}
+.hero-ft{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-top:clamp(28px,4vw,56px);padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
+.hero-ft p{max-width:34em;font-size:clamp(15px,1.25vw,18px);opacity:.8}
+.scroll{font-size:12px;letter-spacing:.24em;display:flex;align-items:center;gap:14px;opacity:.7}
+.scroll i{width:1px;height:46px;background:#fff;transform-origin:top;animation:sc 2s var(--ease) infinite}
+@keyframes sc{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#hero{cursor:pointer;user-select:none;-webkit-user-select:none}
+#hero .scroll{position:absolute;right:var(--pad);bottom:var(--pad);pointer-events:none}
+.tap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:26px;pointer-events:none;transition:opacity .6s,transform .8s var(--ease);color:#fff;font-size:13px;letter-spacing:.5em;padding-left:.5em}
+.tap i{position:relative;width:22px;height:22px;border-radius:50%;background:var(--dot);margin-left:-.5em}
+.tap i::before,.tap i::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid var(--dot);animation:pulse 2.4s var(--ease) infinite}
+.tap i::after{animation-delay:1.2s}
+@keyframes pulse{0%{transform:scale(1);opacity:.9}100%{transform:scale(6);opacity:0}}
+.tap.gone{opacity:0;transform:translate(-50%,-50%) scale(.4)}
+#pops{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.pop{position:absolute;width:clamp(170px,24vw,340px);aspect-ratio:4/3;margin:0;transform:translate(-50%,-50%) rotate(var(--r)) scale(.3);clip-path:circle(0% at 50% 50%);transition:clip-path .9s var(--ease),transform .9s var(--ease),opacity .8s;background:#222 center/cover;border-radius:4px;display:flex;align-items:flex-end;padding:12px 14px;color:#fff;font-size:12px;letter-spacing:.12em}
+.pop::before{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6),transparent 45%)}
+.pop span{position:relative}
+.pop.in{clip-path:circle(80% at 50% 50%);transform:translate(-50%,-50%) rotate(var(--r)) scale(1)}
+.pop.out{opacity:0;transform:translate(-50%,-50%) rotate(var(--r)) scale(.85)}
+.ring{position:fixed;z-index:80;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;border:1.5px solid var(--dot);pointer-events:none;animation:ring .8s var(--ease) forwards}
+@keyframes ring{to{transform:scale(9);opacity:0}}
+#hero{padding:0;min-height:100svh;display:block}
+#stage{position:absolute;inset:0}
+.slide{position:absolute;inset:0;background:#111 center/cover;transform:scale(1.08);transition:clip-path 1.2s var(--ease),transform 9s linear}
+.slide.in{transform:scale(1)}
+.slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#hero::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.78),rgba(0,0,0,0) 48%,rgba(0,0,0,.4));pointer-events:none}
+.tap{z-index:2}
+.hero-cap{position:absolute;left:var(--pad);bottom:calc(var(--pad) + 22px);z-index:2;color:#fff;display:flex;flex-direction:column;gap:6px;max-width:72%}
+.hero-cap small{font-size:13px;letter-spacing:.18em;opacity:.8}
+.hero-cap b{font-family:var(--serif);font-weight:500;font-size:clamp(26px,4.4vw,64px);line-height:1.25}
+.hero-cap em{font-style:normal;font-size:13px;letter-spacing:.14em;margin-top:10px;opacity:.85;border-bottom:1px solid rgba(255,255,255,.4);width:max-content;padding-bottom:3px}
+.hero-cap:hover em{border-color:var(--dot)}
+.hero-cap.in>*{animation:up .9s var(--ease) both}.hero-cap.in>*:nth-child(2){animation-delay:.08s}.hero-cap.in>*:nth-child(3){animation-delay:.16s}
+@keyframes up{from{opacity:0;transform:translateY(24px)}}
+.hero-ct{position:absolute;right:var(--pad);bottom:calc(var(--pad) + 22px);z-index:2;color:#fff;font-family:var(--serif);font-size:18px;display:flex;align-items:center;gap:12px;pointer-events:none}
+.hero-ct i{width:46px;height:1px;background:#fff;opacity:.5}
+#hbar{position:absolute;left:0;bottom:0;height:4px;z-index:2;background:var(--dot);width:0;pointer-events:none}
+#hbar.run{animation:bar 7s linear forwards}
+@keyframes bar{to{width:100%}}
+.ring{z-index:95!important}
+.tile,.wk{cursor:pointer}
+#detail{position:fixed;inset:0;z-index:85;background:var(--ink);color:#fff;overflow-y:auto;clip-path:circle(0px at var(--x,50%) var(--y,50%));visibility:hidden;transition:clip-path .9s var(--ease),visibility 0s .9s}
+#detail.open{clip-path:circle(150vmax at var(--x,50%) var(--y,50%));visibility:visible;transition:clip-path .9s var(--ease)}
+.d-bar{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:16px var(--pad);background:linear-gradient(var(--ink) 55%,transparent);font-size:13px;letter-spacing:.14em}
+.d-bar span{font-family:var(--serif);font-size:16px;opacity:.7}
+.d-bar button{border:1px solid var(--line);border-radius:99px;padding:6px 18px;transition:.3s}
+.d-bar button:hover{background:#fff;color:#000}
+.d-in{padding:0 var(--pad) 60px;max-width:1400px;margin:0 auto}
+.d-media{position:relative;background:#141414;user-select:none;-webkit-user-select:none}
+#dStage{display:flex;justify-content:center;align-items:center;min-height:min(56vh,520px)}
+.d-media img,.d-media video{max-width:100%;max-height:78vh;display:block}
+#dStage img{animation:dfade .5s var(--ease)}
+@keyframes dfade{from{opacity:0;transform:scale(1.015)}}
+.d-arrow{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;border:1px solid rgba(255,255,255,.3);font-size:18px;transition:.3s;z-index:1}
+.d-arrow:hover{background:var(--dot);border-color:var(--dot)}
+.d-arrow.l{left:14px}.d-arrow.r{right:14px}
+.d-media.single .d-arrow{display:none}
+#dCount{position:absolute;right:14px;bottom:12px;background:rgba(0,0,0,.6);border-radius:99px;font-size:12px;padding:3px 12px;letter-spacing:.1em;z-index:1}
+#dCount:empty{display:none}
+.d-thumbs{display:flex;gap:8px;overflow-x:auto;padding:12px 0 4px;scrollbar-width:thin}
+.d-thumbs:empty{display:none}
+.d-thumbs button{flex:0 0 92px;aspect-ratio:4/3;background:#222 center/cover;border-radius:3px;opacity:.42;transition:.3s;position:relative}
+.d-thumbs button.on,.d-thumbs button:hover{opacity:1}
+.d-thumbs button.on{outline:2px solid var(--dot);outline-offset:-2px}
+.d-thumbs em{position:absolute;right:6px;top:4px;font-style:normal;font-size:11px}
+/* 合作夥伴：一整面小 Logo，橫向排滿、高度壓低 */
+#clients{background:var(--white);padding-top:clamp(56px,7vw,104px);padding-bottom:clamp(56px,7vw,104px)}
+#clients .cl-hd{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-bottom:clamp(22px,3vw,40px)}
+#clients .cl-hd h2{font-size:clamp(24px,3vw,44px)}
+#clients .cl-hd span{font-size:13px;letter-spacing:.14em;color:var(--mute)}
+.cl-cloud{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:clamp(6px,1vw,14px) clamp(18px,2.6vw,40px);padding:clamp(18px,2.4vw,34px) 0;border-top:1px solid var(--line-d);border-bottom:1px solid var(--line-d)}
+.cl{position:relative;height:clamp(44px,4.6vw,62px);display:flex;align-items:center;justify-content:center;padding:0 4px}
+.cl img{display:block;width:auto;height:auto;max-height:clamp(22px,2.3vw,32px);max-width:clamp(84px,9vw,128px);object-fit:contain;filter:grayscale(1);opacity:.6;transition:filter .35s,opacity .35s,transform .45s var(--ease)}
+.cl.sq img{max-height:clamp(32px,3.4vw,46px)}
+.cl b{font-family:var(--serif);font-weight:500;font-size:clamp(13px,1.15vw,16px);white-space:nowrap;color:#6b6861;transition:color .3s}
+.cl small{position:absolute;left:50%;bottom:calc(100% - 4px);transform:translate(-50%,6px);background:var(--ink);color:#fff;font-size:11px;letter-spacing:.08em;white-space:nowrap;padding:4px 10px;border-radius:99px;opacity:0;pointer-events:none;transition:.3s;z-index:2}
+.cl small::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--dot);margin-right:6px;vertical-align:1px}
+.cl:hover img{filter:none;opacity:1;transform:scale(1.08)}
+.cl:hover b{color:var(--ink)}
+.cl:hover small{opacity:1;transform:translate(-50%,0)}
+/* 詳細頁：左邊是圖（不滿版），右邊是文字說明 */
+.d-cols{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(28px,4.5vw,72px);align-items:start;padding-top:8px}
+.d-left{min-width:0}
+.d-cols #dStage{min-height:0;aspect-ratio:4/3}
+.d-cols .d-media img,.d-cols .d-media video{max-height:100%;max-width:100%;width:auto;height:auto;object-fit:contain}
+.d-cols #dStage img,.d-cols #dStage video{width:100%;height:100%}
+.d-info{display:flex;flex-direction:column;gap:18px;position:sticky;top:76px;padding:6px 0 0}
+.d-info small{font-size:13px;letter-spacing:.16em;opacity:.6}
+.d-info h2{font-size:clamp(24px,2.6vw,40px);line-height:1.35}
+.d-info p{max-width:34em;opacity:.82;font-size:15px;line-height:1.9}
+.d-info p:empty{display:none}
+.d-meta{display:grid;gap:0;border-top:1px solid var(--line);margin-top:4px}
+.d-meta div{display:grid;grid-template-columns:5.5em 1fr;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);font-size:14px}
+.d-meta dt{font-size:12px;letter-spacing:.16em;opacity:.5;padding-top:2px}
+.d-cta{border:1px solid var(--line);border-radius:99px;padding:10px 22px;font-size:14px;white-space:nowrap;transition:.3s;width:max-content;margin-top:6px}
+.d-cta:hover{background:var(--dot);border-color:var(--dot)}
+.d-more h3{font-family:var(--serif);font-weight:500;font-size:22px;margin:34px 0 16px}
+.d-more h3 small{font-family:var(--sans);font-size:12px;letter-spacing:.14em;opacity:.5;margin-left:10px}
+.d-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.d-grid button{aspect-ratio:4/3;background:#222 center/cover;position:relative;opacity:.5;transition:.3s;border-radius:3px}
+.d-grid button.on,.d-grid button:hover{opacity:1}
+.d-grid button.on{outline:2px solid var(--dot);outline-offset:2px}
+.d-grid em{position:absolute;right:8px;top:6px;font-style:normal;font-size:12px}
+.d-nav{display:grid;grid-template-columns:1fr 1fr;margin-top:50px;border-top:1px solid var(--line)}
+.d-nav button{text-align:left;padding:26px 0;display:flex;flex-direction:column;gap:6px}
+.d-nav button:last-child{text-align:right;align-items:flex-end;border-left:1px solid var(--line)}
+.d-nav small{font-size:12px;letter-spacing:.16em;opacity:.5}
+.d-nav b{font-family:var(--serif);font-weight:500;font-size:clamp(15px,1.8vw,24px);transition:color .3s}
+.d-nav button:hover b{color:var(--dot)}
+@media (max-width:620px){.d-cols{grid-template-columns:1fr;gap:22px}.d-info{position:static}}
+@media (max-width:860px){.d-thumbs button{flex-basis:64px}.hero-ct{display:none}.hero-cap{max-width:100%;right:var(--pad)}}
+.modes{position:absolute;left:var(--pad);bottom:var(--pad);display:flex;align-items:center;gap:6px;font-size:12px;letter-spacing:.1em;color:#fff;flex-wrap:wrap;max-width:70%}
+.modes span{opacity:.5;margin-right:6px}
+.modes button{border:1px solid var(--line);border-radius:99px;padding:4px 12px;transition:.3s}
+.modes button.on{background:#fff;color:#000}
+.tile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.tile.playing video{opacity:1}
+.tile .play{position:absolute;top:14px;right:14px;font-style:normal;font-size:11px;letter-spacing:.14em;color:#fff;background:rgba(0,0,0,.55);border-radius:99px;padding:3px 10px;z-index:1}
+.marquee{background:var(--ink);color:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:22px 0;white-space:nowrap}
+.marquee div{display:inline-flex;will-change:transform}
+.marquee span{font-family:var(--serif);font-size:clamp(26px,4vw,54px);padding:0 .5em;display:inline-flex;align-items:center;gap:1em}
+.marquee span::after{content:"";width:.2em;height:.2em;border-radius:50%;background:var(--dot)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(36px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rv.in{opacity:1;transform:none}
+
+/* about */
+#about .big{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.7vw,58px);line-height:1.55;max-width:22em}
+#about .big b{font-weight:500;color:var(--dot)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,100px);margin-top:clamp(48px,7vw,110px);align-items:end}
+.about-grid p{max-width:32em;font-size:16px}
+.stats{display:flex;gap:clamp(28px,5vw,72px);flex-wrap:wrap}
+.stat .n{font-family:var(--serif);font-size:clamp(52px,7vw,104px);line-height:1}
+.stat .t{font-size:13px;letter-spacing:.1em;color:#5d5a54;margin-top:8px}
+
+/* services */
+#services{background:var(--white)}
+.svc{border-top:1px solid var(--line-d)}
+.svc:last-child{border-bottom:1px solid var(--line-d)}
+.svc button{width:100%;display:grid;grid-template-columns:70px 1fr auto;align-items:center;text-align:left;padding:clamp(18px,2.4vw,34px) 0;position:relative;transition:padding .5s var(--ease),color .3s}
+.svc .no{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--mute)}
+.svc .nm{font-family:var(--serif);font-weight:500;font-size:clamp(20px,2.4vw,34px);line-height:1.25}
+.svc .nm small{font-family:var(--serif);font-style:italic;font-weight:400;font-size:.32em;margin-left:1em;color:var(--mute);letter-spacing:.03em}
+.svc .pl{width:38px;height:38px;border-radius:50%;border:1px solid var(--line-d);position:relative;transition:.4s var(--ease)}
+.svc .pl::before,.svc .pl::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:1px;background:currentColor;transform:translate(-50%,-50%);transition:.4s var(--ease)}
+.svc .pl::after{transform:translate(-50%,-50%) rotate(90deg)}
+.svc.open .pl{background:var(--dot);border-color:var(--dot);color:#fff}
+.svc.open .pl::after{transform:translate(-50%,-50%) rotate(0)}
+@media (hover:hover){.svc button:hover{padding-left:22px}.svc button:hover .nm{color:var(--dot)}}
+.svc .bd{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--ease)}
+.svc.open .bd{grid-template-rows:1fr}
+.svc .bd>div{overflow:hidden}
+.svc .bd p{padding:0 0 30px 70px;max-width:44em;font-size:16px;color:#3a3833}
+.svc .bd .tags{padding:0 0 34px 70px;display:flex;gap:8px;flex-wrap:wrap}
+.tags span{font-size:13px;border:1px solid var(--line-d);border-radius:99px;padding:3px 14px}
+
+/* works */
+.wk-hd{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:clamp(28px,4vw,60px)}
+h2{font-family:var(--serif);font-weight:500;font-size:clamp(36px,6vw,92px);line-height:1.2}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{font-size:13px;letter-spacing:.08em;border:1px solid var(--line);border-radius:99px;padding:6px 18px;transition:.3s}
+.filters button.on,.filters button:hover{background:#fff;color:#000;border-color:#fff}
+.wk{display:grid;grid-template-columns:70px 1fr 200px 40px;align-items:center;gap:12px;padding:clamp(16px,2vw,28px) 0;border-top:1px solid var(--line);transition:opacity .4s,padding .5s var(--ease)}
+.wk:last-child{border-bottom:1px solid var(--line)}
+.wk .no{font-family:var(--serif);font-style:italic;opacity:.5}
+.wk .nm{font-family:var(--serif);font-weight:500;font-size:clamp(18px,2vw,28px);line-height:1.3}
+.wk .ct{font-size:13px;letter-spacing:.14em;opacity:.6}
+.wk .ar{justify-self:end;transition:transform .5s var(--ease)}
+.wk .sw{display:none}
+.wk.off{display:none}
+@media (hover:hover){
+  #wlist:hover .wk{opacity:.3}
+  #wlist .wk:hover{opacity:1;padding-left:22px}
+  .wk:hover .ar{transform:translateX(8px)}
+}
+#pv{position:fixed;left:0;top:0;z-index:40;width:min(30vw,400px);aspect-ratio:4/5;pointer-events:none;overflow:hidden;border-radius:4px;opacity:0;transform:scale(.6);transition:opacity .35s,transform .5s var(--ease);margin:-22% 0 0 30px}
+#pv.on{opacity:1;transform:none}
+.art{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:22px;color:#fff;background:var(--c);overflow:hidden;background-size:cover;background-position:center}
+.art::before{content:"";position:absolute;width:120%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.14);left:30%;top:38%}
+.art::after{content:"";position:absolute;width:18%;aspect-ratio:1;border-radius:50%;background:#fff;left:14%;top:44%;mix-blend-mode:soft-light}
+.art.photo::before,.art.photo::after{display:none}
+.art b{position:relative;font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(34px,4.4vw,64px);line-height:1}
+.art small{position:relative;font-size:12px;letter-spacing:.18em}
+.wk-tools{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.view{display:flex;border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.view button{font-size:13px;letter-spacing:.08em;padding:6px 16px;transition:.3s}
+.view button.on{background:var(--dot);color:#fff}
+#works[data-view=grid] #wlist,#works[data-view=list] #wgrid{display:none}
+#wgrid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-flow:dense;margin:0 calc(var(--pad)*-1)}
+.tile{position:relative;aspect-ratio:4/3;overflow:hidden;display:block}
+.tile.tall{grid-row:span 2;aspect-ratio:auto}
+.tile.wide{grid-column:span 2;aspect-ratio:auto}
+.tile.off{display:none}
+.tile .art{transition:transform 1.2s var(--ease),filter .6s}
+.tile .cap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(16px,2vw,30px);color:#fff;background:linear-gradient(to top,rgba(0,0,0,.72),rgba(0,0,0,0) 60%);opacity:0;transition:opacity .5s}
+.tile .cap b{font-family:var(--serif);font-weight:500;font-size:clamp(20px,2.2vw,34px);line-height:1.3;transform:translateY(14px);transition:transform .6s var(--ease)}
+.tile .cap small{font-size:12px;letter-spacing:.16em;opacity:.8}
+.tile:hover .art{transform:scale(1.07)}
+.tile:hover .cap{opacity:1}.tile:hover .cap b{transform:none}
+@media (hover:hover){#wgrid:hover .tile:not(:hover) .art{filter:saturate(.25) brightness(.55)}}
+.more-wrap{display:flex;justify-content:center;padding-top:clamp(28px,4vw,56px)}
+.more{display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:99px;padding:14px 30px;font-size:14px;letter-spacing:.14em;color:#fff;transition:.3s}
+.more i{width:8px;height:8px;border-radius:50%;background:var(--dot)}
+.more:hover{background:#fff;color:#000}
+.more[hidden]{display:none}
+@media (max-width:860px){#wgrid{grid-template-columns:1fr 1fr}.tile .cap{opacity:1}.tile .cap b{transform:none;font-size:17px}.tile .art b{display:none}}
+@media (hover:none){.tile .cap{opacity:1}.tile .cap b{transform:none}}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line-d)}
+.step{padding:34px 26px 40px 0;border-right:1px solid var(--line-d);padding-left:26px;position:relative;transition:background .5s,color .5s}
+.step:first-child{padding-left:0}
+.step:last-child{border-right:0}
+.step .no{font-family:var(--serif);font-size:clamp(44px,5vw,76px);line-height:1;display:flex;align-items:flex-start;gap:6px}
+.step .no::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--dot);margin-top:10px;transform:scale(0);transition:transform .5s var(--ease)}
+.step:hover .no::after{transform:scale(1)}
+.step h3{font-family:var(--serif);font-weight:500;font-size:24px;margin:28px 0 10px}
+.step p{font-size:15px;color:#3a3833}
+
+/* reviews */
+#reviews{background:var(--white)}
+.rvw{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,32px)}
+.card{border:1px solid var(--line-d);padding:clamp(24px,2.6vw,40px);display:flex;flex-direction:column;justify-content:space-between;min-height:300px;transition:transform .6s var(--ease),background .4s,color .4s;transform-style:preserve-3d}
+.card:hover{background:var(--ink);color:#fff}
+.card q{font-family:var(--serif);font-size:clamp(20px,1.9vw,28px);line-height:1.6;quotes:"「" "」"}
+.card .st{color:var(--dot);letter-spacing:.2em;font-size:14px}
+.card .src{font-size:12px;letter-spacing:.14em;opacity:.6;margin-top:6px}
+
+/* contact */
+#contact{padding-bottom:40px;overflow:hidden}
+.ct-top{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(40px,6vw,100px);align-items:end}
+.tel{font-family:var(--serif);font-size:clamp(40px,7.4vw,120px);line-height:1.1;display:inline-block;position:relative}
+.tel::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:2px;background:var(--dot);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease)}
+.tel:hover::after{transform:scaleX(1)}
+.guide-cta{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-top:clamp(36px,5vw,64px);padding:22px 26px;border-radius:14px;background:#0f2a4a;color:#e8f1ff;background-image:linear-gradient(#1f4570 1px,transparent 1px),linear-gradient(90deg,#1f4570 1px,transparent 1px);background-size:28px 28px;transition:transform .4s var(--ease)}
+.guide-cta:hover{transform:translateY(-3px)}
+.guide-cta span{font-size:clamp(15px,1.4vw,19px);line-height:1.6}
+.guide-cta small{display:block;font-family:ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.24em;color:#ff4a1c;margin-bottom:4px}
+.guide-cta b{flex:none;width:44px;height:44px;border-radius:50%;background:#ff4a1c;color:#fff;display:grid;place-items:center;font-weight:400}
+.line-box{display:flex;align-items:center;gap:24px;margin-top:28px}
+.line-box img{width:clamp(120px,11vw,160px);height:auto;border-radius:12px;background:#fff;padding:8px}
+.line-box p{font-size:15px;line-height:1.7;opacity:.75;margin-bottom:14px}
+.line-btn{display:inline-block;background:#06c755;color:#fff;border-radius:99px;padding:12px 22px;font-size:15px;letter-spacing:.08em;transition:transform .3s var(--ease)}
+.line-btn:hover{transform:translateY(-2px)}
+.info{display:grid;gap:22px;font-size:15px}
+.info dt{font-size:12px;letter-spacing:.2em;opacity:.5;margin-bottom:2px}
+.info a{border-bottom:1px solid var(--line)}
+.info a:hover{border-color:var(--dot)}
+.mag{display:inline-grid;place-items:center;width:clamp(130px,13vw,180px);aspect-ratio:1;border-radius:50%;background:var(--dot);color:#fff;font-size:15px;letter-spacing:.14em;margin-top:44px;transition:transform .5s var(--ease)}
+.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12px;letter-spacing:.12em;opacity:.55;border-top:1px solid var(--line);margin-top:clamp(60px,9vw,130px);padding-top:22px}
+
+@media (max-width:860px){
+  .hd-r .cta{display:none}
+  .about-grid,.ct-top{grid-template-columns:1fr}
+  .svc button{grid-template-columns:42px 1fr auto}
+  .svc .nm small{display:block;margin:2px 0 0}
+  .svc .bd p,.svc .bd .tags{padding-left:42px}
+  .wk{grid-template-columns:64px 1fr 24px;gap:16px}
+  .wk .no{display:none}
+  .wk .sw{display:block;position:relative;width:64px;aspect-ratio:1;border-radius:3px;overflow:hidden}
+  .wk .sw .art{padding:0}.wk .sw .art b,.wk .sw .art small{display:none}
+  .wk .ct{grid-column:2;grid-row:2;margin-top:-14px}
+  .wk .sw{grid-row:1/3}.wk .ar{grid-row:1/3}
+  #pv{display:none}
+  .steps{grid-template-columns:1fr 1fr}
+  .step{padding:26px 16px 30px!important;border-bottom:1px solid var(--line-d)}
+  .step:nth-child(2n){border-right:0}
+  .rvw{grid-template-columns:1fr}
+  .card{min-height:220px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition-duration:.01s!important}
+  .rv{opacity:1;transform:none}
+}
+
+/* ===== 手機版（700px 以下）：專為手機重新排的版面 ===== */
+.fab{display:none}
+@media (max-width:700px){
+  section{padding:64px 20px}
+  :root{--pad:20px}
+  header{padding:14px 20px}
+  .label{margin-bottom:22px}
+  /* 首頁 */
+  .hero-cap{left:20px;right:20px;bottom:42px;max-width:none}
+  .hero-cap b{font-size:26px}
+  .tap{font-size:12px}
+  /* 關於 */
+  #about .big{font-size:22px;line-height:1.7}
+  .about-grid{margin-top:28px}
+  .about-grid p{font-size:15px}
+  /* 服務 */
+  .svc button{grid-template-columns:34px 1fr auto;padding:16px 0}
+  .svc .nm{font-size:19px}
+  .svc .pl{width:32px;height:32px}
+  .svc .bd p,.svc .bd .tags{padding-left:34px}
+  .svc .bd p{font-size:14px;padding-bottom:16px}
+  /* 作品：圖在上、名稱在下的整齊兩欄 */
+  .wk-hd{margin-bottom:18px;gap:14px}
+  h2{font-size:30px}
+  .filters{flex-wrap:nowrap;overflow-x:auto;margin:0 -20px;padding:2px 20px 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;width:calc(100% + 40px)}
+  .filters::-webkit-scrollbar{display:none}
+  .filters button{flex:0 0 auto;padding:8px 16px;font-size:13px}
+  .wk-tools{width:100%}
+  #wgrid{grid-template-columns:1fr 1fr;gap:22px 12px;margin:0;grid-auto-flow:row}
+  .tile,.tile.tall,.tile.wide{aspect-ratio:auto;grid-row:auto;grid-column:auto;overflow:visible;display:flex;flex-direction:column}
+  .tile .art{position:relative;inset:auto;aspect-ratio:1;border-radius:4px;background-color:#1b1b1b;flex:none}
+  .tile video{inset:0 0 auto 0;height:auto;aspect-ratio:1;border-radius:4px}
+  .tile .cap{position:static;opacity:1;background:none;padding:9px 1px 0;gap:3px}
+  .tile .cap small{font-size:10.5px;letter-spacing:.1em;opacity:.55;order:2}
+  .tile .cap b{transform:none;font-size:13.5px;line-height:1.45;font-family:var(--sans);font-weight:400;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .tile .play{top:8px;right:8px;font-size:10px;padding:2px 8px}
+  .more{width:100%;justify-content:center;padding:15px}
+  /* 合作夥伴 */
+  #clients{padding:56px 20px}
+  .cl-cloud{gap:4px 20px;padding:16px 0}
+  .cl{height:46px}
+  .cl small{display:none}
+  /* 合作流程：一列一步 */
+  .steps{grid-template-columns:1fr}
+  .step{display:grid;grid-template-columns:56px 1fr;column-gap:8px;padding:20px 0!important;border-right:0;border-bottom:1px solid var(--line-d)}
+  .step .no{font-size:30px;grid-row:1/3}
+  .step .no::after{display:none}
+  .step h3{margin:2px 0 6px;font-size:19px}
+  .step p{font-size:14px}
+  /* 聯絡 */
+  .tel{font-size:38px}
+  .mag{display:none}
+  .foot{margin-top:48px;padding-bottom:70px}
+  /* 作品詳細頁 */
+  .d-bar{padding:12px 20px}
+  .d-in{padding:0 20px 90px}
+  .d-arrow{width:38px;height:38px;font-size:15px}
+  .d-arrow.l{left:8px}.d-arrow.r{right:8px}
+  .d-info h2{font-size:24px}
+  .d-nav{grid-template-columns:1fr;margin-top:36px}
+  .d-nav button,.d-nav button:last-child{text-align:left;align-items:flex-start;border-left:0;padding:16px 0;border-bottom:1px solid var(--line)}
+  .d-nav b{font-size:15px;font-family:var(--sans);font-weight:400}
+  .d-cta{width:100%;text-align:center;padding:14px}
+  /* 選單 */
+  #menu a{font-size:26px;line-height:1.7}
+  /* 手機專用：右下角的撥號鈕 */
+  .fab{display:flex;position:fixed;right:16px;bottom:18px;z-index:88;align-items:center;gap:8px;background:var(--dot);color:#fff;border-radius:99px;padding:12px 18px 12px 14px;font-size:14px;letter-spacing:.08em;box-shadow:0 6px 22px rgba(0,0,0,.28);transition:transform .4s var(--ease),opacity .3s}
+  .fab i{width:8px;height:8px;border-radius:50%;background:#fff}
+  .fab.hide{transform:translateY(90px);opacity:0;pointer-events:none}
+  body.lock .fab,body.menu .fab{display:none}
+  .tile.off{display:none!important}
+}
+</style>
+</head>
+<body class="lock">
+
+<div id="loader"><div class="mark">賣點設計<i></i></div><div class="pct"><span id="pct">0</span><small>%</small></div></div>
+<div id="cursor"><span></span></div>
+<a class="fab hide" id="fab" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener" aria-label="用 LINE 聯絡賣點設計"><i></i>LINE 聊聊</a>
+
+<header>
+  <a class="logo" href="#hero">賣點設計<i></i></a>
+  <div class="hd-r">
+    <a class="cta" href="#contact">開啟合作 <b>→</b></a>
+    <button id="burger" aria-label="開啟選單"><s></s><s></s></button>
+  </div>
+</header>
+
+<nav id="menu">
+  <a href="#about">關於 <em>About</em></a>
+  <a href="#clients">夥伴 <em>Clients</em></a>
+  <a href="#services">服務 <em>Services</em></a>
+  <a href="#works">作品 <em>Works</em></a>
+  <a href="#process">流程 <em>Process</em></a>
+  <a href="#contact">聯絡 <em>Contact</em></a>
+  <a href="guide.html">服務地圖 <em>Guide</em></a>
+</nav>
+
+<main>
+<section id="hero" class="dark">
+  <h1 class="sr">賣點設計</h1>
+  <div id="stage"></div>
+  <div class="tap" id="tap"><i></i><span>點一下</span></div>
+  <div class="hero-cap"><small id="hcat"></small><b id="hname"></b><em>查看這件作品 →</em></div>
+  <div class="hero-ct"><span id="hidx">01</span><i></i><span id="htot"></span></div>
+  <div id="hbar"></div>
+</section>
+
+<section id="about" class="light">
+  <div class="label">關於我們 <span class="en">About</span></div>
+  <p class="big rv">辦活動沒有靈感，想整理企業形象卻不知道從哪裡開始，或是需要一支動畫、一份設計，都可以先來找我們聊。從<b>創意發想</b>到<b>現場執行</b>，我們一路做完。</p>
+  <div class="about-grid">
+    <p class="rv">我們做活動企劃，也做設計與影像，從提案到現場都是同一組人。創業初期要建立品牌，或是公司要辦開幕、尾牙與各種企業活動，我們都接。</p>
+  </div>
+</section>
+
+<section id="clients" class="light">
+  <div class="label">合作夥伴 <span class="en">Clients</span></div>
+  <div class="cl-hd rv"><h2>合作過的單位</h2></div>
+  <div class="cl-cloud rv" id="clGrid"></div>
+</section>
+
+<section id="services" class="light">
+  <div class="label">服務項目 <span class="en">Services</span></div>
+  <div id="slist"></div>
+  <a class="guide-cta rv" href="guide.html"><span><small>SERVICE MAP</small>不知道該找哪一項？讓導覽員小點帶你逛一圈</span><b>→</b></a>
+</section>
+
+<section id="works" class="dark" data-view="grid">
+  <div class="label">作品 <span class="en">Works</span></div>
+  <div class="wk-hd">
+    <h2 class="rv">Selected Works</h2>
+    <div class="wk-tools">
+      <div class="filters" id="filters"></div>
+    </div>
+  </div>
+  <div id="wgrid"></div>
+  <div class="more-wrap"><button id="more" class="more">看更多作品 <i></i></button></div>
+  <div id="wlist"></div>
+</section>
+<div id="pv"></div>
+
+<section id="process" class="light">
+  <div class="label">合作流程 <span class="en">Process</span></div>
+  <div class="steps">
+    <div class="step rv"><div class="no">01</div><h3>聊需求</h3><p>打電話或傳訊息告訴我們活動日期、用途與預算範圍。</p></div>
+    <div class="step rv"><div class="no">02</div><h3>提案與報價</h3><p>我們整理方向、項目與費用，雙方確認後開始製作。</p></div>
+    <div class="step rv"><div class="no">03</div><h3>設計製作</h3><p>過程中分階段給你看稿，有想調整的地方隨時提出。</p></div>
+    <div class="step rv"><div class="no">04</div><h3>交付與執行</h3><p>檔案交付、印刷製作，活動案由我們到現場佈置與執行。</p></div>
+  </div>
+</section>
+
+<div id="detail" aria-hidden="true">
+  <div class="d-bar"><span id="dIdx"></span><button id="dClose">關閉 ✕</button></div>
+  <div class="d-in">
+    <div class="d-cols">
+      <div class="d-left">
+        <div class="d-media" id="dMedia"><div id="dStage"></div><button class="d-arrow l" id="dL" aria-label="上一張">←</button><button class="d-arrow r" id="dR" aria-label="下一張">→</button><span id="dCount"></span></div>
+        <div class="d-thumbs" id="dThumbs"></div>
+      </div>
+      <div class="d-info">
+        <small id="dTags"></small>
+        <h2 id="dName"></h2>
+        <p id="dDesc"></p>
+        <dl class="d-meta" id="dMeta"></dl>
+        <a class="d-cta" href="#contact">想做類似的案子 →</a>
+      </div>
+    </div>
+    <div class="d-nav"><button id="dPrev"></button><button id="dNext"></button></div>
+  </div>
+</div>
+
+<section id="contact" class="dark">
+  <div class="label">聯絡我們 <span class="en">Contact</span></div>
+  <div class="ct-top">
+    <div>
+      <h2 class="rv" style="margin-bottom:.3em">有案子想聊，<br>先線上聊聊</h2>
+      <div class="line-box rv">
+        <img src="logos/line-qr.png" alt="賣點設計 LINE QR Code" width="160" height="160">
+        <div>
+          <p>手機掃描 QR Code<br>加 LINE 直接聊</p>
+          <a class="line-btn" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener" data-cursor="開啟">LINE 聊聊 →</a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <dl class="info rv">
+        <div><dt>電話</dt><dd><a href="tel:0930204562">0930 204 562</a></dd></div>
+        <div><dt>Email</dt><dd><a href="mailto:bulipu424301@gmail.com">bulipu424301@gmail.com</a></dd></div>
+        <div><dt>地址</dt><dd><a href="https://share.google/xR7foOhlayHp4ybu5" target="_blank" rel="noopener">300 新竹市東區慈雲路 80 號 24 樓之 5</a></dd></div>
+        <div><dt>服務時間</dt><dd>08:00 至 22:00</dd></div>
+        <div><dt>服務內容</dt><dd>從活動企劃、設計、動畫、插畫，到贈品製作和印刷都可以找我們。<br>不確定能不能做，也歡迎先傳 LINE 問問看。</dd></div>
+      </dl>
+      <a class="mag" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener" data-cursor="">開啟合作</a>
+    </div>
+  </div>
+  <div class="foot"><span>© <span id="yr"></span> 賣點設計</span><span>新竹 <span id="clock"></span></span><a href="#hero">回到頂端 ↑</a></div>
+</section>
+</main>
+
+<script src="works-data.js?v=3"></script>
+<script src="edits.js?v=5"></script>
+<script src="hidden.js?v=4"></script>
+<script src="order.js?v=3"></script>
+<script>
+/* ===== 內容資料：要改文字或換作品圖，改這裡就好 ===== */
+const SERVICES=[
+ {zh:'設計',en:'Design',d:'海報、手冊、型錄、LOGO、名片、菜單、簡報，也做網頁與社群用圖。',t:['海報','手冊型錄','LOGO','名片','菜單','網頁設計']},
+ {zh:'活動佈置與企劃',en:'Event & Styling',d:'開幕、尾牙、論壇、典禮與展覽，從企劃、主視覺、背板到現場佈置與執行。',t:['活動企劃','展場攤位','舞台背板','會場佈置']},
+ {zh:'動畫與影片',en:'Motion & Video',d:'宣導動畫、產品動畫，以及影片拍攝與剪輯。',t:['宣導動畫','產品動畫','拍攝','剪輯']},
+ {zh:'插畫',en:'Illustration',d:'繪本、手繪地圖、活動主視覺與周邊商品上的插畫。',t:['繪本','手繪地圖','周邊商品']},
+ {zh:'印刷',en:'Printing',d:'設計完成後接著處理印刷與大圖輸出，不用另外找廠商對稿。',t:['印刷製作','大圖輸出']},
+ {zh:'贈品製作',en:'Gifts & Merch',d:'企業與活動用的客製化贈品，從設計到成品交付。',t:['客製贈品','活動禮品']}
+];
+/* img 填入圖片路徑（例如 'images/01.jpg'）就會換成實際作品照 */
+const CATS=['場地佈置','平面設計','插畫','包裝贈品','動畫影片'];
+const mk=(n,nm,tags,vid)=>({id:n,nm,tags,img:`images/${n}.jpg`,vid:vid?`videos/${n}.mp4`:''});
+/* 這一組是較早從 Google 商家取得的作品。新的作品在 works-data.js */
+const OLD_WORKS=[
+ mk('97','衛生福利部「健康台灣 美好未來」展場',['政府案件','場地佈置']),
+ mk('98','喵星委託屋 3D 動畫預告',['動畫影片'],1),
+ mk('99','喵星委託屋 開場動畫',['動畫影片','插畫'],1),
+ mk('01','展場攤位設計',['場地佈置']),
+ mk('04','新竹縣政府 食品安全宣導動畫',['政府案件','動畫影片'],1),
+ mk('19','TEL 007 系列活動海報',['科技業','平面設計']),
+ mk('10','論壇會場佈置',['場地佈置']),
+ mk('56','法務部 農漁會反賄選宣導海報',['政府案件','平面設計']),
+ mk('47','等角 3D 廠區插圖',['科技業','插畫']),
+ mk('02','Quandela × 漢民科技 簽約儀式背板',['科技業','場地佈置']),
+ mk('26','繪本《男孩與烏龜》',['插畫']),
+ mk('25','ECO-Keyless 產品動畫',['科技業','動畫影片'],1),
+ mk('35','TEL 日文儲備工程師開訓典禮',['科技業','場地佈置']),
+ mk('31','醫療器材販售宣導動畫',['政府案件','動畫影片'],1),
+ mk('52','園區手繪地圖',['插畫']),
+ mk('39','愛普科技 徵才展位',['科技業','場地佈置']),
+ mk('06','Taiwan Medtech 活動手冊',['平面設計']),
+ mk('12','「護山者」活動背板',['場地佈置']),
+ mk('28','TEL 指認呼喚宣導海報',['科技業','平面設計']),
+ mk('05','死亡證明書填報介紹動畫',['動畫影片'],1),
+ mk('42','桌遊卡牌設計',['插畫','平面設計']),
+ mk('16','HFX 臺北 會場吊旗',['場地佈置']),
+ mk('44','乾坤科技 社群封面',['科技業','平面設計']),
+ mk('53','大學永續週 戶外看板',['場地佈置','平面設計']),
+ mk('76','TEL 永續行動主視覺',['科技業','插畫']),
+ mk('20','年報 Annual Report 2023',['平面設計']),
+ mk('11','ECO-Keyless 情境動畫',['科技業','動畫影片'],1),
+ mk('21','幼兒園畢業典禮背板',['場地佈置','插畫']),
+ mk('73','矽格 徵才文宣',['科技業','平面設計']),
+ mk('63','將軍村 中秋市集主視覺',['平面設計','插畫']),
+ mk('18','COMPAMED 德國科技展 階梯廣告設計',['場地佈置']),
+ mk('38','繪本內頁插畫',['插畫']),
+ mk('48','ON STAGE 歌曲創作營海報',['平面設計']),
+ mk('74','網頁設計',['平面設計']),
+ mk('34','產品型錄',['科技業','平面設計']),
+ mk('80','智慧居家情境影片',['科技業','動畫影片'],1),
+ mk('22','新竹縣政府衛生局 食材衛生宣導動畫',['政府案件','動畫影片'],1),
+ mk('84','論壇會場舞台',['場地佈置']),
+ mk('81','上班情境宣導動畫',['動畫影片'],1),
+ mk('90','兒童醫療照護計畫插畫',['插畫']),
+ mk('24','ECO-Keyless 門鎖情境動畫',['科技業','動畫影片'],1),
+ mk('83','Taiwan x BIO 活動識別證',['平面設計']),
+ mk('13','TEL 寶島感恩散步趣海報',['科技業','平面設計']),
+ mk('85','桌遊包裝設計',['插畫','平面設計']),
+ mk('03','「護山者」放映座談現場',['場地佈置']),
+ mk('86','工安環保月 系列活動主視覺',['平面設計']),
+ mk('89','TEL 璀璨魅力之星海報',['科技業','平面設計']),
+ mk('61','樂齡主題插畫',['插畫']),
+ mk('09','展場攤位全景',['場地佈置']),
+ mk('87','春神海報',['平面設計','插畫']),
+ mk('45','愛普科技 徵才 DM',['科技業','平面設計']),
+ mk('88','好雲林 YOUNG 演唱會海報',['平面設計']),
+ mk('14','HFX Taipei 冰雕佈置',['場地佈置']),
+ mk('49','TEL 撐把傘活動海報',['科技業','平面設計']),
+ mk('57','毛毛聖誕夜海報',['平面設計','插畫']),
+ mk('58','動力機械工程學系簡介',['平面設計']),
+ mk('33','論壇識別證',['平面設計']),
+ mk('27','TEL 用電安全宣導海報',['科技業','平面設計']),
+ mk('36','秋季市集海報',['平面設計','插畫']),
+ mk('30','Taiwan 產業簡介手冊',['平面設計']),
+ mk('46','TEL 緊急通報宣導海報',['科技業','平面設計']),
+ mk('60','公益年曆',['平面設計','插畫']),
+ mk('43','金融詐騙宣導講座海報',['平面設計']),
+ mk('29','將軍村 活動市集海報',['平面設計']),
+ mk('51','TEL 行車安全宣導海報',['科技業','平面設計']),
+ mk('72','萬聖節活動海報',['平面設計','插畫']),
+ mk('17','聖誕市集海報',['平面設計','插畫']),
+ mk('77','生醫技術簡介摺頁',['平面設計']),
+ mk('37','餐廳菜單',['平面設計']),
+ mk('71','ECO-LUX 電子鎖文宣',['科技業','平面設計']),
+ mk('66','年報內頁',['平面設計']),
+ mk('70','烘焙品牌網頁',['平面設計']),
+ mk('54','TEL 活動徽章',['科技業','平面設計'])
+];
+/* GROUPS：舊作品裡同一個案子的圖片編號放在同一組，詳細頁會一起輪播 */
+const GROUPS=[['97','94','93','91','92','95','96'],['01','09'],['12','03','07'],['10','84','16','14','33','32'],['06','23'],['34','62','82'],['20','66'],['42','85'],['39','41','45'],['58','65'],['29','79'],['53','59'],['49','54'],['19','40','64','68']];
+const OLD_VID=new Set(OLD_WORKS.filter(w=>w.vid).map(w=>w.id));
+OLD_WORKS.forEach(w=>{w.imgs=(GROUPS.find(g=>g.includes(w.id))||[w.id]).map(m=>({img:`images/${m}.jpg`,vid:OLD_VID.has(m)?`videos/${m}.mp4`:''}))});
+/* 作品區的順序：衛福部展場、新作品、其餘舊作品 */
+const WORKS=[OLD_WORKS[0],...(typeof NEW_WORKS!=='undefined'?NEW_WORKS:[]),...OLD_WORKS.slice(1)];
+/* 最新加入、排在作品區第一件的作品 */
+WORKS.unshift({id:'p099',nm:'TEL｜2026 儲備工程師開訓式 投影背板動畫',tags:['動畫影片'],img:'works/p099/poster.jpg',vid:'works/p099/video.mp4',imgs:[{img:'works/p099/poster.jpg',vid:'works/p099/video.mp4'}]});
+/* 分類只看作品類別，不分政府案件或科技業 */
+WORKS.forEach(w=>{w.tags=w.tags.filter(t=>t!=='政府案件'&&t!=='科技業');if(!w.tags.length)w.tags=['平面設計']});
+/* 整理頁（review.html）需要原始的完整清單 */
+window.__ALL=JSON.parse(JSON.stringify(WORKS));
+/* 套用作品整理的結果（edits.js）：改名稱、只留選中的圖、第一張當封面、不要的作品拿掉 */
+if(typeof EDITS!=='undefined'){
+  for(let k=WORKS.length-1;k>=0;k--){const w=WORKS[k],e=EDITS[w.id];if(!e)continue;
+    if(e.drop){WORKS.splice(k,1);continue}
+    if(e.nm)w.nm=e.nm;
+    if(e.keep&&e.keep.length){const all=w.imgs&&w.imgs.length?w.imgs:[{img:w.img,vid:w.vid}];w.imgs=e.keep.map(i=>all[i]).filter(Boolean);w.img=w.imgs[0].img;w.vid=w.imgs[0].vid||''}
+  }
+}
+/* 合併重複的專案：to 是留下的作品；add 的作品圖片接在後面（img: 開頭表示只取那一張舊圖）；rm 的作品整件拿掉 */
+const MERGE=[
+  /* 動畫一支一件，不合併；只拿掉內容完全一樣的重複影片 */
+  {to:'p007',rm:['04'],nm:'新竹縣政府衛生局｜食品安全宣導動畫'},
+  {to:'22',nm:'新竹縣政府衛生局｜食材衛生宣導動畫'},
+  {to:'81',nm:'ECO-Keyless 打卡情境動畫'},
+  {to:'p012',rm:['05'],nm:'衛生福利部｜死亡證明書填報介紹動畫'},
+  {to:'p008',rm:['31'],nm:'新竹縣衛生局｜醫療器材販售宣導動畫'},
+  {to:'p049',rm:['90']},
+  {to:'p017',add:['p021'],rm:['p021']},
+  {to:'p077',add:['83'],rm:['83']},
+  {to:'p085',add:['89'],rm:['89']},
+  {to:'p022',add:['13'],rm:['13']},
+  {to:'p057',add:['20'],rm:['20','66'],nm:'成功大學｜2023 英文年報 Annual Report'},
+  {to:'p073',add:['86'],rm:['86']},
+  {to:'p074',add:['36'],rm:['36']},
+  /* COMPAMED 階梯和 MEDICA Handout 是同一個德國展 */
+  {to:'p083',add:['18'],rm:['18'],nm:'工研院｜德國 MEDICA 醫療展 Handout 與階梯廣告設計',tags:['平面設計','場地佈置'],cover:'images/18.jpg'},
+  /* 舊作品同一組的其他編號，圖片已經在第一件裡 */
+  {rm:['16','84','14','33','85','03','09','45','54']}
+];
+MERGE.forEach(m=>{
+  const t=m.to&&WORKS.find(w=>w.id===m.to);
+  if(t){
+    if(!t.imgs||!t.imgs.length)t.imgs=[{img:t.img,vid:t.vid||''}];
+    (m.add||[]).forEach(a=>{
+      if(a.startsWith('img:')){const n=a.slice(4);t.imgs.push({img:`images/${n}.jpg`,vid:OLD_VID.has(n)?`videos/${n}.mp4`:''});return}
+      const s=WORKS.find(w=>w.id===a);if(s)t.imgs.push(...(s.imgs&&s.imgs.length?s.imgs:[{img:s.img,vid:s.vid||''}]));
+    });
+    if(m.nm)t.nm=m.nm;
+    if(m.tags)t.tags=m.tags;
+    /* cover：用哪張圖當封面（移到第一張） */
+    if(m.cover){const k=t.imgs.findIndex(s=>s.img===m.cover);if(k>0)t.imgs.unshift(...t.imgs.splice(k,1))}
+    t.img=t.imgs[0].img;t.vid=t.imgs[0].vid||'';
+  }
+  (m.rm||[]).forEach(id=>{const k=WORKS.findIndex(w=>w.id===id);if(k>=0)WORKS.splice(k,1)});
+});
+/* 作品區排序：order.js（由 order.html 產生）有排好的完整順序就用它，否則用 TOP；沒列到的作品排在最後 */
+const TOP=['p099','97','01','12','p095','p094','p012','p007','p003','p002','p004','p052','p057','18','p083','p077','p064','p069','p017','p008','22','p049','p051','p014','53','58','p072','p066'];
+const SEQ=typeof ORDER!=='undefined'&&ORDER.length?ORDER:TOP;
+WORKS.sort((a,b)=>{const x=SEQ.indexOf(a.id),y=SEQ.indexOf(b.id);return (x<0?999:x)-(y<0?999:y)});
+/* 隱藏清單（hidden.js）：只是不顯示，檔案都留著，拿掉編號就會回來。整理頁要看到全部，所以先記下來再隱藏 */
+const HID=new Set(typeof HIDDEN!=='undefined'?HIDDEN:[]);
+window.__ORDERED=WORKS.map(w=>({id:w.id,nm:w.nm,img:w.img,tags:w.tags,vid:!!w.vid,hidden:HID.has(w.id)}));
+window.__SHOWN=window.__ORDERED;
+for(let k=WORKS.length-1;k>=0;k--)if(HID.has(WORKS[k].id))WORKS.splice(k,1);
+/* 導覽頁（guide.html）用 ?data 只讀作品資料，不跑後面的畫面 */
+window.__PUBLIC=WORKS.map(w=>({id:w.id,nm:w.nm,img:w.img,tags:w.tags,vid:!!w.vid}));
+if(/[?&]data\b/.test(location.search)){addEventListener('error',e=>{if(String(e.message).includes('data-only'))e.preventDefault()});throw 'data-only'}
+
+const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>[...p.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const pad=n=>String(n).padStart(2,'0');
+
+/* services */
+$('#slist').innerHTML=SERVICES.map((s,i)=>`<div class="svc rv"><button aria-expanded="false"><span class="no">${pad(i+1)}</span><span class="nm">${s.zh}<small>${s.en}</small></span><span class="pl"></span></button><div class="bd"><div><p>${s.d}</p><div class="tags">${s.t.map(x=>`<span>${x}</span>`).join('')}</div></div></div></div>`).join('');
+$$('.svc').forEach(el=>$('button',el).addEventListener('click',()=>{
+  const open=el.classList.contains('open');
+  $$('.svc.open').forEach(o=>{o.classList.remove('open');$('button',o).setAttribute('aria-expanded','false')});
+  if(!open){el.classList.add('open');$('button',el).setAttribute('aria-expanded','true')}
+}));
+
+/* works */
+/* 縮圖：thumbs/ 資料夾裡的小尺寸圖，作品牆和縮圖列用這個，手機載入才快 */
+/* 手機用 640px 的 thumbs，電腦版格子大、螢幕解析度高，改用 1400px 的 mid，才不會糊 */
+/* 大圖用 1400px 版本（mid/），不載原始檔 */
+const md=p=>'mid/'+p.replace(/\//g,'_');
+const th=p=>(matchMedia('(max-width:700px)').matches?'thumbs/':'mid/')+p.replace(/\//g,'_');
+const art=w=>`<div class="art photo" style="background-image:url('${th(w.img)}')"></div>`;
+$('#filters').innerHTML=['全部',...CATS].map((c,i)=>`<button class="${i?'':'on'}">${c}</button>`).join('');
+const shape=i=>i%11===0?'wide':i%11===6?'tall':'';
+$('#wgrid').innerHTML=WORKS.map((w,i)=>`<div class="tile wi off ${shape(i)}" data-i="${i}" data-ct="${w.tags.join(',')}">${art(w)}${w.vid?`<video muted loop playsinline preload="none" src="${w.vid}"></video><em class="play">▶ 影片</em>`:''}<div class="cap"><small>${w.tags.join('・')}</small><b>${w.nm}</b></div></div>`).join('');
+/* 作品牆一次只顯示一部分，按「看更多作品」再往下載入。手機一次 12 件，桌機 24 件 */
+const PAGE=matchMedia('(max-width:700px)').matches?12:24;let wCat='全部',wLimit=PAGE;
+function applyGrid(){
+  let n=0;
+  $$('#wgrid .tile').forEach(t=>{const ok=wCat==='全部'||t.dataset.ct.split(',').includes(wCat);t.classList.toggle('off',!(ok&&n<wLimit));if(ok)n++});
+  $('#more').hidden=n<=wLimit;
+}
+$$('#filters button').forEach(b=>b.addEventListener('click',()=>{
+  $$('#filters button').forEach(x=>x.classList.toggle('on',x===b));wCat=b.textContent;wLimit=PAGE;applyGrid();
+  b.scrollIntoView({block:'nearest',inline:'center',behavior:reduce?'auto':'smooth'});
+}));
+$('#more').addEventListener('click',()=>{wLimit+=PAGE;applyGrid()});
+applyGrid();
+$$('.tile video').forEach(v=>{const t=v.parentElement;
+  t.addEventListener('mouseenter',()=>{v.play().catch(()=>{});t.classList.add('playing')});
+  t.addEventListener('mouseleave',()=>{v.pause();t.classList.remove('playing')})});
+$$('#view button').forEach(b=>b.addEventListener('click',()=>{
+  $$('#view button').forEach(x=>x.classList.toggle('on',x===b));$('#works').dataset.view=b.dataset.v;
+}));
+const pv=$('#pv');let px=0,py=0,tx=0,ty=0;
+$$('.wk').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{pv.innerHTML=art(WORKS[el.dataset.i]);pv.classList.add('on')});
+  el.addEventListener('mouseleave',()=>pv.classList.remove('on'));
+});
+
+/* 合作夥伴：n 是名稱、s 是分類、logo 是圖檔（沒有 logo 的會顯示文字）。要增減單位改這裡 */
+const CLIENTS=[
+ {n:'東京威力科創 TEL',s:'科技業',logo:'tel'},{n:'矽格',s:'科技業',logo:'sigurd'},{n:'乾坤科技',s:'科技業',logo:'cyntec'},{n:'愛普科技',s:'科技業',logo:'apmemory'},
+ {n:'洹藝科技',s:'科技業',logo:'agnitio'},{n:'德凱宜特',s:'科技業',logo:'dekra'},{n:'尚承科技',s:'科技業',logo:'ecolux'},{n:'文坦自動化',s:'科技業',logo:'wintank'},
+ {n:'恆昇科技',s:'科技業',logo:'nanoe'},{n:'漢民科技',s:'科技業',logo:'hermes'},{n:'Quandela',s:'科技業',logo:'quandela'},
+ {n:'衛生福利部',s:'政府機關',logo:'mohw'},{n:'新竹縣政府',s:'政府機關',logo:'hsinchu'},{n:'新竹市政府',s:'政府機關',logo:'hccg'},{n:'桃園市政府',s:'政府機關',logo:'taoyuan'},
+ {n:'衛福部疾病管制署',s:'政府機關',logo:'cdc'},{n:'法務部',s:'政府機關',logo:'moj'},{n:'經濟部水利署',s:'政府機關',logo:'wra'},{n:'新竹科學園區管理局',s:'政府機關',logo:'sipa'},{n:'台元科技園區',s:'科技業',logo:'tyht.svg'},{n:'三立電視',s:'媒體',logo:'settv.svg'},{n:'工業技術研究院',s:'政府機關',logo:'itri'},{n:'桃園國際機場公司',s:'政府機關',logo:'tpeairport'},{n:'桃園市政府衛生局',s:'政府機關',logo:'tydph'},{n:'臺南市政府環境保護局',s:'政府機關',logo:'tnepb.svg'},
+ {n:'成功大學',s:'學校',logo:'ncku'},{n:'成功大學 QFort',s:'學校',logo:'qfort'},{n:'陽明交通大學',s:'學校',logo:'nycu'},{n:'清華大學',s:'學校',logo:'nthu'},{n:'明新科技大學',s:'學校',logo:'must'},
+ {n:'伊甸基金會',s:'基金會',logo:'eden'},{n:'家扶基金會',s:'基金會',logo:'tfcf'},
+ {n:'DryDry',s:'品牌與企業',logo:'drydry'},{n:'樂菓手作',s:'品牌與企業',logo:'dayun'},
+ {n:'八柴',s:'品牌與企業',logo:'bachai'},{n:'Sobigo',s:'品牌與企業',logo:'sobigo'},{n:'泰治環科',s:'品牌與企業',logo:'taizhi'},
+ {n:'AsiaKOL',s:'品牌與企業',logo:'asiakol'},{n:'season.co',s:'品牌與企業',logo:'fourseason'},{n:'永苑行',s:'品牌與企業',logo:'yongyuan'},{n:'將軍村',s:'品牌與企業',logo:'generalvillage'},{n:'HFX Taipei',s:'品牌與企業',logo:'hfx'}
+];
+/* 暫時不放在合作夥伴牆的 Logo（填 logo 名稱），拿掉就會回來 */
+const HIDE_CLIENTS=['hermes','quandela'];
+$('#clGrid').innerHTML=CLIENTS.filter(c=>!HIDE_CLIENTS.includes(c.logo)).map(c=>`<div class="cl" title="${c.n}">${c.logo?`<img src="logos/${c.logo.includes('.')?c.logo:c.logo+'.png'}" alt="${c.n}">`:`<b>${c.n}</b>`}<small>${c.n}</small></div>`).join('');
+/* 接近正方形的徽章類 Logo 放大一點，跟橫式 Logo 看起來才一樣大 */
+$$('.cl img').forEach(i=>{const f=()=>{if(i.naturalWidth/i.naturalHeight<1.9)i.parentElement.classList.add('sq')};i.complete?f():i.addEventListener('load',f)});
+
+/* 手機的撥號鈕：離開首頁後出現，捲到聯絡區就收起來（那裡本來就有電話） */
+{const fab=$('#fab');const upd=()=>{const c=$('#contact').getBoundingClientRect();fab.classList.toggle('hide',scrollY<innerHeight*.6||c.top<innerHeight*.75)};addEventListener('scroll',upd,{passive:true});upd()}
+
+/* cursor */
+const cur=$('#cursor'),curT=$('span',cur);let cx=innerWidth/2,cy=innerHeight/2,ex=cx,ey=cy,seen=false;
+addEventListener('mousemove',e=>{ex=tx=e.clientX;ey=ty=e.clientY;if(!seen){seen=true;cx=ex;cy=ey;cur.style.opacity=1}});
+document.addEventListener('mouseleave',()=>cur.classList.add('hide'));
+document.addEventListener('mouseenter',()=>cur.classList.remove('hide'));
+const bind=(sel,txt)=>$$(sel).forEach(el=>{
+  el.addEventListener('mouseenter',()=>{curT.textContent=el.dataset.cursor??txt;cur.classList.add('big');if(el.dataset.cursor==='')cur.classList.add('hide')});
+  el.addEventListener('mouseleave',()=>cur.classList.remove('big','hide'));
+});
+bind('.wk','查看');bind('.tile','查看');bind('.svc button','展開');bind('#stage','點一下');bind('.hero-cap','查看');bind('[data-cursor]','');
+
+/* magnetic */
+const mag=$('.mag');
+mag.addEventListener('mousemove',e=>{const r=mag.getBoundingClientRect();mag.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.35}px,${(e.clientY-r.top-r.height/2)*.35}px)`});
+mag.addEventListener('mouseleave',()=>mag.style.transform='');
+
+/* 點一下換一個顏色 */
+let clickN=0,curC='#ff4a1c';
+const PAL=['#ff4a1c','#ffc21a','#19c37d','#2b6bff','#b04bff','#ff4fa3','#00c2d1'];
+document.addEventListener('click',()=>{clickN++;curC=PAL[clickN%PAL.length]},true);
+
+/* 首頁：滿版作品，點一下，下一件從那個點展開。FEAT 是首頁輪播的作品編號 */
+const hero=$('#hero'),stage=$('#stage');
+const num=w=>w.id;
+const FEAT=['p099','97','p001','98','10','p024','25','47','p094','01','26','80','12'].map(n=>WORKS.find(w=>num(w)===n)).filter(Boolean);
+let hi=-1,hTimer;
+function advance(x,y){
+  hi=(hi+1)%FEAT.length;const w=FEAT[hi],el=document.createElement('div'),old=[...stage.children];
+  el.className='slide';el.style.backgroundImage=`url('${md(w.img)}')`;
+  if(w.vid){const v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.src=w.vid;el.appendChild(v)}
+  const R=Math.hypot(Math.max(x,hero.clientWidth-x),Math.max(y,hero.clientHeight-y))+40;
+  el.style.clipPath=`circle(0px at ${x}px ${y}px)`;stage.appendChild(el);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.clipPath=`circle(${R}px at ${x}px ${y}px)`;el.classList.add('in')}));
+  setTimeout(()=>old.forEach(o=>o.remove()),1300);
+  $('#hcat').textContent=w.tags.join('・');$('#hname').textContent=w.nm;$('#hidx').textContent=pad(hi+1);
+  const cap=$('.hero-cap'),bar=$('#hbar');cap.classList.remove('in');bar.classList.remove('run');void cap.offsetWidth;cap.classList.add('in');
+  bar.style.background=curC;
+  clearTimeout(hTimer);
+  if(!reduce){bar.classList.add('run');hTimer=setTimeout(()=>advance(hero.clientWidth/2,hero.clientHeight/2),7000)}
+}
+$('#htot').textContent=pad(FEAT.length);
+advance(innerWidth/2,innerHeight/2);
+hero.addEventListener('click',e=>{
+  if(e.target.closest('.hero-cap'))return openWork(WORKS.indexOf(FEAT[hi]),e.clientX,e.clientY);
+  const r=hero.getBoundingClientRect();advance(e.clientX-r.left,e.clientY-r.top);$('#tap').classList.add('gone');
+});
+
+/* 作品詳細頁：每件作品的圖片（imgs）做成輪播，只有一張就單張顯示 */
+const det=$('#detail');let di=0,si=0,slides=[],sTimer,auto=true;
+const slideHTML=s=>s.vid?`<video src="${s.vid}" poster="${md(s.img)}" controls autoplay muted loop playsinline></video>`:`<img src="${md(s.img)}" alt="">`;
+function show(k,byUser){
+  if(!slides.length)return;
+  si=(k+slides.length)%slides.length;const s=slides[si];
+  $('#dStage').innerHTML=slideHTML(s);
+  $('#dCount').textContent=slides.length>1?`${si+1} / ${slides.length}`:'';
+  const ts=$$('#dThumbs button');ts.forEach((b,j)=>b.classList.toggle('on',j===si));
+  if(ts[si]){const box=$('#dThumbs');box.scrollTo({left:ts[si].offsetLeft-box.clientWidth/2+ts[si].clientWidth/2,behavior:reduce?'auto':'smooth'})}
+  clearTimeout(sTimer);if(byUser)auto=false;
+  /* 自動輪播：使用者自己切換過，或這一張是影片，就停下來 */
+  if(auto&&!reduce&&slides.length>1&&!s.vid)sTimer=setTimeout(()=>show(si+1),4500);
+}
+function fill(i){
+  di=(i+WORKS.length)%WORKS.length;const w=WORKS[di];
+  slides=w.imgs&&w.imgs.length?w.imgs:[{img:w.img,vid:w.vid}];auto=true;
+  $('#dMedia').classList.toggle('single',slides.length<2);
+  $('#dThumbs').innerHTML=slides.length>1?slides.map((s,j)=>`<button style="background-image:url('${th(s.img)}')" aria-label="第 ${j+1} 張">${s.vid?'<em>▶</em>':''}</button>`).join(''):'';
+  $$('#dThumbs button').forEach((b,j)=>b.addEventListener('click',()=>show(j,true)));
+  show(0);
+  /* 名稱寫成「合作單位｜作品名」的，右邊會拆成兩欄顯示。desc 是說明文字，在作品資料裡加 desc 就會出現 */
+  const [client,title]=w.nm.includes('｜')?w.nm.split('｜'):['',w.nm];
+  $('#dTags').textContent=w.tags.join('・');$('#dName').textContent=title;$('#dDesc').textContent=w.desc||'';
+  const nv=slides.filter(s=>s.vid).length,ni=slides.length-nv;
+  const rows=[['合作單位',client],['服務類別',w.tags.filter(t=>t!=='政府案件'&&t!=='科技業').join('、')],['產業',w.tags.filter(t=>t==='政府案件'||t==='科技業').map(t=>t==='政府案件'?'政府機關':t).join('、')]];
+  $('#dMeta').innerHTML=rows.filter(r=>r[1]).map(r=>`<div><dt>${r[0]}</dt><dd>${r[1]}</dd></div>`).join('');
+  $('#dIdx').textContent='';
+  const p=WORKS[(di-1+WORKS.length)%WORKS.length],nx=WORKS[(di+1)%WORKS.length];
+  $('#dPrev').innerHTML=`<small>← 上一件</small><b>${p.nm}</b>`;$('#dNext').innerHTML=`<small>下一件 →</small><b>${nx.nm}</b>`;
+  history.replaceState(null,'','#w-'+num(w));det.scrollTop=0;
+}
+$('#dL').addEventListener('click',()=>show(si-1,true));$('#dR').addEventListener('click',()=>show(si+1,true));
+{let sx=null;const m=$('#dMedia');
+ m.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+ m.addEventListener('touchend',e=>{if(sx===null||slides.length<2)return;const dx=e.changedTouches[0].clientX-sx;sx=null;if(Math.abs(dx)>40)show(si+(dx<0?1:-1),true)},{passive:true});}
+function openWork(i,x=innerWidth/2,y=innerHeight/2){
+  if(i<0)return;fill(i);det.style.setProperty('--x',x+'px');det.style.setProperty('--y',y+'px');
+  det.classList.add('open');det.setAttribute('aria-hidden','false');document.body.classList.add('lock');pv.classList.remove('on');clearTimeout(hTimer);
+}
+function closeWork(){
+  if(!det.classList.contains('open'))return;
+  det.classList.remove('open');det.setAttribute('aria-hidden','true');document.body.classList.remove('lock');
+  $('#dStage').innerHTML='';clearTimeout(sTimer);history.replaceState(null,'',location.pathname);
+  if(!reduce){clearTimeout(hTimer);hTimer=setTimeout(()=>advance(hero.clientWidth/2,hero.clientHeight/2),7000)}
+}
+$$('.tile,.wk').forEach(el=>el.addEventListener('click',e=>openWork(+el.dataset.i,e.clientX,e.clientY)));
+$('#dClose').addEventListener('click',closeWork);
+$('#dPrev').addEventListener('click',()=>fill(di-1));$('#dNext').addEventListener('click',()=>fill(di+1));
+$('.d-cta').addEventListener('click',closeWork);
+addEventListener('keydown',e=>{if(!det.classList.contains('open'))return;if(e.key==='Escape')closeWork();
+  /* 左右鍵：有多張就切換照片，只有一張就切換作品 */
+  if(e.key==='ArrowLeft')slides.length>1?show(si-1,true):fill(di-1);if(e.key==='ArrowRight')slides.length>1?show(si+1,true):fill(di+1)});
+const fromHash=()=>{const m=location.hash.match(/^#w-(\w+)$/);if(m)openWork(WORKS.findIndex(w=>num(w)===m[1]))};
+fromHash();addEventListener('hashchange',fromHash);
+
+document.addEventListener('click',e=>{const d=document.createElement('i');d.className='ring';d.style.borderColor=curC;d.style.left=e.clientX+'px';d.style.top=e.clientY+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),850)});
+
+/* main loop */
+function loop(t){
+  cx+=(ex-cx)*.2;cy+=(ey-cy)*.2;cur.style.transform=`translate(${cx}px,${cy}px)`;
+  px+=(tx-px)*.12;py+=(ty-py)*.12;pv.style.left=px+'px';pv.style.top=py+'px';
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+/* reveal + count */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;e.target.classList.add('in');io.unobserve(e.target);
+  $$('[data-count]',e.target).forEach(n=>{const end=+n.dataset.count,dec=n.dataset.count.includes('.')?1:0,t0=performance.now();
+    (function tick(now){const p=Math.min(1,(now-t0)/1400),v=end*(1-Math.pow(1-p,3));n.textContent=v.toFixed(dec);if(p<1)requestAnimationFrame(tick)})(t0)});
+}),{threshold:.15});
+$$('.rv').forEach((el,i)=>{el.style.transitionDelay=(el.parentElement.classList.contains('steps')||el.parentElement.classList.contains('rvw')?[...el.parentElement.children].indexOf(el)*.1:0)+'s';io.observe(el)});
+/* 保險：有些手機瀏覽器不會即時觸發上面的偵測，捲動時再檢查一次，避免內容一直是透明的 */
+{const sweep=()=>$$('.rv:not(.in)').forEach(el=>{if(el.getBoundingClientRect().top<innerHeight*.95)el.classList.add('in')});addEventListener('scroll',sweep,{passive:true});setTimeout(sweep,1200)}
+
+/* menu */
+$('#burger').addEventListener('click',()=>document.body.classList.toggle('menu'));
+$$('#menu a').forEach(a=>a.addEventListener('click',()=>document.body.classList.remove('menu')));
+$$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=$(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:reduce?'auto':'smooth'})}}));
+
+/* clock */
+$('#yr').textContent=new Date().getFullYear();
+const ck=()=>$('#clock').textContent=new Date().toLocaleTimeString('zh-TW',{timeZone:'Asia/Taipei',hour:'2-digit',minute:'2-digit',hour12:false});ck();setInterval(ck,20000);
+
+/* loader */
+(function(){const el=$('#pct'),ld=$('#loader'),t0=performance.now(),dur=reduce?200:1700;
+  (function tick(now){const p=Math.min(1,(now-t0)/dur);el.textContent=Math.round((1-Math.pow(1-p,2))*100);
+    if(p<1)return requestAnimationFrame(tick);
+    setTimeout(()=>{ld.classList.add('out');document.body.classList.remove('lock');document.body.classList.add('ready');setTimeout(()=>ld.remove(),1200)},250)})(t0)})();
+/* 從導覽頁跳過來：#w=作品編號 直接開作品，#cat=類別 直接篩選作品區 */
+(()=>{const h=decodeURIComponent(location.hash);let m;
+  if((m=h.match(/^#w=(.+)$/))){const i=WORKS.findIndex(w=>w.id===m[1]);if(i>=0)setTimeout(()=>openWork(i),1700)}
+  else if((m=h.match(/^#cat=(.+)$/))){const b=$$('#filters button').find(x=>x.textContent===m[1]);if(b)setTimeout(()=>{b.click();$('#works').scrollIntoView({behavior:'smooth'})},1500)}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>服務地圖｜賣點設計</title>
+<meta name="description" content="跟著小點逛賣點設計的服務小鎮：活動、設計、動畫、插畫、印刷與贈品。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0b0b0b;--navy2:#161616;--edge:#3a3732;--cream:#efe6d4;--dot:#ff4a1c;--warm:#ffc978;--cool:#bfe8ff;--lg:#06c755;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--serif:"Noto Serif TC",serif;--sans:"Noto Sans TC",-apple-system,"PingFang TC",sans-serif;--panel:430px}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--sans);font-weight:300;background:var(--navy);color:var(--cream);overflow:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.top{position:fixed;inset:0 0 auto 0;z-index:8;height:58px;display:flex;align-items:center;padding:0 clamp(16px,3vw,36px);padding-top:env(safe-area-inset-top);border-bottom:1px solid var(--edge);background:rgba(11,11,11,.92)}
+.logo{font-family:var(--serif);font-weight:700;font-size:20px;letter-spacing:.14em;display:flex;align-items:baseline;gap:3px}
+.logo i{width:7px;height:7px;border-radius:50%;background:var(--dot)}
+.mid{position:absolute;left:50%;transform:translateX(-50%);font-family:var(--serif);font-style:italic;letter-spacing:.3em;font-size:14px;color:#cfc6b4;display:flex;align-items:center;gap:16px}
+.mid::before,.mid::after{content:"";width:90px;height:1px;background:var(--edge)}
+.nav{margin-left:auto;display:flex;align-items:center;gap:18px;font-family:var(--serif);font-size:14px;letter-spacing:.14em}
+.nav s{width:1px;height:16px;background:var(--edge)}
+.nav a:hover{color:#fff}
+#map{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#dim{transition:opacity 2.4s ease}
+.lit{opacity:0;transition:opacity .6s ease}
+.lit.seen{opacity:.55}.lit.near,.lit.on{opacity:1;animation:breathe 2.2s ease-in-out infinite}
+@keyframes breathe{50%{opacity:.78}}
+.tag{cursor:pointer}
+.tag text{font-family:var(--serif);fill:var(--cream);paint-order:stroke;stroke:#0b0b0b;stroke-width:7px;stroke-linejoin:round}
+.tag .no{font-style:italic;font-size:22px;font-weight:500;fill:var(--dot)}
+.tag .zh{font-size:21px;font-weight:700;letter-spacing:.1em}
+.tag .bar{fill:var(--dot);opacity:0;transition:opacity .3s,transform .3s;transform-box:fill-box;transform-origin:center;transform:scaleX(.3)}
+.tag.near .bar,.tag.on .bar{opacity:1;transform:scaleX(1)}
+.tag.near .zh,.tag.on .zh{fill:#fff}
+.ring{fill:none;stroke:var(--warm);stroke-width:2.5;opacity:0;transition:opacity .3s}
+.ring.show{opacity:1}
+.ring.show .r2{animation:ringp 1.4s ease-out infinite}
+@keyframes ringp{from{transform:scale(.6);opacity:.9}to{transform:scale(1.5);opacity:0}}
+.lamp{opacity:0;transition:opacity 1.2s}
+.lamp.on{opacity:1;animation:flick 3.2s ease-in-out infinite}
+@keyframes flick{40%{opacity:.85}45%{opacity:1}70%{opacity:.92}}
+#title{position:fixed;z-index:4;left:clamp(16px,3vw,36px);top:78px;pointer-events:none;transition:opacity .8s,transform .8s}
+#title.hide{opacity:0;transform:translateY(-8px)}
+#title h1{font-family:var(--serif);font-weight:900;font-size:clamp(38px,4.4vw,64px);letter-spacing:.06em;line-height:1.1;display:flex;align-items:center;gap:14px;text-shadow:0 2px 18px rgba(11,11,11,.9)}
+#title h1 i{width:4px;height:.9em;background:var(--dot);transform:skewX(-20deg);display:inline-block}
+#title p{font-family:var(--serif);font-size:14px;letter-spacing:.14em;color:#cfc6b4;margin-top:8px;text-shadow:0 1px 10px rgba(11,11,11,.95)}
+#stamps{position:fixed;z-index:6;left:clamp(16px,3vw,36px);top:200px;display:flex;align-items:center;gap:12px;padding:10px 16px;background:rgba(11,11,11,.9);border:1px solid var(--cream);outline:1px solid rgba(239,230,212,.3);outline-offset:3px;transition:top .8s}
+#title.hide~#stamps{top:76px}
+#stamps svg{flex:none}
+#stamps b{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.1em;display:block}
+#stamps span{display:flex;gap:6px;margin-top:4px}
+#stamps i{width:12px;height:12px;border-radius:50%;border:1.5px solid var(--cream);transition:.5s}
+#stamps i.on{background:var(--dot);border-color:var(--dot);box-shadow:0 0 10px rgba(255,74,28,.8)}
+#mini{position:fixed;z-index:6;left:clamp(16px,3vw,36px);bottom:22px;width:176px;height:176px}
+#keys{position:fixed;z-index:6;right:calc(var(--panel) + 56px);bottom:24px;display:flex;align-items:center;gap:6px;font-family:var(--serif);font-size:14px;letter-spacing:.1em}
+#keys kbd{font-family:var(--mono);font-size:11px;min-width:24px;height:24px;display:inline-grid;place-items:center;border:1px solid var(--cream);border-radius:4px;padding:0 6px;background:rgba(11,11,11,.8)}
+#keys em{font-style:normal;margin:0 6px 0 4px}
+#zoom{position:fixed;z-index:6;right:calc(var(--panel) + 56px);bottom:64px;display:flex;flex-direction:column;border:1px solid var(--cream);background:rgba(11,11,11,.85)}
+#zoom button{width:40px;height:40px;font-size:20px;line-height:1;color:var(--cream)}
+#zoom button+button{border-top:1px solid var(--edge)}
+#zoom button:active{background:#222}
+#banner{position:fixed;z-index:9;left:calc((100% - var(--panel) - 40px)/2);top:96px;transform:translateX(-50%);text-align:center;pointer-events:none;opacity:0}
+#banner small{display:block;font-family:var(--serif);font-weight:700;font-size:15px;letter-spacing:.24em;margin-bottom:8px;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+#banner small::before{content:"＼ "}#banner small::after{content:" ／"}
+#banner b{display:inline-block;font-family:var(--serif);font-weight:900;font-size:clamp(26px,3.2vw,40px);letter-spacing:.12em;color:#fff;background:var(--dot);padding:10px 44px 12px;clip-path:polygon(0 0,100% 0,96% 50%,100% 100%,0 100%,4% 50%);white-space:nowrap}
+#banner.on{animation:ban 2.6s ease forwards}
+@keyframes ban{0%{opacity:0;transform:translate(-50%,-10px) scale(.96)}10%{opacity:1;transform:translate(-50%,0) scale(1.03)}16%{transform:translate(-50%,0) scale(1)}82%{opacity:1}100%{opacity:0}}
+#panel{position:fixed;z-index:7;right:20px;top:76px;bottom:20px;width:var(--panel);background:rgba(11,11,11,.95);border:1px solid var(--edge);display:flex;flex-direction:column;padding:26px 28px 22px;overflow-y:auto;scrollbar-width:thin}
+#panel::before{content:"";position:absolute;inset:7px;border:1px solid rgba(58,55,50,.6);pointer-events:none}
+.who{display:flex;align-items:center;gap:16px;width:100%;text-align:left;cursor:default}
+#peek,.chev{display:none}
+.who svg{flex:none;width:110px;height:100px}
+.who b{display:block;font-family:var(--serif);font-weight:900;font-size:44px;letter-spacing:.12em;line-height:1.1}
+.who b::after{content:"";display:block;width:56px;height:3px;background:var(--dot);margin-top:8px}
+.who small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.26em;color:#9a9282;margin-top:10px}
+#say{font-family:var(--serif);font-weight:500;font-size:17px;line-height:1.95;letter-spacing:.06em;margin-top:18px;min-height:5.8em;white-space:pre-line;cursor:pointer}
+#say .cur{display:inline-block;width:2px;height:1.1em;background:var(--dot);vertical-align:-3px;margin-left:3px;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+#strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+#strip:empty{display:none}
+#strip a{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--edge);background:var(--navy2)}
+#strip img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+#strip a:hover img{transform:scale(1.06)}
+#strip a span{position:absolute;inset:auto 0 0 0;padding:16px 6px 5px;font-size:10.5px;line-height:1.35;background:linear-gradient(transparent,rgba(11,11,11,.95));opacity:0;transition:.3s}
+#strip a:hover span{opacity:1}
+#strip em{position:absolute;right:5px;top:5px;font-style:normal;font-size:10px;background:rgba(0,0,0,.6);border-radius:99px;padding:1px 6px}
+#opts{margin-top:auto;padding-top:18px;display:flex;flex-direction:column}
+#opts .k{display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid var(--edge);font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.1em;text-align:left;transition:.25s}
+#opts .k:first-child{border-top:1px solid var(--edge)}
+#opts .k::before{content:"▶";font-size:11px;color:var(--cream);opacity:.5;transition:.25s}
+#opts .k::after{content:"→";margin-left:auto;font-family:var(--sans);font-weight:300;opacity:.7;transition:transform .25s}
+#opts .k:hover{color:#fff;padding-left:10px}
+#opts .k:hover::before{opacity:1;color:var(--dot)}
+#opts .k:hover::after{transform:translateX(4px)}
+#opts .main{color:var(--dot)}#opts .main::before{color:var(--dot);opacity:1}
+#opts .lg::before{color:var(--lg);opacity:1}
+#opts.grid{display:grid;grid-template-columns:1fr 1fr;column-gap:16px}
+#opts.grid .k:nth-child(2){border-top:1px solid var(--edge)}
+#opts.grid .k{font-size:15px;padding:11px 2px}
+#opts.grid .k::after{display:none}
+#opts .k.wide{grid-column:1/-1}
+@media (max-width:999px){
+  :root{--panel:0px}
+  .mid{display:none}.nav{gap:12px;font-size:13px}
+  #title{top:68px}#title h1{font-size:30px;gap:10px}#title p{font-size:12px}
+  #stamps{top:150px;bottom:auto;left:16px;right:auto;padding:7px 12px;gap:8px}
+  #title.hide~#stamps{top:68px;left:auto;right:12px}
+  #stamps svg{display:none}#stamps b{font-size:13px}#stamps i{width:10px;height:10px}
+  #mini,#keys{display:none}
+  #zoom{right:12px;bottom:calc(74px + 16px + env(safe-area-inset-bottom))}
+  #panel{left:0;right:0;top:auto;bottom:0;width:auto;height:min(60vh,520px);padding:0 18px calc(14px + env(safe-area-inset-bottom));border:0;border-top:1px solid var(--edge);border-radius:16px 16px 0 0;transform:translateY(0);transition:transform .38s cubic-bezier(.2,.8,.2,1);will-change:transform}
+  #panel.min{transform:translateY(calc(100% - 74px - env(safe-area-inset-bottom)));overflow:hidden}
+  #panel::before{display:none}
+  .who{width:100%;height:74px;flex:none;text-align:left;gap:10px;position:sticky;top:0;background:rgba(11,11,11,.97);z-index:1}
+  .who::before{content:"";position:absolute;left:50%;top:7px;width:38px;height:4px;border-radius:2px;background:#4a463f;transform:translateX(-50%)}
+  .who svg{width:58px;height:54px}.who b{font-size:22px;display:inline-block}.who b::after{display:none}
+  .who small{display:none}
+  #peek{display:block;font-family:var(--serif);font-size:13px;letter-spacing:.04em;color:#cfc6b4;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62vw}
+  .chev{margin-left:auto;width:12px;height:12px;border-left:2px solid var(--cream);border-top:2px solid var(--cream);transform:rotate(45deg) translate(3px,3px);transition:transform .3s}
+  #panel:not(.min) .chev{transform:rotate(225deg) translate(3px,3px)}
+  #say{font-size:15px;min-height:3.6em;margin-top:4px;line-height:1.8}
+  #strip{grid-template-columns:repeat(6,92px);overflow-x:auto;scrollbar-width:none;margin-top:10px}
+  #opts{padding-top:10px}#opts .k{font-size:15px;padding:10px 2px}
+  #banner{left:50%;top:84px}
+}
+/* 開場 */
+#opening{position:fixed;inset:0;z-index:30;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 24px calc(24px + env(safe-area-inset-bottom));text-align:center;transition:opacity .6s}
+#opening.out{opacity:0;pointer-events:none}
+#opening .skip{position:absolute;top:calc(16px + env(safe-area-inset-top));right:18px;font-family:var(--serif);font-size:14px;letter-spacing:.14em;opacity:.7}
+#opDot{width:min(78vw,340px);height:auto}
+.op-step{display:none;max-width:420px}
+.op-step.on{display:block;animation:rise .6s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+.op-step small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--dot);margin-bottom:10px}
+.op-step h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,8vw,44px);letter-spacing:.1em;line-height:1.25}
+.op-step p{font-family:var(--serif);font-size:16px;line-height:1.9;letter-spacing:.06em;color:#cfc6b4;margin-top:14px}
+#howto{list-style:none;margin-top:18px;display:grid;gap:12px;text-align:left}
+#howto li{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid var(--edge);animation:rise .5s ease both}
+#howto li:nth-child(2){animation-delay:.08s}#howto li:nth-child(3){animation-delay:.16s}#howto li:nth-child(4){animation-delay:.24s}
+#howto svg,#howto kbd{flex:none}
+#howto kbd{font-family:var(--mono);font-size:11px;min-width:30px;height:28px;display:inline-grid;place-items:center;border:1px solid var(--cream);border-radius:4px;padding:0 7px}
+#howto b{display:block;font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.08em}
+#howto span{font-size:13px;color:#cfc6b4}
+.op-foot{display:flex;align-items:center;gap:24px;margin-top:28px}
+.op-dots{display:flex;gap:8px}.op-dots i{width:8px;height:8px;border-radius:50%;border:1px solid var(--cream)}.op-dots i.on{background:var(--dot);border-color:var(--dot)}
+.op-next{font-family:var(--serif);font-weight:700;font-size:16px;letter-spacing:.14em;background:var(--dot);color:#fff;padding:12px 30px}
+/* 走進門：從門口擴散的黑色圓 */
+#iris{position:fixed;inset:0;z-index:15;background:var(--navy);pointer-events:none;clip-path:circle(0 at var(--x,50%) var(--y,50%));transition:clip-path .55s cubic-bezier(.6,0,.4,1)}
+#iris.on{clip-path:circle(150vmax at var(--x,50%) var(--y,50%))}
+#iris.inst{transition:none}
+/* 作品展示間 */
+#show{position:fixed;inset:0;z-index:16;background:var(--navy);overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .4s;-webkit-overflow-scrolling:touch}
+#show.on{opacity:1;pointer-events:auto}
+#show .back{position:fixed;z-index:2;top:calc(14px + env(safe-area-inset-top));left:16px;font-family:var(--serif);font-weight:700;font-size:14px;letter-spacing:.12em;padding:9px 14px;background:rgba(11,11,11,.85);border:1px solid var(--edge)}
+#show .hero{position:relative;height:min(52vh,520px);display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--edge)}
+#show .hero img{max-width:92%;max-height:92%;object-fit:contain}
+#show.on .hero img{animation:push 1.1s cubic-bezier(.2,.8,.2,1) both}
+@keyframes push{from{transform:scale(1.25);opacity:0}}
+#show .hero::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(transparent,var(--navy))}
+#show .cap{position:absolute;z-index:1;left:0;right:0;bottom:22px;text-align:center}
+#show .cap small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.32em;color:var(--dot)}
+#show .cap h2{font-family:var(--serif);font-weight:900;font-size:clamp(30px,6vw,52px);letter-spacing:.12em;margin-top:6px}
+#show.on .cap{animation:rise .7s .25s ease both}
+#show .body{max-width:980px;margin:0 auto;padding:22px 18px calc(32px + env(safe-area-inset-bottom))}
+#show .guide{display:flex;align-items:flex-start;gap:12px}
+#shDot{flex:none;width:64px;height:58px}
+#shSay{font-family:var(--serif);font-weight:500;font-size:16px;line-height:1.9;letter-spacing:.05em;padding-top:6px}
+#shGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:20px}
+@media (min-width:760px){#shGrid{grid-template-columns:repeat(3,1fr);gap:16px}#show .body{padding:30px 32px 40px}}
+#shGrid a{display:block}
+#show.on #shGrid a{animation:rise .5s ease both}
+#shGrid .im{position:relative;aspect-ratio:4/3;overflow:hidden;border:1px solid var(--edge);background:var(--navy2)}
+#shGrid img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+#shGrid a:hover img{transform:scale(1.05)}
+#shGrid em{position:absolute;right:6px;top:6px;font-style:normal;font-size:10px;background:rgba(0,0,0,.65);border-radius:99px;padding:2px 7px}
+#shGrid p{font-size:13px;line-height:1.5;margin-top:7px;color:#e6dcc8}
+#shOpts{margin-top:26px;display:flex;flex-direction:column}
+#shOpts .k{display:flex;align-items:center;gap:12px;padding:15px 4px;border-bottom:1px solid var(--edge);font-family:var(--serif);font-weight:700;font-size:17px;letter-spacing:.1em;text-align:left}
+#shOpts .k:first-child{border-top:1px solid var(--edge)}
+#shOpts .k::before{content:"▶";font-size:11px;opacity:.5}
+#shOpts .k::after{content:"→";margin-left:auto;font-family:var(--sans);font-weight:300;opacity:.7}
+#shOpts .main{color:var(--dot)}#shOpts .main::before{opacity:1}
+#shOpts .lg::before{color:var(--lg);opacity:1}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="logo" href="index.html">賣點設計<i></i></a>
+  <span class="mid">Service Map</span>
+  <nav class="nav"><a href="index.html">回首頁</a><s></s><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></nav>
+</header>
+<svg id="map" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice" role="img" aria-label="賣點設計服務小鎮地圖"></svg>
+<div id="title"><h1>服務地圖<i></i></h1><p>賣點設計的服務小鎮・走進每一棟看看</p></div>
+<div id="stamps" aria-label="集章進度">
+  <svg width="30" height="34" viewBox="0 0 30 34" aria-hidden="true"><path d="M10 3h10v9c0 3 6 5 6 10v3H4v-3c0-5 6-7 6-10z" fill="none" stroke="#efe6d4" stroke-width="1.6" stroke-linejoin="round"/><rect x="2" y="27" width="26" height="5" rx="1" fill="#efe6d4"/></svg>
+  <div><b>集章 <em id="stN" style="font-style:normal">0/7</em></b><span id="stD"></span></div>
+</div>
+<svg id="mini" viewBox="0 0 176 176" aria-hidden="true"></svg>
+<div id="keys"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd><em>方向鍵移動</em>・<kbd>Space</kbd><em>進入</em></div>
+<div id="zoom" aria-label="地圖縮放"><button type="button" data-z="in" aria-label="放大">＋</button><button type="button" data-z="out" aria-label="縮小">－</button></div>
+<div id="banner"><small></small><b></b></div>
+<aside id="panel" aria-live="polite">
+  <button class="who" id="grab" type="button" aria-expanded="true"><svg id="portrait" viewBox="0 0 110 100" aria-hidden="true"></svg><div><b>小點</b><small id="loc">GUIDE · 賣點設計導覽員</small><span id="peek"></span></div><i class="chev" aria-hidden="true"></i></button>
+  <p id="say"></p>
+  <div id="strip"></div>
+  <div id="opts"></div>
+</aside>
+<div id="opening" aria-live="polite" hidden>
+  <button class="skip" type="button">略過</button>
+  <svg id="opDot" viewBox="0 0 240 150" aria-hidden="true"></svg>
+  <div class="op-step on"><small>SERVICE MAP · 服務地圖</small><h2>嗨，我是小點</h2><p>賣點設計的導覽員。<br>這座小鎮的每一棟建築，都是我們能幫你做的事。</p></div>
+  <div class="op-step"><small>HOW TO PLAY · 怎麼玩</small><h2>跟著我逛一圈</h2><ul id="howto"></ul></div>
+  <div class="op-foot"><span class="op-dots"><i class="on"></i><i></i></span><button class="op-next" type="button">下一步</button></div>
+</div>
+<div id="iris" aria-hidden="true"></div>
+<section id="show" aria-hidden="true" tabindex="-1">
+  <button class="back" type="button">← 回到小鎮</button>
+  <div class="hero"><img id="shArt" alt=""><div class="cap"><small id="shEn"></small><h2 id="shTitle"></h2></div></div>
+  <div class="body">
+    <div class="guide"><svg id="shDot" viewBox="0 0 110 100" aria-hidden="true"></svg><p id="shSay"></p></div>
+    <div id="shGrid"></div>
+    <div id="shOpts"></div>
+  </div>
+</section>
+<iframe id="src" src="index.html?data=1" title="作品資料" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0" aria-hidden="true" tabindex="-1"></iframe>
+<script type="module">
+import {el,pen,paint,limb,shoe,hang,inkDefs,place} from './lib/ink.js';
+import {gait} from './lib/gait.js';
+
+const LINE='https://line.me/ti/p/UplDc9NA68';
+const $=s=>document.querySelector(s);
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const touch=matchMedia('(pointer:coarse)').matches;
+const q=new URLSearchParams(location.search);
+const IMG='guide-assets/map-k.jpg',MW=1536,MH=1024;
+const svg=$('#map');
+
+/* ---------- 七棟建築：座標都是底圖 1536×1024 上的像素 ----------
+   poly：建築佔的地（小點走不進去）；door：門口；tag／pin：標籤和引線指到的點；route：從廣場沿路走過去的轉折點 */
+const PLAZA=[620,590];
+const B=[
+ {k:'event',no:'01',zh:'活動會場',en:'EVENT HALL',cat:'場地佈置',
+  poly:[[100,300],[240,200],[600,190],[690,380],[560,450],[420,450],[240,525],[95,440]],door:[505,492],tag:[150,232],pin:[250,330],lx:90,ly:95,route:[[560,525]],
+  say:'這裡是活動會場。開幕、尾牙、論壇、典禮和展覽，從企劃、主視覺、背板，到活動當天的現場佈置，我們都會到場處理。'},
+ {k:'design',no:'02',zh:'設計工作室',en:'DESIGN STUDIO',cat:'平面設計',
+  poly:[[650,262],[700,92],[1030,112],[1030,250],[860,352],[762,348]],door:[716,362],tag:[600,96],pin:[760,190],route:[[560,525],[660,455],[752,388]],
+  say:'設計工作室負責海報、手冊、型錄、品牌識別、簡報和社群圖。我們會先聽你想說什麼，再決定怎麼設計。'},
+ {k:'motion',no:'03',zh:'動畫放映室',en:'MOTION LAB',cat:'動畫影片',
+  poly:[[1090,250],[1130,170],[1350,130],[1420,210],[1400,400],[1290,420],[1130,372]],door:[1150,390],tag:[1120,104],pin:[1200,180],route:[[790,630],[1010,690],[1300,560],[1300,462]],
+  say:'動畫放映室做宣導動畫、產品動畫和活動開場影片，也可以幫你拍攝和剪輯。'},
+ {k:'illus',no:'04',zh:'插畫小屋',en:'ILLUSTRATION',cat:'插畫',
+  poly:[[800,472],[930,372],[1060,372],[1170,482],[1160,580],[1000,630],[800,562]],door:[905,614],tag:[880,316],pin:[950,420],route:[[790,630]],
+  say:'插畫小屋畫繪本、手繪地圖、角色和活動主視覺，從草稿一路畫到完稿。'},
+ {k:'print',no:'05',zh:'印刷廠',en:'PRINT WORKS',cat:null,
+  poly:[[160,720],[230,620],[380,560],[560,662],[540,800],[430,850],[330,862],[160,800]],door:[520,862],tag:[60,560],pin:[200,650],route:[[605,760],[565,840]],
+  say:'印刷廠接在設計之後。印刷、大圖輸出和打樣都由我們處理，不用另外找廠商對稿。'},
+ {k:'gift',no:'06',zh:'贈品商店',en:'GIFT SHOP',cat:'包裝贈品',
+  poly:[[642,700],[790,650],[930,712],[920,880],[780,930],[642,880]],door:[612,800],tag:[470,610],pin:[690,700],route:[[612,700]],
+  say:'贈品商店做桌曆、提袋、文具和客製禮盒。從設計、打樣到成品，交到你手上。'},
+ {k:'line',no:'07',zh:'聯絡站',en:'CONTACT',cat:'line',
+  poly:[[1080,742],[1160,662],[1360,662],[1410,742],[1400,880],[1270,912],[1102,880]],door:[1058,872],tag:[1180,600],pin:[1240,690],route:[[790,630],[1000,700],[1020,800]],
+  say:'不確定要找哪一棟也沒關係，直接傳 LINE 給我們，先聊聊再決定。'}
+];
+const ISLAND=[[60,420],[300,140],[700,50],[1300,90],[1490,320],[1490,820],[1260,975],[600,975],[60,870]];
+/* 點亮後的建築圖（預先算好），[左, 上, 右, 下] */
+const LITBOX={"event": [69, 164, 712, 548], "design": [628, 67, 1059, 379], "motion": [1067, 107, 1446, 445], "illus": [773, 344, 1196, 654], "print": [133, 538, 585, 888], "gift": [614, 627, 957, 954], "line": [1056, 634, 1436, 937]};
+const LAMPS=[[660,470],[925,640],[1266,502]];
+const TOUR=['event','design','motion','illus','print','gift','line'];
+
+/* ---------- 畫地圖 ---------- */
+const pp=a=>a.map(p=>p.join(',')).join(' ');
+svg.innerHTML=`<defs>
+ <radialGradient id="lampg"><stop offset="0" stop-color="#fff3d6" stop-opacity=".95"/><stop offset=".25" stop-color="#ffc978" stop-opacity=".55"/><stop offset="1" stop-color="#ffc978" stop-opacity="0"/></radialGradient>
+ <radialGradient id="mote"><stop offset="0" stop-color="#eaf8ff"/><stop offset=".4" stop-color="#bfe8ff" stop-opacity=".6"/><stop offset="1" stop-color="#bfe8ff" stop-opacity="0"/></radialGradient>
+</defs>
+<rect x="-2000" y="-2000" width="${MW+4000}" height="${MH+4000}" fill="#0b0b0b"/>
+<image href="${IMG}" width="${MW}" height="${MH}"/>
+<rect id="dim" x="-2000" y="-2000" width="${MW+4000}" height="${MH+4000}" fill="#000" opacity=".34"/>
+${B.map(b=>{const r=LITBOX[b.k];return`<image class="lit" id="L-${b.k}" href="guide-assets/lit-${b.k}.webp" x="${r[0]}" y="${r[1]}" width="${r[2]-r[0]}" height="${r[3]-r[1]}"/>`}).join('')}
+${LAMPS.map((p,i)=>`<circle class="lamp" id="lamp${i}" cx="${p[0]}" cy="${p[1]}" r="46" fill="url(#lampg)"/>`).join('')}
+<g id="motes"></g>
+<g id="ring" class="ring"><ellipse rx="34" ry="13"/><ellipse class="r2" rx="34" ry="13" style="transform-box:fill-box;transform-origin:center"/></g>
+<g id="actors"></g>
+${B.map(b=>{const xs=b.poly.map(p=>p[0]),cx=(Math.min(...xs)+Math.max(...xs))/2+(b.lx||0),ty=Math.min(...b.poly.map(p=>p[1]))-18+(b.ly||0),w=b.zh.length*23+36;
+  return`<g class="tag" id="T-${b.k}" data-k="${b.k}" transform="translate(${cx} ${ty})"><g class="ti"><text text-anchor="middle"><tspan class="no">${b.no}</tspan><tspan class="zh" dx="8">${b.zh}</tspan></text><rect class="bar" x="${-w/2}" y="9" width="${w}" height="3"/></g></g>`}).join('')}`;
+svg.style.color='#efe6d4';svg.style.setProperty('--paper','#0b0b0b');
+const ink=inkDefs(svg);
+const st=document.createElementNS('http://www.w3.org/2000/svg','style');st.textContent='.pp{fill:var(--paper)}';svg.appendChild(st);
+
+/* 漂浮的光點（涼感） */
+const motes=[];for(let i=0;i<(touch||innerWidth<1000?9:22);i++){const c=el('circle',{r:2+Math.random()*3,fill:'url(#mote)'},$('#motes'));motes.push({c,x:120+Math.random()*1300,y:120+Math.random()*820,v:6+Math.random()*10,ph:Math.random()*6.28,a:.3+Math.random()*.5})}
+
+/* ---------- 小點：line-art-animation 的線稿與跑步步態 ---------- */
+function makeDot(parent){
+  const body=el('g',{},parent);
+  const legB=limb(body,4.2),armB=limb(body,3.4),shoeB=el('path',{fill:'currentColor'},body);
+  const ball=paint(body,'#ff4a1c');
+  const eyeA=el('ellipse',{rx:2.4,ry:3,fill:'#fff'},body),eyeB=el('ellipse',{rx:2.1,ry:2.8,fill:'#fff'},body);
+  const smile=pen(body,1.3);smile.setAttribute('stroke','#fff');
+  const legF=limb(body,4.2),armF=limb(body,3.4),shoeF=el('path',{fill:'currentColor'},body);
+  const handB=el('circle',{r:2.3,fill:'currentColor'},body),handF=el('circle',{r:2.3,fill:'currentColor'},body);
+  return{draw(p,go,wave=null){
+    const hipY=p.hip[1],cy=hipY-15;
+    const back=p.front?0:1,front=p.front;
+    const leg=(L,f,dx)=>L.draw([[40+dx,hipY],[f.knee[0]+dx,f.knee[1]],[f.ankle[0]+dx,f.ankle[1]]]);
+    leg(legB,p.feet[back],-2);leg(legF,p.feet[front],2);
+    shoe(shoeB,[p.feet[back].ankle[0]-2,p.feet[back].ankle[1]],p.feet[back].pitch);
+    shoe(shoeF,[p.feet[front].ankle[0]+2,p.feet[front].ankle[1]],p.feet[front].pitch);
+    ball.setAttribute('d',`M22 ${cy}a18 17.5 0 1 0 36 0a18 17.5 0 1 0 -36 0Z`);
+    eyeA.setAttribute('cx',49);eyeA.setAttribute('cy',cy-4);eyeB.setAttribute('cx',56.5);eyeB.setAttribute('cy',cy-3.6);
+    smile.setAttribute('d',`M48 ${cy+4}Q52.5 ${cy+7.5} 57 ${cy+3.5}`);
+    const sh=[40,cy+3],aw=(p.feet[front].ankle[0]-40)*-2.2*go;
+    const arm=(L,hand,deg,dx,bend=18)=>{const s0=[sh[0]+dx,sh[1]],e=hang(s0,7,deg),w=hang(e,7,deg+bend);L.draw([s0,e,w]);hand.setAttribute('cx',w[0]);hand.setAttribute('cy',w[1])};
+    arm(armB,handB,-aw-6,-3);
+    if(wave!==null)arm(armF,handF,150+wave,6,-12);else arm(armF,handF,aw+6,3);
+  }};
+}
+const RUN=gait({kind:'run',thigh:10,shin:10,stride:20,lift:7,heelKick:2.5,period:0.36,ankleY:118,ground:120,toe:3});
+const SC=0.8;
+const actors=$('#actors');
+const shadow=el('ellipse',{rx:15,ry:5,fill:'#000',opacity:.42},actors);
+const LITE=touch||innerWidth<1000;
+const fig=el('g',LITE?{}:{filter:ink.filter},actors);const dot=makeDot(fig);
+const tip=el('g',{opacity:0},actors);
+el('rect',{x:-92,y:-34,width:184,height:32,rx:4,fill:'rgba(11,11,11,.95)',stroke:'#efe6d4','stroke-width':1.2},tip);
+el('rect',{x:-82,y:-28,width:52,height:20,rx:3,fill:'#efe6d4'},tip);
+const k1=el('text',{x:-56,y:-13.5,'text-anchor':'middle','font-size':11,'font-family':'JetBrains Mono,monospace',fill:'#0b0b0b','font-weight':500},tip);k1.textContent=touch?'TAP':'Space';
+const k2=el('text',{x:24,y:-12.5,'text-anchor':'middle','font-size':14,'font-family':'Noto Serif TC,serif','font-weight':700,fill:'#efe6d4'},tip);k2.textContent=touch?'點一下進入':'按空白鍵進入';
+el('path',{d:'M-6 -2L0 6L6 -2Z',fill:'#efe6d4'},tip);
+/* 右側欄的大張小點：站著揮手 */
+const pt=$('#portrait');pt.style.color='#efe6d4';pt.style.setProperty('--paper','#0b0b0b');
+const pst=document.createElementNS('http://www.w3.org/2000/svg','style');pst.textContent='.pp{fill:var(--paper)}';pt.appendChild(pst);
+const pg=el('g',{transform:'translate(14 -32) scale(1.05)'},pt);const pdot=makeDot(pg);
+el('path',{d:'M86 8l6-6M92 17l8-3M80 4l1-8',stroke:'#ff4a1c','stroke-width':2.2,'stroke-linecap':'round',fill:'none'},pt);
+
+/* ---------- 碰撞 ---------- */
+const inPoly=(x,y,poly)=>{let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const[xi,yi]=poly[i],[xj,yj]=poly[j];if((yi>y)!==(yj>y)&&x<(xj-xi)*(y-yi)/(yj-yi)+xi)c=!c}return c};
+const free=(x,y)=>inPoly(x,y,ISLAND)&&!B.some(b=>inPoly(x,y,b.poly));
+const clear=(a,b)=>{const n=Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/12);for(let i=1;i<=n;i++){const t=i/n;if(!free(a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t))return false}return true};
+
+/* ---------- 狀態與操作 ---------- */
+const me={x:PLAZA[0],y:PLAZA[1],dir:1,phase:0,go:0};
+let path=[],autoEnter=null,near=null,inside=null,follow=false,tour=-1,started=false;
+const got=new Set(),keys=new Set();
+const KMAP={ArrowUp:'u',KeyW:'u',ArrowDown:'d',KeyS:'d',ArrowLeft:'l',KeyA:'l',ArrowRight:'r',KeyD:'r'};
+const PHONE=()=>innerWidth<1000;
+function setMin(v){if(!PHONE())v=false;$('#panel').classList.toggle('min',v);$('#grab').setAttribute('aria-expanded',String(!v))}
+$('#grab').addEventListener('click',()=>{if(PHONE())setMin(!$('#panel').classList.contains('min'))});
+function peek(s){$('#peek').textContent=s}
+function begin(){if(!started){started=true;$('#title').classList.add('hide')}follow=true;pan=null;setMin(true)}
+addEventListener('keydown',e=>{
+  if(opOn){if(e.key==='Enter'||e.code==='Space'){e.preventDefault();opNext()}if(e.key==='Escape')opClose();return}
+  if(showing){if(e.key==='Escape')closeShow();return}
+  if(KMAP[e.code]){keys.add(KMAP[e.code]);path=[];autoEnter=null;tour=-1;begin();e.preventDefault();return}
+  const tagN=document.activeElement&&document.activeElement.tagName;
+  if((e.code==='Space'||e.code==='Enter')&&near&&near!==inside&&tagN!=='BUTTON'&&tagN!=='A'){e.preventDefault();enter(near);return}
+  const n=+e.key;if(n>=1&&n<=9){const o=$('#opts').children[n-1];if(o)o.click()}
+  if(e.key==='Escape')explore()});
+addEventListener('keyup',e=>{if(KMAP[e.code])keys.delete(KMAP[e.code])});
+addEventListener('blur',()=>keys.clear());
+const toMap=e=>new DOMPoint(e.clientX,e.clientY).matrixTransform(svg.getScreenCTM().inverse());
+/* 拖曳移動地圖、雙指縮放、滾輪縮放；拖過就不算點擊 */
+const ptrs=new Map();let drag=null,dragged=false,pinch=null;
+svg.addEventListener('pointerdown',e=>{ptrs.set(e.pointerId,[e.clientX,e.clientY]);dragged=false;
+  if(ptrs.size===1){const v=svg.viewBox.baseVal;drag={x:e.clientX,y:e.clientY,c:[v.x+v.width/2,v.y+v.height/2]}}
+  else if(ptrs.size===2){const [a,b]=[...ptrs.values()];pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),z:Z};drag=null}});
+svg.addEventListener('pointermove',e=>{if(!ptrs.has(e.pointerId))return;ptrs.set(e.pointerId,[e.clientX,e.clientY]);
+  if(pinch&&ptrs.size===2){const [a,b]=[...ptrs.values()];setZ(pinch.z*Math.hypot(a[0]-b[0],a[1]-b[1])/pinch.d);dragged=true;return}
+  if(drag){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(!dragged&&Math.hypot(dx,dy)<8)return;dragged=true;
+    const s=camScale(),a=area(),v=svg.viewBox.baseVal;const off=[((a.left+a.right)/2)/s-v.width/2,((a.top+a.bot)/2)/s-v.height/2];
+    pan=[drag.c[0]-dx/s+off[0],drag.c[1]-dy/s+off[1]];pan=[Math.max(0,Math.min(MW,pan[0])),Math.max(0,Math.min(MH,pan[1]))]}});
+const up=e=>{ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;if(!ptrs.size)drag=null};
+svg.addEventListener('pointerup',up);svg.addEventListener('pointercancel',up);
+svg.addEventListener('wheel',e=>{e.preventDefault();setZ(Z*Math.exp(-e.deltaY*0.0015))},{passive:false});
+document.querySelectorAll('#zoom button').forEach(b=>b.addEventListener('click',()=>setZ(Z*(b.dataset.z==='in'?1.3:1/1.3))));
+svg.addEventListener('click',e=>{
+  if(dragged){dragged=false;return}
+  const t=e.target.closest('.tag');if(t){walkTo(t.dataset.k);return}
+  const p=toMap(e);const hit=B.find(b=>inPoly(p.x,p.y,b.poly));
+  if(hit){if(near===hit&&inside!==hit){enter(hit);return}walkTo(hit.k);return}
+  if(!free(p.x,p.y))return;
+  path=[[p.x,p.y]];autoEnter=null;tour=-1;begin();ripple(p.x,p.y)});
+function ripple(x,y){const r=el('ellipse',{cx:x,cy:y,rx:6,ry:2.4,fill:'none',stroke:'#ffc978','stroke-width':2},$('#actors'));
+  r.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:'scale(5)'}],{duration:700,easing:'ease-out'});r.style.transformBox='fill-box';r.style.transformOrigin='center';setTimeout(()=>r.remove(),720)}
+/* 走到某一棟：能直走就直走，不然先回廣場再沿路走 */
+function walkTo(k){const b=B.find(x=>x.k===k);begin();autoEnter=k;
+  if(clear([me.x,me.y],b.door)){path=[b.door];return}
+  const c=inside||near;const back=c?[...c.route].reverse():[];
+  path=[...back,PLAZA,...b.route,b.door]}
+
+/* ---------- 主迴圈 ---------- */
+let vb=[0,0,MW,MH],camT=null,lastLs='',vbSet=false;
+function loop(dt,t){
+  let sx=0,sy=0;
+  if(keys.has('u'))sy-=1;if(keys.has('d'))sy+=1;if(keys.has('l'))sx-=1;if(keys.has('r'))sx+=1;
+  if(!sx&&!sy&&path.length){const tg=path[0];const dx=tg[0]-me.x,dy=tg[1]-me.y,d=Math.hypot(dx,dy);
+    if(d<3){path.shift();if(!path.length&&autoEnter){const k=autoEnter;autoEnter=null;enter(B.find(b=>b.k===k))}}
+    else{sx=dx/d;sy=dy/d}}
+  const l=Math.hypot(sx,sy),moving=l>0;
+  if(moving){sx/=l;sy/=l;
+    /* 每秒走 RUN.speed×SC 像素，腳才會踩穩不滑 */
+    const step=RUN.speed*SC*dt;let nx=me.x+sx*step,ny=me.y+sy*step;
+    if(path.length&&Math.hypot(path[0][0]-me.x,path[0][1]-me.y)<step){nx=path[0][0];ny=path[0][1]}
+    if(free(nx,ny)){me.x=nx;me.y=ny}else if(free(nx,me.y))me.x=nx;else if(free(me.x,ny))me.y=ny;
+    else if(path.length){path=[];if(autoEnter){const k=autoEnter;autoEnter=null;enter(B.find(b=>b.k===k))}}
+    if(Math.abs(sx)>0.2)me.dir=sx>0?1:-1}
+  me.go+=((moving?1:0)-me.go)*Math.min(1,dt*9);
+  me.phase+=dt/RUN.period*Math.max(me.go,0.0001);
+  dot.draw(RUN.pose(me.phase,me.go),me.go);
+  place(fig,me.x,me.y,me.dir,SC);
+  shadow.setAttribute('cx',me.x);shadow.setAttribute('cy',me.y+1);
+  tip.setAttribute('transform',`translate(${me.x.toFixed(1)} ${(me.y-66).toFixed(1)})`);
+  /* 走到門口：建築點亮、地上出現光圈 */
+  let nb=null,best=46;for(const b of B){const d=Math.hypot(b.door[0]-me.x,b.door[1]-me.y);if(d<best){best=d;nb=b}}
+  if(nb!==near){near=nb;B.forEach(b=>['L-','T-'].forEach(p=>$('#'+p+b.k).classList.toggle('near',b===near)));
+    const r=$('#ring');if(near){r.setAttribute('transform',`translate(${near.door[0]} ${near.door[1]})`);r.classList.add('show')}else r.classList.remove('show')}
+  tip.setAttribute('opacity',near&&near!==inside&&!autoEnter?1:0);
+  if(inside&&Math.hypot(inside.door[0]-me.x,inside.door[1]-me.y)>90){inside=null;B.forEach(b=>['L-','T-'].forEach(p=>$('#'+p+b.k).classList.remove('on')));if(tour<0)explore()}
+  for(const m of motes){m.y-=m.v*dt;if(m.y<60){m.y=980;m.x=120+Math.random()*1300}m.c.setAttribute('cx',(m.x+Math.sin(t*.6+m.ph)*14).toFixed(1));m.c.setAttribute('cy',m.y.toFixed(1));m.c.setAttribute('opacity',(m.a*(.6+.4*Math.sin(t*2+m.ph))).toFixed(2))}
+  pdot.draw(RUN.pose(0,0),0,Math.sin(t*5)*22);
+  if(opOn)opLoop(dt,t);
+  if(showing)shDot.draw(RUN.pose(0,0),0,Math.sin(t*5)*22);
+  if(!PHONE())mini();
+  const tg=followBox();const k=Math.min(1,dt*3.2);let mv=0;vb=vb.map((v,i)=>{const d=(tg[i]-v)*k;mv+=Math.abs(d);return v+d});if(mv>0.04||!vbSet){vbSet=true;svg.setAttribute('viewBox',vb.map(n=>n.toFixed(2)).join(' '))}
+  /* 建築名稱在螢幕上維持固定大小，不跟著鏡頭縮放 */
+  const ls=(vb[2]/innerWidth*(innerWidth<1000?0.78:0.92)).toFixed(3);if(ls!==lastLs){lastLs=ls;document.querySelectorAll('.ti').forEach(g=>g.setAttribute('transform',`scale(${ls})`))}
+}
+/* ---------- 鏡頭：地圖放在上方列和右側欄（手機是下方卡片）以外的空間 ---------- */
+function area(){const ph=PHONE(),pn=$('#panel');const top=58,bot=ph?innerHeight-(pn.classList.contains('min')?74:pn.offsetHeight):innerHeight,right=ph?innerWidth:innerWidth-pn.offsetWidth-40;return{top,bot,left:0,right}}
+const cover=()=>Math.max(innerWidth/MW,innerHeight/MH);
+function clampBox(x,y,s){const w=innerWidth/s,h=innerHeight/s;return[Math.max(0,Math.min(MW-w,x)),Math.max(0,Math.min(MH-h,y)),w,h]}
+function boxAt(cx,cy,s){const a=area();s=Math.max(s,cover());return clampBox(cx-((a.left+a.right)/2)/s,cy-((a.top+a.bot)/2)/s,s)}
+let Z=1,pan=null;
+const baseS=()=>PHONE()?Math.max(cover(),0.8):0.95;
+const camScale=()=>Math.min(3,Math.max(cover(),baseS()*Z));
+function setZ(z){Z=z;Z=camScale()/baseS()}
+function followBox(){const c=pan||[me.x,me.y-30];return boxAt(c[0],c[1],camScale())}
+function home(){follow=true;if(PHONE())return;pan=[MW/2+120,MH/2];Z=cover()/baseS()}
+addEventListener('resize',()=>setZ(Z));
+
+/* ---------- 小地圖、集章、橫幅 ---------- */
+$('#stD').innerHTML=B.map(b=>`<i data-k="${b.k}" title="${b.zh}"></i>`).join('');
+const MS=150/MW,MX=88-MW*MS/2,MY=88-MH*MS/2;
+$('#mini').innerHTML=`<defs><clipPath id="miniC"><circle cx="88" cy="88" r="80"/></clipPath></defs><circle cx="88" cy="88" r="86" fill="#0b0b0b" stroke="#efe6d4" stroke-width="1.5"/><g clip-path="url(#miniC)"><image href="${IMG}" x="${MX}" y="${MY}" width="${MW*MS}" height="${MH*MS}" opacity=".7"/>${B.map(b=>`<circle id="mk-${b.k}" cx="${MX+b.door[0]*MS}" cy="${MY+b.door[1]*MS}" r="3.4" fill="none" stroke="#efe6d4" stroke-width="1.2"/>`).join('')}<path id="mMe" d="M0 -7L5 5L0 2L-5 5Z" fill="#ff4a1c"/></g><circle cx="88" cy="88" r="80" fill="none" stroke="#efe6d4" stroke-width=".8" opacity=".6"/><text x="88" y="20" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="12" fill="#efe6d4">N</text>`;
+let lastX=me.x,lastY=me.y,heading=0;
+function mini(){const dx=me.x-lastX,dy=me.y-lastY;if(Math.hypot(dx,dy)>0.5)heading=Math.atan2(dx,-dy)*180/Math.PI;lastX=me.x;lastY=me.y;$('#mMe').setAttribute('transform',`translate(${(MX+me.x*MS).toFixed(1)} ${(MY+me.y*MS).toFixed(1)}) rotate(${heading.toFixed(0)})`)}
+function stamp(b){const isNew=!got.has(b.k);got.add(b.k);$('#stN').textContent=got.size+'/7';
+  document.querySelector(`#stD i[data-k="${b.k}"]`).classList.add('on');$('#mk-'+b.k).setAttribute('fill','#ff4a1c');$('#mk-'+b.k).setAttribute('stroke','#ff4a1c');
+  $('#L-'+b.k).classList.add('seen');
+  LAMPS.forEach((_,i)=>$('#lamp'+i).classList.toggle('on',got.size>=[2,4,6][i]));
+  if(got.size===7)$('#dim').setAttribute('opacity','0');
+  const bn=$('#banner');bn.querySelector('small').textContent=isNew?'新地點解鎖！':'歡迎回來';bn.querySelector('b').textContent=b.no+'　'+b.zh;
+  bn.classList.remove('on');void bn.offsetWidth;bn.classList.add('on');return isNew}
+
+/* ---------- 對話 ---------- */
+let typer=null,sayCb=null;
+function say(text,cb){clearInterval(typer);const e=$('#say');e.dataset.full=text;sayCb=cb;if(reduce){e.textContent=text;sayCb=null;return cb&&cb()}
+  let i=0;e.innerHTML='<span class="cur"></span>';typer=setInterval(()=>{i+=2;e.innerHTML=text.slice(0,i).replace(/</g,'&lt;')+'<span class="cur"></span>';if(i>=text.length){clearInterval(typer);typer=null;e.textContent=text;const c=sayCb;sayCb=null;c&&c()}},26)}
+$('#say').addEventListener('click',()=>{if(typer){clearInterval(typer);typer=null;$('#say').textContent=$('#say').dataset.full;const c=sayCb;sayCb=null;c&&c()}});
+function opts(list,grid=false){const o=$('#opts');o.className=grid?'grid':'';o.innerHTML='';list.forEach(x=>{const b=document.createElement(x.href?'a':'button');b.className='k '+(x.cls||'');b.textContent=x.t;
+  if(x.href){b.href=x.href;if(x.ext){b.target='_blank';b.rel='noopener'}}else b.onclick=x.fn;o.appendChild(b)})}
+let WORKS=[];
+function worksFor(b,n=6){if(!WORKS.length||b.cat==='line')return[];
+  if(b.k==='print')return WORKS.filter(w=>/手冊|桌曆|型錄|年報|摺頁|月曆|Handout/.test(w.nm)).slice(0,n);
+  return WORKS.filter(w=>w.tags.includes(b.cat)).slice(0,n)}
+const th=p=>'thumbs/'+p.replace(/\//g,'_');
+function strip(list){$('#strip').innerHTML=list.map(w=>`<a href="index.html#w=${encodeURIComponent(w.id)}"><img loading="lazy" src="${th(w.img)}" alt="">${w.vid?'<em>▶</em>':''}<span>${w.nm.replace(/</g,'&lt;')}</span></a>`).join('')}
+
+/* ---------- 進建築：拉近、從門口擴散黑圓、進作品展示間 ---------- */
+let showing=null,pendingFinale=false;
+function enter(b){if(showing)return;inside=b;path=[];autoEnter=null;const isNew=stamp(b);
+  B.forEach(x=>['L-','T-'].forEach(p=>$('#'+p+x.k).classList.toggle('on',x===b)));
+  $('#loc').textContent=b.no+' · '+b.en;peek(b.no+' '+b.zh);
+  if(isNew&&got.size===7)pendingFinale=true;
+  const xs=b.poly.map(p=>p[0]),ys=b.poly.map(p=>p[1]);const z0=Z;
+  pan=[(Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2];setZ(Z*1.6);showing=b;
+  setTimeout(()=>{const pt=new DOMPoint(b.door[0],b.door[1]).matrixTransform(svg.getScreenCTM());irisAt(pt.x,pt.y);$('#iris').classList.add('on');
+    setTimeout(()=>{openShow(b);Z=z0;pan=[me.x,me.y-30]},reduce?0:560)},reduce?0:750)}
+function irisAt(x,y){const s=$('#iris').style;s.setProperty('--x',x+'px');s.setProperty('--y',y+'px')}
+function openShow(b){const sh=$('#show');
+  $('#shArt').src='guide-assets/lit-'+b.k+'.webp';$('#shArt').alt=b.zh;$('#shEn').textContent=b.no+' · '+b.en;$('#shTitle').textContent=b.zh;
+  $('#shSay').textContent=b.say;
+  const list=worksFor(b,9);
+  $('#shGrid').innerHTML=list.map((w,i)=>`<a href="index.html#w=${encodeURIComponent(w.id)}" style="animation-delay:${.35+i*.06}s"><div class="im"><img loading="lazy" src="${th(w.img)}" alt="">${w.vid?'<em>▶ 動畫</em>':''}</div><p>${w.nm.replace(/</g,'&lt;')}</p></a>`).join('');
+  const o=[];
+  if(tour>=0){const nx=TOUR[tour+1];if(nx)o.push({t:'下一站：'+B.find(x=>x.k===nx).zh,cls:'main',fn:()=>{closeShow(()=>{tour++;walkTo(nx)})}});else o.push({t:'逛完了',cls:'main',fn:()=>{tour=-1;closeShow()}})}
+  if(b.cat==='line')o.push({t:'加 LINE 聊聊',cls:'lg main',href:LINE,ext:true});
+  else{if(b.cat)o.push({t:`看全部${b.cat}作品`,cls:tour<0?'main':'',href:'index.html#cat='+encodeURIComponent(b.cat)});o.push({t:'LINE 問問看',cls:'lg',href:LINE,ext:true})}
+  o.push({t:'回到小鎮',fn:()=>closeShow()});
+  const box=$('#shOpts');box.innerHTML='';o.forEach(x=>{const e=document.createElement(x.href?'a':'button');e.className='k '+(x.cls||'');e.textContent=x.t;if(x.href){e.href=x.href;if(x.ext){e.target='_blank';e.rel='noopener'}}else e.onclick=x.fn;box.appendChild(e)});
+  sh.scrollTop=0;sh.classList.add('on');sh.setAttribute('aria-hidden','false');sh.focus({preventScroll:true});
+  setTimeout(()=>{const ir=$('#iris');ir.classList.add('inst');ir.classList.remove('on');void ir.offsetWidth;ir.classList.remove('inst')},420);
+  setMin(true);say(b.say,()=>opts([{t:'再看一次作品',cls:'main',fn:()=>openShow(b)},{t:'換一棟看看',fn:explore}]))}
+function closeShow(after){const b=showing;if(!b)return;const sh=$('#show'),ir=$('#iris');
+  const pt=new DOMPoint(b.door[0],b.door[1]).matrixTransform(svg.getScreenCTM());irisAt(pt.x,pt.y);
+  ir.classList.add('inst','on');void ir.offsetWidth;ir.classList.remove('inst');
+  sh.classList.remove('on');sh.setAttribute('aria-hidden','true');
+  setTimeout(()=>{ir.classList.remove('on');showing=null;pan=null;
+    if(after)after();else if(pendingFinale){pendingFinale=false;finale()}else if(tour<0)explore()},reduce?0:380)}
+$('#show .back').addEventListener('click',()=>closeShow());
+function explore(){$('#loc').textContent='EXPLORING · 自由逛逛';strip([]);peek('點地圖走走看・點這裡選目的地');
+  say('想去哪一棟？可以自己走過去，或從下面選，我帶你跑過去。',()=>opts([...B.map(b=>({t:b.no+' '+b.zh,fn:()=>walkTo(b.k)})),{t:'帶我逛一圈',cls:'main wide',fn:startTour}],true))}
+function startTour(){tour=0;walkTo(TOUR[0])}
+function finale(){$('#loc').textContent='ALL STAMPS · 集滿了';strip([]);setMin(false);peek('七個章集滿了・加 LINE 聊聊');
+  say('七個章都蓋滿了，整座小鎮都亮起來了！謝謝你逛完。有想做的事，傳個 LINE 給我們聊聊吧。',()=>opts([{t:'加 LINE 聊聊',cls:'lg',href:LINE,ext:true},{t:'回首頁看作品',href:'index.html#works'},{t:'再逛逛',fn:explore}]))}
+function intro(){home();$('#loc').textContent='GUIDE · 賣點設計導覽員';peek('點地圖走走看・點這裡選目的地');setMin(true);
+  say(touch?'嗨，我是小點，賣點設計的導覽員。\n點地圖我就會走過去，走到門口點一下就能進去。每一棟都是我們能幫你做的事。':'嗨，我是小點，賣點設計的導覽員。\n用方向鍵或 WASD 帶我走，走到門口按空白鍵就能進去。每一棟都是我們能幫你做的事。',()=>opts([
+    {t:'帶我逛一圈',cls:'main wide',fn:startTour},
+    {t:'辦一場活動',fn:()=>walkTo('event')},{t:'做設計',fn:()=>walkTo('design')},{t:'做動畫或影片',fn:()=>walkTo('motion')},
+    {t:'畫插畫',fn:()=>walkTo('illus')},{t:'印刷',fn:()=>walkTo('print')},{t:'做贈品',fn:()=>walkTo('gift')},
+    {t:'我也不確定',cls:'wide',fn:()=>walkTo('line')}],true))}
+
+/* 作品資料從首頁讀（index.html?data） */
+$('#src').addEventListener('load',()=>{const f=$('#src').contentWindow;let n=0;const wait=()=>{if(f.__PUBLIC){WORKS=f.__PUBLIC;$('#src').remove()}else if(n++<40)setTimeout(wait,150)};wait()});
+
+/* ---------- 開場：小點跑進來自我介紹，再說明怎麼玩 ---------- */
+const getS=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const setS=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+let opOn=!q.has('debug')&&(!getS('guideSeen')||q.has('intro')),opStep=0;
+const opSvg=$('#opDot');opSvg.style.color='#efe6d4';opSvg.style.setProperty('--paper','#0b0b0b');
+{const s2=document.createElementNS('http://www.w3.org/2000/svg','style');s2.textContent='.pp{fill:var(--paper)}';opSvg.appendChild(s2)}
+el('ellipse',{cx:120,cy:131,rx:70,ry:4,fill:'#1d1b18'},opSvg);
+const opShadow=el('ellipse',{rx:20,ry:5,fill:'#000',opacity:.5},opSvg);
+const opG=el('g',{},opSvg);const opDot=makeDot(opG);
+const opSpark=el('path',{d:'M0 0',stroke:'#ff4a1c','stroke-width':3,'stroke-linecap':'round',fill:'none',opacity:0},opSvg);
+const op={x:-40,phase:0,go:1,t:0};
+function opLoop(dt,t){op.t+=dt;const target=118;
+  if(op.x<target){op.x=Math.min(target,op.x+RUN.speed*1.15*dt);op.go=1}else op.go+=(0-op.go)*Math.min(1,dt*8);
+  op.phase+=dt/RUN.period*Math.max(op.go,0.0001);
+  const arrived=op.x>=target&&op.go<0.2;
+  opDot.draw(RUN.pose(op.phase,op.go),op.go,arrived?Math.sin(t*6)*24:null);
+  place(opG,op.x,128,1,1.15);opShadow.setAttribute('cx',op.x);opShadow.setAttribute('cy',129);
+  opSpark.setAttribute('opacity',arrived?.9:0);opSpark.setAttribute('d',`M${op.x+44} 22l8-8M${op.x+52} 34l11-3M${op.x+34} 14l2-11`)}
+const HOW=touch?[
+  ['<svg width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="5" fill="#ff4a1c"/><circle cx="17" cy="17" r="11" fill="none" stroke="#efe6d4" stroke-width="1.4"/><circle cx="17" cy="17" r="16" fill="none" stroke="#efe6d4" stroke-width="1" opacity=".5"/></svg>','點地圖','小點就會走過去'],
+  ['<svg width="34" height="34" viewBox="0 0 34 34"><circle cx="10" cy="24" r="4" fill="#efe6d4"/><circle cx="24" cy="10" r="4" fill="#efe6d4"/><path d="M5 29l-3 3M29 5l3-3M2 26v6h6M32 8V2h-6" fill="none" stroke="#ff4a1c" stroke-width="1.6"/></svg>','兩指捏合','放大縮小，單指拖曳移動地圖'],
+  ['<svg width="34" height="34" viewBox="0 0 34 34"><path d="M8 31V9a9 9 0 0 1 18 0v22" fill="none" stroke="#efe6d4" stroke-width="1.6"/><path d="M3 31h28" stroke="#efe6d4" stroke-width="1.6"/><circle cx="21" cy="20" r="1.8" fill="#ff4a1c"/></svg>','走到門口點一下','進去看那一棟的作品'],
+  ['<svg width="34" height="34" viewBox="0 0 30 34"><path d="M10 3h10v9c0 3 6 5 6 10v3H4v-3c0-5 6-7 6-10z" fill="none" stroke="#efe6d4" stroke-width="1.6"/><rect x="2" y="27" width="26" height="5" fill="#ff4a1c"/></svg>','集滿 7 個章','整座小鎮會亮起來']
+]:[
+  ['<kbd>←↑↓→</kbd>','方向鍵或 WASD','帶小點走路，也可以直接點地圖'],
+  ['<kbd>Space</kbd>','空白鍵','在門口按下，進去看作品'],
+  ['<kbd>滾輪</kbd>','滾輪或＋－','放大縮小，按住拖曳移動地圖'],
+  ['<svg width="30" height="34" viewBox="0 0 30 34"><path d="M10 3h10v9c0 3 6 5 6 10v3H4v-3c0-5 6-7 6-10z" fill="none" stroke="#efe6d4" stroke-width="1.6"/><rect x="2" y="27" width="26" height="5" fill="#ff4a1c"/></svg>','集滿 7 個章','整座小鎮會亮起來']];
+$('#howto').innerHTML=HOW.map(h=>`<li>${h[0]}<div><b>${h[1]}</b><span>${h[2]}</span></div></li>`).join('');
+function opNext(){if(opStep===0){opStep=1;document.querySelectorAll('.op-step').forEach((s,i)=>s.classList.toggle('on',i===1));document.querySelectorAll('.op-dots i').forEach((s,i)=>s.classList.toggle('on',i===1));$('.op-next').textContent='開始探索'}else opClose()}
+function opClose(){if(!opOn)return;setS('guideSeen','1');const o=$('#opening');o.classList.add('out');setTimeout(()=>{o.hidden=true;opOn=false},600);intro()}
+$('.op-next').addEventListener('click',opNext);$('#opening .skip').addEventListener('click',opClose);
+const shSvg=$('#shDot');shSvg.style.color='#efe6d4';shSvg.style.setProperty('--paper','#0b0b0b');
+{const s3=document.createElementNS('http://www.w3.org/2000/svg','style');s3.textContent='.pp{fill:var(--paper)}';shSvg.appendChild(s3)}
+const shDot=makeDot(el('g',{transform:'translate(14 -32) scale(1.05)'},shSvg));
+window.__g={me,walkTo,enter,B,got,closeShow,opNext,opClose};
+if(q.has('debug')){let tt=0;loop(1/60,0);window.__step=(sec=1)=>{for(let i=0,n=Math.round(sec*60);i<n;i++){tt+=1/60;loop(1/60,tt)}return tt}}
+else{const t0=performance.now();let prev=t0;const tick=now=>{loop(Math.min(0.05,(now-prev)/1000),(now-t0)/1000);prev=now;requestAnimationFrame(tick)};requestAnimationFrame(tick)}
+if(opOn)$('#opening').hidden=false;else intro();
+</script>
+</body>
+</html>
