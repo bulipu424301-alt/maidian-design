@@ -560,7 +560,7 @@ h2{font-family:var(--serif);font-weight:500;font-size:clamp(36px,6vw,92px);line-
 <script src="works-data.js?v=3"></script>
 <script src="edits.js?v=5"></script>
 <script src="hidden.js?v=4"></script>
-<script src="order.js?v=3"></script>
+<script src="order.js?v=4"></script>
 <script>
 /* ===== 內容資料：要改文字或換作品圖，改這裡就好 ===== */
 const SERVICES=[
@@ -657,6 +657,8 @@ OLD_WORKS.forEach(w=>{w.imgs=(GROUPS.find(g=>g.includes(w.id))||[w.id]).map(m=>(
 /* 作品區的順序：衛福部展場、新作品、其餘舊作品 */
 const WORKS=[OLD_WORKS[0],...(typeof NEW_WORKS!=='undefined'?NEW_WORKS:[]),...OLD_WORKS.slice(1)];
 /* 最新加入、排在作品區第一件的作品 */
+WORKS.unshift({id:'p101',nm:'新竹縣衛生局｜用藥安全宣導動畫',tags:['動畫影片'],img:'works/p101/poster.jpg',vid:'works/p101/video.mp4',imgs:[{img:'works/p101/poster.jpg',vid:'works/p101/video.mp4'}]});
+WORKS.unshift({id:'p100',nm:'Foodeast｜心早越南桌遊 募資影片',tags:['動畫影片'],img:'works/p100/poster.jpg',vid:'works/p100/video.mp4',imgs:[{img:'works/p100/poster.jpg',vid:'works/p100/video.mp4'}]});
 WORKS.unshift({id:'p099',nm:'TEL｜2026 儲備工程師開訓式 投影背板動畫',tags:['動畫影片'],img:'works/p099/poster.jpg',vid:'works/p099/video.mp4',imgs:[{img:'works/p099/poster.jpg',vid:'works/p099/video.mp4'}]});
 /* 分類只看作品類別，不分政府案件或科技業 */
 WORKS.forEach(w=>{w.tags=w.tags.filter(t=>t!=='政府案件'&&t!=='科技業');if(!w.tags.length)w.tags=['平面設計']});

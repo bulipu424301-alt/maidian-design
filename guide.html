@@ -333,6 +333,22 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 #ask .a-tour{background:var(--dot);color:#fff;box-shadow:0 4px 0 #a82a0c}
 #ask .a-free{background:#fffaf0;color:var(--ink2);border:2px solid var(--parch2);box-shadow:0 4px 0 var(--parch2)}
 #ask button:active{transform:translateY(2px)}
+/* 下方面板：讓人知道可以點開 */
+.opn,#badge{display:none}
+@media (max-width:999px){
+  .chev{display:none}
+  .opn{display:flex;align-items:center;gap:5px;margin-left:auto;flex:none;font-style:normal;font-family:var(--serif);font-weight:900;font-size:14px;letter-spacing:.08em;color:#fff;background:var(--dot);padding:7px 12px 7px 14px;border-radius:99px;box-shadow:0 3px 0 #a82a0c}
+  .opn::after{content:"";width:7px;height:7px;border-left:2px solid #fff;border-top:2px solid #fff;transform:rotate(45deg);margin-top:4px}
+  .opn .o2{display:none}
+  #panel:not(.min) .opn{background:transparent;color:var(--ink2);box-shadow:none;border:1.5px solid var(--parch2)}
+  #panel:not(.min) .opn::after{border-color:var(--ink2);transform:rotate(225deg);margin-top:-4px}
+  #panel:not(.min) .opn .o1{display:none}#panel:not(.min) .opn .o2{display:inline}
+  #panel.min .opn{animation:opnB 1.6s ease-in-out infinite}
+  @keyframes opnB{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+  #badge{display:grid;place-items:center;position:absolute;left:46px;top:9px;min-width:20px;height:20px;padding:0 5px;border-radius:99px;background:var(--dot);color:#fff;font-family:var(--mono);font-style:normal;font-size:11px;font-weight:700;border:2px solid var(--parch);z-index:2;animation:bdg .4s cubic-bezier(.2,1.8,.4,1)}
+  #badge[hidden]{display:none}
+  @keyframes bdg{from{transform:scale(0)}}
+}
 </style>
 </head>
 <body>
@@ -354,7 +370,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 <div id="ask" role="dialog" aria-label="小點的問題" aria-hidden="true"><b>要怎麼逛呢？</b><span>我可以帶你七棟全部走一遍，也可以讓你自己慢慢逛。</span><div><button class="a-tour" type="button">帶我全部逛一圈</button><button class="a-free" type="button">我自己逛逛</button></div></div>
 <div id="lucky" role="status" aria-live="polite"><img src="guide-assets/item-coin.webp" width="40" height="45" alt=""><div><small>金幣 ×1</small><b>你是全世界最幸運的人！</b><span>繼續探索吧</span></div></div>
 <aside id="panel" aria-live="polite">
-  <button class="who" id="grab" type="button" aria-expanded="true"><svg id="portrait" viewBox="0 0 110 100" aria-hidden="true"></svg><div><b>小點</b><small id="loc">GUIDE · 賣點設計導覽員</small><span id="peek"></span></div><i class="chev" aria-hidden="true"></i></button>
+  <button class="who" id="grab" type="button" aria-expanded="true"><svg id="portrait" viewBox="0 0 110 100" aria-hidden="true"></svg><div><b>小點</b><small id="loc">GUIDE · 賣點設計導覽員</small><span id="peek"></span></div><i id="badge" aria-hidden="true" hidden>1</i><i class="chev" aria-hidden="true"></i><em class="opn" aria-hidden="true"><span class="o1">點開</span><span class="o2">收起</span></em></button>
   <p id="say"></p>
   <div id="strip"></div>
   <div id="opts"></div>
@@ -521,8 +537,8 @@ const k2=el('text',{x:24,y:-12.5,'text-anchor':'middle','font-size':14,'font-fam
 el('path',{d:'M-6 -2L0 6L6 -2Z',fill:'#efe6d4'},tip);
 const setTip=(a,b)=>{if(k1.textContent!==a)k1.textContent=a;if(k2.textContent!==b)k2.textContent=b};
 
-/* ---------- 金幣方塊：活動會場和噴泉中間，小點在下面跳 10 下就掉出金幣 ---------- */
-const QB={x:592,y:522,lift:60,hits:0,need:10,done:false,bump:0};
+/* ---------- 金幣方塊：活動會場和噴泉中間，小點在下面跳 3 下就掉出金幣 ---------- */
+const QB={x:592,y:522,lift:60,hits:0,need:3,done:false,bump:0};
 
 const qbG=el('g',{id:'qb',style:'cursor:pointer'},actors);
 const qbBox=el('g',{},qbG);
@@ -706,7 +722,9 @@ let path=[],autoEnter=null,autoAct=null,near=null,inside=null,follow=false,tour=
 const got=new Set(),keys=new Set();
 const KMAP={ArrowUp:'u',KeyW:'u',ArrowDown:'d',KeyS:'d',ArrowLeft:'l',KeyA:'l',ArrowRight:'r',KeyD:'r'};
 const PHONE=()=>innerWidth<1000;
-function setMin(v){if(!PHONE())v=false;$('#panel').classList.toggle('min',v);$('#grab').setAttribute('aria-expanded',String(!v))}
+let unread=0,panelOpened=false;
+function badge(n){unread=n;const b=$('#badge');b.textContent=n;b.hidden=!n}
+function setMin(v){if(!PHONE())v=false;$('#panel').classList.toggle('min',v);if(!v){badge(0);if(PHONE())panelOpened=true}$('#grab').setAttribute('aria-expanded',String(!v))}
 $('#grab').addEventListener('click',()=>{if(PHONE())setMin(!$('#panel').classList.contains('min'))});
 function peek(s){$('#peek').textContent=s}
 function begin(){if(askOn)askHide();if(!started){started=true;$('#title').classList.add('hide')}follow=true;pan=null;setMin(true)}
@@ -832,7 +850,7 @@ function stamp(b){const isNew=!got.has(b.k);got.add(b.k);$('#stN').textContent=g
 
 /* ---------- 對話 ---------- */
 let typer=null,sayCb=null;
-function say(text,cb){clearInterval(typer);const e=$('#say');e.dataset.full=text;sayCb=cb;if(reduce){e.textContent=text;sayCb=null;return cb&&cb()}
+function say(text,cb){clearInterval(typer);if(PHONE()&&$('#panel').classList.contains('min')){badge(unread+1);peek(text.split('\n')[0])}const e=$('#say');e.dataset.full=text;sayCb=cb;if(reduce){e.textContent=text;sayCb=null;return cb&&cb()}
   let i=0;e.innerHTML='<span class="cur"></span>';typer=setInterval(()=>{i+=2;e.innerHTML=text.slice(0,i).replace(/</g,'&lt;')+'<span class="cur"></span>';if(i>=text.length){clearInterval(typer);typer=null;e.textContent=text;const c=sayCb;sayCb=null;c&&c()}},26)}
 $('#say').addEventListener('click',()=>{if(typer){clearInterval(typer);typer=null;$('#say').textContent=$('#say').dataset.full;const c=sayCb;sayCb=null;c&&c()}});
 function opts(list,grid=false){const o=$('#opts');o.className=grid?'grid':'';o.innerHTML='';list.forEach(x=>{const b=document.createElement(x.href?'a':'button');b.className='k '+(x.cls||'');b.textContent=x.t;
@@ -902,7 +920,7 @@ function explore(){$('#loc').textContent='EXPLORING · 自由逛逛';strip([]);p
 function startTour(){tour=0;walkTo(TOUR[0])}
 function finale(){$('#loc').textContent='ALL STAMPS · 集滿了';strip([]);setMin(false);peek('七個章集滿了・加 LINE 聊聊');
   if(QB.done){showChest();return}
-  if(!QB.done)return say('七個章都蓋滿了，整座小鎮都亮起來了！\n不過還差一樣：活動會場前面有個金色方塊，在下面跳十下看看。',()=>opts([{t:'帶我去方塊下面',cls:'main',fn:()=>{begin();autoAct=jump;go([QB.x,QB.y])}},{t:'加 LINE 聊聊',cls:'lg',href:LINE,ext:true},{t:'再逛逛',fn:explore}]));
+  if(!QB.done)return say('七個章都蓋滿了，整座小鎮都亮起來了！\n不過還差一樣：活動會場前面有個金色方塊，在下面跳三下看看。',()=>opts([{t:'帶我去方塊下面',cls:'main',fn:()=>{begin();autoAct=jump;go([QB.x,QB.y])}},{t:'加 LINE 聊聊',cls:'lg',href:LINE,ext:true},{t:'再逛逛',fn:explore}]));
   say('七個章都蓋滿了，整座小鎮都亮起來了！謝謝你逛完。有想做的事，傳個 LINE 給我們聊聊吧。',()=>opts([{t:'加 LINE 聊聊',cls:'lg',href:LINE,ext:true},{t:'回首頁看作品',href:'index.html#works'},{t:'再逛逛',fn:explore}]))}
 function intro(){home();$('#loc').textContent='GUIDE · 賣點設計導覽員';peek('點地圖走走看・點這裡選目的地');setMin(true);
   say(touch?'嗨，我是小點，賣點設計的導覽員。\n點地圖我就會走過去，走到門口點一下就能進去。每一棟都是我們能幫你做的事。':'嗨，我是小點，賣點設計的導覽員。\n用方向鍵或 WASD 帶我走，走到門口按空白鍵就能進去。每一棟都是我們能幫你做的事。',()=>opts([
@@ -948,7 +966,7 @@ const COIN_ICON='<img src="guide-assets/item-qb.webp" width="40" height="41" alt
 const WHEEL_ICON='<svg width="40" height="40" viewBox="-20 -20 40 40"><circle r="18" fill="#f4ead3" stroke="#8a5a12" stroke-width="3"/><path d="M0 0L0-18A18 18 0 0 1 12.7-12.7Z" fill="#ff4a1c"/><path d="M0 0L18 0A18 18 0 0 1 12.7 12.7Z" fill="#f6c445"/><path d="M0 0L-12.7 12.7A18 18 0 0 1-18 0Z" fill="#06c755"/><circle r="6" fill="#ff4a1c" stroke="#8a5a12" stroke-width="1.5"/></svg>';
 const CHEST_ICON='<img src="guide-assets/item-chest.webp" width="42" height="37" alt="">';
 $('#eggs').innerHTML=[
-  [COIN_ICON,'金色方塊','活動會場前面浮著一個，'+(touch?'點方塊讓我在下面跳，':'站到下面按空白鍵跳，')+'撞滿 10 下會掉出金幣'],
+  [COIN_ICON,'金色方塊','活動會場前面浮著一個，'+(touch?'點方塊讓我在下面跳，':'站到下面按空白鍵跳，')+'撞滿 3 下會掉出金幣'],
   [CHEST_ICON,'神秘寶箱','七個章都蓋滿，再拿到金幣，噴泉前面會掉下寶箱，打開還有第二枚金幣'],
   [WHEEL_ICON,'幸運轉盤','兩枚金幣投進轉盤轉一次，有機會抽到海報印刷、設計費折扣']
 ].map(h=>`<li>${h[0]}<div><b>${h[1]}</b><span>${h[2]}</span></div></li>`).join('');
