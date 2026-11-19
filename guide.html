@@ -39,6 +39,10 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 .lit{opacity:0;transition:opacity .6s ease}
 .lit.seen{opacity:.55}.lit.near,.lit.on{opacity:1;animation:breathe 2.2s ease-in-out infinite}
 @keyframes breathe{50%{opacity:.78}}
+/* 逛完一棟、回到小鎮時亮燈：先閃兩下再全亮，之後一直亮著 */
+.lit.done{opacity:1}
+.lit.flick{animation:litOn 1.3s ease-out both}
+@keyframes litOn{0%{opacity:0}12%{opacity:.9}20%{opacity:.15}34%{opacity:1}44%{opacity:.4}60%,100%{opacity:1}}
 .tag{cursor:pointer}
 .tag .pill{fill:var(--parch);stroke:var(--brown);stroke-width:1.5}
 .tag .tail{fill:var(--parch);stroke:var(--brown);stroke-width:1.5}
@@ -890,7 +894,6 @@ let lastX=me.x,lastY=me.y,heading=0;
 function mini(){const dx=me.x-lastX,dy=me.y-lastY;if(Math.hypot(dx,dy)>0.5)heading=Math.atan2(dx,-dy)*180/Math.PI;lastX=me.x;lastY=me.y;$('#mMe').setAttribute('transform',`translate(${(MX+me.x*MS).toFixed(1)} ${(MY+me.y*MS).toFixed(1)}) rotate(${heading.toFixed(0)})`)}
 function stamp(b){const isNew=!got.has(b.k);got.add(b.k);$('#stN').textContent=got.size+'/7';
   document.querySelector(`#stD i[data-k="${b.k}"]`).classList.add('on');$('#mk-'+b.k).setAttribute('fill','#ff4a1c');$('#mk-'+b.k).setAttribute('stroke','#ff4a1c');
-  $('#L-'+b.k).classList.add('seen');
   LAMPS.forEach((_,i)=>$('#lamp'+i).classList.toggle('on',got.size>=[2,4,6][i]));
   if(got.size===7)$('#dim').setAttribute('opacity','0');
   const bn=$('#banner');bn.querySelector('small').textContent=isNew?'新地點解鎖！':'歡迎回來';bn.querySelector('b').textContent=b.no+'　'+b.zh;
@@ -960,9 +963,13 @@ function closeShow(after){const b=showing;if(!b)return;const sh=$('#show'),ir=$(
   const pt=new DOMPoint(b.door[0],b.door[1]).matrixTransform(svg.getScreenCTM());irisAt(pt.x,pt.y);
   ir.classList.add('inst','on');void ir.offsetWidth;ir.classList.remove('inst');
   sh.classList.remove('on');sh.setAttribute('aria-hidden','true');
-  setTimeout(()=>{ir.classList.remove('on');showing=null;pan=null;
+  setTimeout(()=>{ir.classList.remove('on');showing=null;pan=null;lightUp(b);
     if(after)after();else if(pendingFinale){pendingFinale=false;finale()}else if(tour<0)explore()},reduce?0:380)}
 $('#show .back').addEventListener('click',()=>closeShow());
+function lightUp(b){const l=$('#L-'+b.k);if(l.classList.contains('done'))return;
+  setTimeout(()=>{l.classList.add('done','flick');setTimeout(()=>l.classList.remove('flick'),1400);
+    const r=LITBOX[b.k];sparks((r[0]+r[2])/2,(r[1]+r[3])/2-20,'#fff3c4',10);
+    const bn=$('#banner');bn.querySelector('small').textContent='亮燈了！';bn.querySelector('b').textContent=b.no+'　'+b.zh;bn.classList.remove('on');void bn.offsetWidth;bn.classList.add('on')},reduce?0:350)}
 function explore(){$('#loc').textContent='EXPLORING · 自由逛逛';strip([]);peek('點地圖走走看・點這裡選目的地');
   say('想去哪一棟？可以自己走過去，或從下面選，我帶你跑過去。',()=>opts([...B.map(b=>({t:b.no+' '+b.zh,fn:()=>walkTo(b.k)})),{t:'帶我逛一圈',cls:'main wide',fn:startTour}],true))}
 function startTour(){tour=0;walkTo(TOUR[0])}

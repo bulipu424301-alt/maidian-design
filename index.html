@@ -315,6 +315,14 @@ h2{font-family:var(--serif);font-weight:500;font-size:clamp(36px,6vw,92px);line-
 .step:hover .no::after{transform:scale(1)}
 .step h3{font-family:var(--serif);font-weight:500;font-size:24px;margin:28px 0 10px}
 .step p{font-size:15px;color:#3a3833}
+.step .meta{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:5px 12px;border:1px solid var(--line-d);border-radius:99px;font-size:13px;letter-spacing:.04em;color:#3a3833}
+.step .meta::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--dot);flex:none}
+.rush{display:flex;align-items:center;gap:clamp(12px,2vw,28px);margin-top:clamp(28px,4vw,48px);padding:clamp(18px,2.2vw,26px) clamp(20px,2.6vw,34px);background:var(--ink);color:#fff;border-radius:14px}
+.rush small{flex:none;font-family:var(--serif);font-size:13px;letter-spacing:.16em;padding:4px 12px;border-radius:99px;background:var(--dot)}
+.rush p{flex:1;font-size:15px;line-height:1.7}
+.rush a{flex:none;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.4);border-radius:99px;padding:10px 20px;font-size:14px;letter-spacing:.08em;transition:.3s}
+.rush a:hover{background:var(--dot);border-color:var(--dot)}
+
 
 /* reviews */
 #reviews{background:var(--white)}
@@ -421,6 +429,10 @@ h2{font-family:var(--serif);font-weight:500;font-size:clamp(36px,6vw,92px);line-
   .step .no::after{display:none}
   .step h3{margin:2px 0 6px;font-size:19px}
   .step p{font-size:14px}
+  .step .meta{grid-column:2;justify-self:start;margin-top:10px;font-size:12px;padding:4px 10px}
+  .rush{flex-wrap:wrap;gap:10px 12px;padding:18px}
+  .rush p{flex-basis:100%;order:2;font-size:14px}
+  .rush a{order:3}
   /* 聯絡 */
   .tel{font-size:38px}
   .mag{display:none}
@@ -548,10 +560,11 @@ body.lock #dg,body.menu #dg{display:none}
   <div class="label">合作流程 <span class="en">Process</span></div>
   <div class="steps">
     <div class="step rv"><div class="no">01</div><h3>聊需求</h3><p>打電話或傳訊息告訴我們活動日期、用途與預算範圍。</p></div>
-    <div class="step rv"><div class="no">02</div><h3>提案與報價</h3><p>我們整理方向、項目與費用，雙方確認後開始製作。</p></div>
-    <div class="step rv"><div class="no">03</div><h3>設計製作</h3><p>過程中分階段給你看稿，有想調整的地方隨時提出。</p></div>
-    <div class="step rv"><div class="no">04</div><h3>交付與執行</h3><p>檔案交付、印刷製作，活動案由我們到現場佈置與執行。</p></div>
+    <div class="step rv"><div class="no">02</div><h3>提案與報價</h3><p>我們整理方向、項目與費用，雙方確認後開始製作。</p><span class="meta">報價時一起告訴你交件日</span></div>
+    <div class="step rv"><div class="no">03</div><h3>設計製作</h3><p>過程中分階段給你看稿，有想調整的地方隨時提出。</p><span class="meta">含 3 次免費修改</span></div>
+    <div class="step rv"><div class="no">04</div><h3>交付與執行</h3><p>檔案交付、印刷製作，活動案由我們到現場佈置與執行。</p><span class="meta">可開發票、打統編</span></div>
   </div>
+  <div class="rush rv"><small>急件</small><p>小型設計最快隔天交件，先傳 LINE 問我們的排程。</p><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 問排程 →</a></div>
 </section>
 
 <div id="detail" aria-hidden="true">

@@ -42,6 +42,13 @@ svg.street.drag{cursor:grabbing}
 #shBtns{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
 #shBtns a,#shBtns button{font:inherit;font-weight:700;font-size:15px;letter-spacing:.06em;padding:11px 18px;border-radius:99px;border:1.5px solid #6b4a2b;background:none;color:#2a1c10;cursor:pointer;text-decoration:none}
 #shBtns .main{background:#ff4a1c;border-color:#ff4a1c;color:#fff}
+/* 門打開後的「要進去嗎」確認 */
+#knock{position:absolute;left:50%;bottom:56px;z-index:4;display:flex;align-items:center;gap:10px;background:#fbf6ea;color:#2a1c10;border:2px solid #6b4a2b;border-radius:14px;padding:10px 12px 10px 16px;box-shadow:0 8px 24px rgba(0,0,0,.25);white-space:nowrap;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:opacity .25s,transform .35s cubic-bezier(.2,1.4,.4,1)}
+#knock.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#knock b{font-size:15px;letter-spacing:.04em}
+#knock button{font:inherit;font-weight:700;font-size:14px;padding:8px 14px;border-radius:99px;border:1.5px solid #6b4a2b;background:none;color:#2a1c10;cursor:pointer}
+#knock .go{background:#ff4a1c;border-color:#ff4a1c;color:#fff}
+@media (max-width:860px){#knock{bottom:150px}}
 #shBtns .lg{background:#06c755;border-color:#06c755;color:#fff}
 .pp{fill:var(--paper)}
 #clock{position:absolute;left:22px;top:16px;font-size:15px;letter-spacing:.08em;color:var(--ink);opacity:.85;pointer-events:none}
@@ -294,6 +301,7 @@ svg.street.drag{cursor:grabbing}
   <div id="ask" role="dialog" aria-label="小點的問題"><b>要怎麼逛呢？</b><span>我可以帶你把七間店全部走一遍，也可以讓你自己慢慢逛。</span><div><button class="a-tour" type="button">帶我全部逛一圈</button><button class="a-free" type="button">我自己逛逛</button></div></div>
   <div id="stamps"><span>集章 <b id="stN">0/7</b></span><span id="stD"></span></div>
   <div id="bub"></div>
+  <div id="knock" role="dialog" aria-label="要進去嗎" aria-hidden="true"><b></b><button type="button" class="go">進去看看</button><button type="button" class="no">先不要</button></div>
   <div id="qbN"></div>
   <div id="zoomB"><button type="button" data-z="1.25" aria-label="放大">＋</button><button type="button" data-z="0.8" aria-label="縮小">－</button></div>
   <button id="bgm" type="button" aria-pressed="false" aria-label="聲音：關"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"/><path class="w" d="M13 7c1.2 1.5 1.2 4.5 0 6M15.5 5c2.4 2.8 2.4 7.2 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="x" d="M13 7.5l5 5M18 7.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>聲音</button>
@@ -398,7 +406,10 @@ const back=L(scene),houses=L(scene),street=L(scene),walkers=L(scene),front=L(sce
 const glow=L(svg,{style:'mix-blend-mode:screen;pointer-events:none'});
 
 /* ---------- 天空：星星、月亮、太陽 ---------- */
-const starN=[];for(let i=0;i<110;i++){const x=sr(10,W-10),y=sr(8,170),r=sr(.5,1.4);starN.push({n:el('circle',{cx:f(x),cy:f(y),r:f(r),fill:'#fff8e6'},stars),ph:sr(0,6.3),sp:sr(.6,1.8)})}
+/* 星星：每顆亮暗交替；每六顆有一顆會偶爾閃出十字星芒 */
+const starN=[];for(let i=0;i<110;i++){const x=sr(10,W-10),y=sr(8,170),r=sr(.5,1.4);const n=el('circle',{cx:f(x),cy:f(y),r:f(r),fill:'#fff8e6'},stars);
+  const spk=i%6===0?el('path',{d:`M${f(x)} ${f(y-6)}L${f(x+1)} ${f(y-1)}L${f(x+6)} ${f(y)}L${f(x+1)} ${f(y+1)}L${f(x)} ${f(y+6)}L${f(x-1)} ${f(y+1)}L${f(x-6)} ${f(y)}L${f(x-1)} ${f(y-1)}Z`,fill:'#fff8e6',opacity:0},stars):null;
+  starN.push({n,x,y,spk,per:2.5+(i%7)*.6,ph:sr(0,6.3),sp:sr(.6,1.8)})}
 el('circle',{cx:1610,cy:84,r:70,fill:'url(#s-moon)'},moonL);
 S(moonL,'M1596 62a24 24 0 1 0 30 40a19 19 0 1 1 -30 -40Z',SP);moonL.lastChild.setAttribute('class','');moonL.lastChild.setAttribute('fill','#fff6dc');
 const sun=el('circle',{cx:300,cy:90,r:20,fill:'#fff2c8',stroke:'currentColor','stroke-width':SP},sunL);
@@ -471,14 +482,24 @@ function shophouse(x0,x1,o){
   const n=o.wins,gap=w/(n);for(let i=0;i<n;i++){const wx=x0+gap*(i+.5),ww=gap*.42;win(g,wx-ww/2,wallTop+14,wx+ww/2,band-14,{bars:3})}
   // 二樓陽台欄杆
   balusters(g,x0+8,x1-8,band-12,band);
+  // 陽台欄杆上的小盆栽（放在窗與窗之間和兩端）
+  const FLC=['#ff4a1c','#f6c445','#7fb8a4','#d8432c'];
+  const pots=[x0+16];for(let i=1;i<n;i++)pots.push(x0+gap*i);pots.push(x1-16);
+  pots.forEach((x,i)=>{const yb=band-12;
+    P(g,`M${x} ${yb-6} q-5 -5 -7 -11 M${x} ${yb-6} q1 -7 -1 -13 M${x} ${yb-6} q5 -4 7 -10`,SP*.5);
+    [[-7,-12],[0,-14],[6,-11]].forEach(([dx,dy],j)=>{const fl=paint(g,FLC[(i+j+o.wins)%4],SP*.4);fl.setAttribute('d',oval(x+dx,yb+dy,2.3,2.3))});
+    S(g,`M${x-6} ${yb-7} L${x+6} ${yb-7} L${x+4.5} ${yb} L${x-4.5} ${yb}Z`,SP*.7)});
   // 腰帶
   S(g,R(x0-2,band,x1+2,arcTop),SP);P(g,`M${x0} ${band+5} L${x1} ${band+5}`,SP*.5);
+  // 腰帶上的菱形花磚
+  {const dd=[];for(let x=x0+10;x<x1-8;x+=14)dd.push(`M${x} ${band+5} l3.2 -3.2 l3.2 3.2 l-3.2 3.2Z`);P(g,dd.join(' '),SP*.45)
+   for(let x=x0+10,i=0;x<x1-8;x+=28,i++){const tl=paint(g,i%2?'#7fb8a4':'#f6c445',SP*.3);tl.setAttribute('d',oval(x+3.2,band+5,1.4,1.4))}}
   // 騎樓內的店面（先畫）
   const shop=L(g);
   S(shop,R(x0+8,arcTop+10,x1-8,BASE));
   o.front(shop,x0,x1,arcTop+10);
   // 騎樓拱與柱子
-  const cols=o.wide?[x0+7,x1-7]:[x0+7,cx,x1-7];
+  const cols=[x0+7,x1-7];
   for(let i=0;i<cols.length-1;i++){const a=cols[i]+7,b=cols[i+1]-7,m=(a+b)/2;S(g,`M${a} ${arcTop} L${b} ${arcTop} L${b} ${arcTop+16} Q${m} ${arcTop+2} ${a} ${arcTop+16}Z`,SP)}
   cols.forEach(x=>{S(g,R(x-7,arcTop,x+7,BASE),SP);P(g,`M${x-7} ${arcTop+6} L${x+7} ${arcTop+6} M${x-7} ${BASE-10} L${x+7} ${BASE-10}`,SP*.5)});
   // 直立招牌
@@ -490,7 +511,15 @@ function shophouse(x0,x1,o){
 }
 /* 店面內容 */
 function glass(g,x0,y0,x1,y1,cols=3){const d=R(x0,y0,x1,y1);const pane=el('path',{d,fill:'#fff'},g);windows.push({n:pane,thr:sr(.15,.4),lit:0,warm:sr(0,1),glow:lightAt((x0+x1)/2,(y0+y1)/2,(x1-x0)*.9,.2)});S(g,d,SP).setAttribute('fill','none');const dd=[];for(let i=1;i<cols;i++){const x=lerp(x0,x1,i/cols);dd.push(`M${f(x)} ${y0} L${f(x)} ${y1}`)}P(g,dd.join(' '),SP*.55)}
-function door(g,x0,x1,y0){S(g,R(x0,y0,x1,BASE));P(g,`M${(x0+x1)/2} ${y0} L${(x0+x1)/2} ${BASE} M${x0+3} ${y0+(BASE-y0)*.55} L${x1-3} ${y0+(BASE-y0)*.55}`,SP*.6)}
+/* 雙開門：左右兩片各自一組，進店前往兩側打開，裡面透出暖光 */
+let curShop=null;
+function door(g,x0,x1,y0){const mx=(x0+x1)/2,yb=y0+(BASE-y0)*.55;
+  const inn=paint(g,'#ffd88a',SP*.4);inn.setAttribute('d',R(x0,y0,x1,BASE));
+  const lv=[[x0,mx,'left'],[mx,x1,'right']].map(([a,b,side])=>{const l=L(g,{style:`transform-box:fill-box;transform-origin:${side} center`});
+    S(l,R(a,y0,b,BASE),SP);P(l,`M${a+3} ${yb} L${b-3} ${yb}`,SP*.6);S(l,oval(side==='left'?b-4:a+4,yb+8,1.6,1.6),SP*.5);return l});
+  P(g,R(x0,y0,x1,BASE),SP);
+  if(curShop)curShop.leaves=lv}
+function swingDoor(o,open){if(!o||!o.leaves)return;o.doorOpen=open;o.leaves.forEach(l=>l.animate([{transform:`scaleX(${open?1:.12})`},{transform:`scaleX(${open?.12:1})`}],{duration:matchMedia("(prefers-reduced-motion:reduce)").matches?0:420,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}))}
 
 const INFO={
  event:{no:'02',name:'活動會場',cat:'場地佈置',say:'這裡是活動會場。開幕、尾牙、論壇、典禮和展覽，從企劃、主視覺、背板，到活動當天的現場佈置，我們都會到場處理。'},
@@ -545,7 +574,12 @@ const SH=[
    S(g,`M${x1-52} ${BASE-21} q-1 -10 6 -10 q8 0 6 10Z`,SP*.7);P(g,`M${x1-40} ${BASE-27} q5 -1 6 -5`,SP*.6)}},
 ];
 const bulbs=[];
-SH.forEach(o=>{o.x0=POS[o.k][0];o.x1=POS[o.k][1];o.name=INFO[o.k].name;o.sign.x=o.sign.side<0?o.x0-8:o.x1+8;o.door=(o.x0+o.x1)/2;o.g=shophouse(o.x0,o.x1,o)});
+SH.forEach(o=>{o.x0=POS[o.k][0];o.x1=POS[o.k][1];o.name=INFO[o.k].name;o.sign.x=o.sign.side<0?o.x0-8:o.x1+8;o.door=(o.x0+o.x1)/2;const w0=windows.length,s0=signs.length;curShop=o;o.g=shophouse(o.x0,o.x1,o);curShop=null;o.wins=windows.slice(w0);o.wins.forEach(w=>w.shop=o.k);o.signs=signs.slice(s0)});
+/* 逛完一間店、回到街上時，那間的窗戶和招牌先閃兩下再全亮，白天晚上都亮著 */
+function lightShop(k,flick=true){const o=SH.find(x=>x.k===k);if(!o||o.litOn)return;o.litOn=true;[...o.wins,...o.signs].forEach(w=>{w.on=true;w.t0=flick?null:-99})}
+const FLICK=[[0,0],[.12,.9],[.2,.15],[.34,1],[.44,.4],[.6,1]];
+function flickAt(a){if(a>=.6)return 1;for(let i=FLICK.length-1;i>=0;i--)if(a>=FLICK[i][0]){const [ta,va]=FLICK[i],[tb,vb]=FLICK[i+1]||[ta+1,va];return va+(vb-va)*Math.min(1,(a-ta)/(tb-ta))}return 0}
+function onLit(w,base,t){if(!w.on)return base;if(w.t0===null)w.t0=t;const a=(t-w.t0)/1.3;return Math.max(base,flickAt(a))}
 // 服務台的紅燈籠
 const lanterns=[];[[POS.line[0]+30,300],[POS.line[1]-30,300]].forEach(([x,y])=>{const g=L(houses);P(g,`M${x} ${y-10} L${x} ${y}`,SP*.7);const b=paint(g,'#d8432c',SP*.8);b.setAttribute('d',oval(x,y+11,8,11));P(g,`M${x-8} ${y+11} L${x+8} ${y+11} M${x-6} ${y+3} q6 -2 12 0 M${x-6} ${y+19} q6 2 12 0`,SP*.4);P(g,`M${x-3} ${y+22} l0 6 M${x} ${y+22} l0 7 M${x+3} ${y+22} l0 6`,SP*.5);lanterns.push({g,b,x,y,glow:lightAt(x,y+11,34,.25)})});
 
@@ -653,9 +687,17 @@ const LINE_URL='https://line.me/ti/p/UplDc9NA68';
 /* ---------- 進店：展示作品 ---------- */
 let showing=null;
 let pendStamp=null;
-function enter(b){const I=INFO[b.k];const isNew=stamp(b.k);showing=b;pendStamp=isNew?b.k:null;save();
+/* 走到門口：門先打開，問要不要進去；按「進去看看」才進店，按「先不要」或走開就關門 */
+let knock=null;const kn=$('#knock');
+function enter(b){if(showing)return;if(knock&&knock!==b)swingDoor(knock,false);knock=b;if(!b.doorOpen)swingDoor(b,true);
+  kn.querySelector('b').textContent=`要進去${INFO[b.k].name}嗎？`;kn.classList.add('on');kn.setAttribute('aria-hidden','false')}
+function knockHide(){knock=null;kn.classList.remove('on');kn.setAttribute('aria-hidden','true')}
+function knockGo(){const b=knock;if(!b)return;knockHide();doEnter(b)}
+function knockNo(){const b=knock;if(!b)return;knockHide();swingDoor(b,false);if(tour>=0)tour=-1}
+kn.querySelector('.go').onclick=knockGo;kn.querySelector('.no').onclick=knockNo;
+function doEnter(b){const I=INFO[b.k];const isNew=stamp(b.k);showing=b;pendStamp=isNew?b.k:null;save();
   say(isNew?`歡迎光臨${I.name}`:`歡迎回來${I.name}`,1.8);
-  setTimeout(()=>goIn(b),500)}
+  setTimeout(()=>goIn(b),350)}
 /* 從店門口擴散的圓形過場 */
 const iris=$('#iris');
 function irisAt(b){const sp=new DOMPoint(b.door,BASE-40).matrixTransform(svg.getScreenCTM());iris.style.setProperty('--x',f(sp.x)+'px');iris.style.setProperty('--y',f(sp.y)+'px')}
@@ -673,11 +715,12 @@ function fillShow(b){const I=INFO[b.k];showing=b;{
     $('#shBtns').innerHTML=btn.join('');$('#shBack').onclick=()=>{tour=-1;closeShow()};
     if($('#shNext'))$('#shNext').onclick=()=>{const nx=TOUR[tour+1];closeShow();if(nx){tour++;setTimeout(()=>walkTo(SH.find(o=>o.k===nx)),450)}else{tour=-1;setTimeout(()=>say('一圈逛完了！有想做的就傳 LINE 給我們',3.5),500)}};
     $('#show').classList.add('on')}}
-function closeShow(){if(showing){irisAt(showing);iris.style.transition='none';iris.classList.add('on');void iris.offsetWidth;iris.style.transition='';setTimeout(()=>iris.classList.remove('on'),30)}$('#show').classList.remove('on');showing=null;save();
-  let wait=0;if(pendStamp){const k=pendStamp;pendStamp=null;wait=2200;setTimeout(()=>{say(`蓋章！${INFO[k].name}`,1.8);openPass(k)},450);setTimeout(closePass,2400)}
+function closeShow(){const was=showing;if(was&&was.doorOpen)setTimeout(()=>swingDoor(was,false),700);if(showing){irisAt(showing);iris.style.transition='none';iris.classList.add('on');void iris.offsetWidth;iris.style.transition='';setTimeout(()=>iris.classList.remove('on'),30)}$('#show').classList.remove('on');showing=null;save();
+  let wait=0;if(pendStamp){const k=pendStamp;pendStamp=null;wait=2200;setTimeout(()=>{say(`蓋章！${INFO[k].name}`,1.8);openPass(k)},450);setTimeout(closePass,2400);setTimeout(()=>{lightShop(k);say(`${INFO[k].name}亮燈了！`,1.8)},2700)}
+  else if(was&&got.has(was.k)&&!SH.find(o=>o.k===was.k).litOn)setTimeout(()=>{lightShop(was.k);say(`${INFO[was.k].name}亮燈了！`,1.8)},400);
   if(got.size===7){if(QB.done)setTimeout(showChest,600+wait);else setTimeout(()=>say('七個章蓋滿了！去活動會場旁的金色方塊跳 3 下',4),400)}}
 $('#show').addEventListener('click',e=>{if(e.target.id==='show')closeShow()});
-addEventListener('keydown',e=>{if(e.key==='Escape'){if(showing)closeShow();closeChest();closeWheel();closePass();closeMenu()}
+addEventListener('keydown',e=>{if(knock){if(e.key==='Enter'||e.code==='Space'){e.preventDefault();knockGo();return}if(e.key==='Escape'){knockNo();return}}if(e.key==='Escape'){if(showing)closeShow();closeChest();closeWheel();closePass();closeMenu()}
   if(showing||opOn||$('#treasure').classList.contains('on')||$('#wheel').classList.contains('on'))return;
   if(e.code==='Space'||e.key==='ArrowUp'){e.preventDefault();if(CH.on&&Math.abs(me.x-CH.x)<44)openChest();else jump();return}
   if(e.key==='ArrowRight'||e.key==='ArrowLeft'){me.target=clamp(me.x+(e.key==='ArrowRight'?120:-120),30,W-30);me.onArrive=null;manual=0;hintOff()}});
@@ -915,7 +958,7 @@ let restored=false;
 try{const s=JSON.parse(sessionStorage.getItem('stSave')||'null');
   const navType=(performance.getEntriesByType('navigation')[0]||{}).type;
   if(s&&!q.has('fresh')&&(navType==='back_forward'||q.has('resume'))){restored=true;
-    s.got.forEach(k=>stamp(k));QB.hits=s.hits||0;
+    s.got.forEach(k=>{stamp(k);if(s.show!==k)lightShop(k,false)});QB.hits=s.hits||0;
     if(s.qb){QB.done=true;qbUsed();$('#stD .coin').classList.add('on')}
     if(s.chOn){CH.on=true;chG.style.display='';chG.setAttribute('transform',`translate(${CH.x} ${me.y+2})`)}
     if(s.chOpen){CH.open=true;chShut.style.display='none';chOpen.style.display='';$('#stD .c2').classList.add('on')}
@@ -935,18 +978,20 @@ run((t,dt)=>{
   card.style.setProperty('--paper-bg',rgb(Pp.bottom));
   s0.setAttribute('stop-color',rgb(Pp.top));s1.setAttribute('stop-color',rgb(Pp.bottom));
   const night=Pp.night;
-  starN.forEach(s=>s.n.setAttribute('opacity',f(night*(.45+.55*Math.sin(t*s.sp+s.ph)**2))));
+  starN.forEach(s=>{s.n.setAttribute('opacity',f(night*(.12+.88*Math.sin(t*s.sp*1.7+s.ph)**4)));
+    if(s.spk){const c=((t+s.ph)%s.per)/s.per,k=c<.14?Math.sin(c/.14*Math.PI):0;s.spk.setAttribute('opacity',f(night*k));s.spk.setAttribute('transform',`translate(${f(s.x)} ${f(s.y)}) scale(${f(.3+k)}) translate(${f(-s.x)} ${f(-s.y)})`)}});
   moonL.setAttribute('opacity',f(night));
   const ang=(tau-0.25)*Math.PI*2;sun.setAttribute('cx',f(W/2-Math.cos(ang)*900));sun.setAttribute('cy',f(260-Math.sin(ang)*190));sun.setAttribute('opacity',f(1-night));
   paints.forEach(n=>n.setAttribute('fill',tint(n.dataset.base,Pp)));
-  windows.forEach(w=>{const lit=smooth(w.thr,w.thr+.25,Pp.lamp);w.lit=lerp(w.lit,lit,.08);w.n.setAttribute('fill',rgb(mix(Pp.paper,mix(WARM,WARMD,w.warm),w.lit*.92)));w.glow.setAttribute('opacity',f(w.lit*.75))});
-  signs.forEach(s=>{const lit=smooth(s.thr,s.thr+.2,Pp.lamp);s.n.setAttribute('fill',rgb(mix(Pp.paper,toRGB('#fff6e0'),lit)));s.glow.setAttribute('opacity',f(lit*.8))});
+  windows.forEach(w=>{const lit=onLit(w,smooth(w.thr,w.thr+.25,Pp.lamp)*(w.shop&&!w.on?.3:1),t);w.lit=w.on?lit:lerp(w.lit,lit,.08);w.n.setAttribute('fill',rgb(mix(Pp.paper,mix(WARM,WARMD,w.warm),w.lit*.92)));w.glow.setAttribute('opacity',f(w.lit*.75))});
+  signs.forEach(s=>{const lit=onLit(s,smooth(s.thr,s.thr+.2,Pp.lamp),t);s.n.setAttribute('fill',rgb(mix(Pp.paper,toRGB('#fff6e0'),lit)));s.glow.setAttribute('opacity',f(lit*.8))});
   lanterns.forEach((l,i)=>{const sw=Math.sin(t*1.3+i)*2.5;l.g.setAttribute('transform',`rotate(${f(sw)} ${l.x} ${l.y-10})`);l.glow.setAttribute('opacity',f(smooth(.2,.45,Pp.lamp)*(.85+.15*Math.sin(t*7+i))))});
   const lampOn=smooth(.2,.45,Pp.lamp);
   lampsL.forEach(l=>{l.head.setAttribute('fill',rgb(mix(Pp.paper,toRGB('#fff1c9'),lampOn)));l.cone.setAttribute('opacity',f(lampOn*.7));l.glow.setAttribute('opacity',f(lampOn))});
   bulbs.forEach((b,i)=>b.setAttribute('opacity',f(.25+.75*lampOn*((Math.floor(t*4)+i)%3?1:.25))));
   // 小點：有目標就走過去，到了就做事
   if(me.target!==null){const dx=me.target-me.x;
+    if(knock&&Math.abs(me.x-knock.door)>60)knockNo();
     if(Math.abs(dx)<3){me.target=null;const fn=me.onArrive;me.onArrive=null;fn&&fn()}
     else{me.dir=dx>0?1:-1;me.go=lerp(me.go,1,Math.min(1,dt*6));me.x+=me.dir*Math.min(Math.abs(dx),RUN.speed*FS*PACE*dt*me.go)}}
   else me.go=lerp(me.go,0,Math.min(1,dt*8));
