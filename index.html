@@ -115,7 +115,7 @@ h1 u::after{content:"";position:absolute;right:-.2em;bottom:.2em;width:.13em;hei
 .hero-cap:hover em{border-color:var(--dot)}
 .hero-cap.in>*{animation:up .9s var(--ease) both}.hero-cap.in>*:nth-child(2){animation-delay:.08s}.hero-cap.in>*:nth-child(3){animation-delay:.16s}
 @keyframes up{from{opacity:0;transform:translateY(24px)}}
-.hero-ct{position:absolute;right:var(--pad);bottom:calc(var(--pad) + 22px);z-index:2;color:#fff;font-family:var(--serif);font-size:18px;display:flex;align-items:center;gap:12px;pointer-events:none}
+.hero-ct{position:absolute;right:calc(var(--pad) + 96px);bottom:calc(var(--pad) + 22px);z-index:2;color:#fff;font-family:var(--serif);font-size:18px;display:flex;align-items:center;gap:12px;pointer-events:none}
 .hero-ct i{width:46px;height:1px;background:#fff;opacity:.5}
 #hbar{position:absolute;left:0;bottom:0;height:4px;z-index:2;background:var(--dot);width:0;pointer-events:none}
 #hbar.run{animation:bar 4.5s linear forwards}
@@ -429,12 +429,42 @@ h2{font-family:var(--serif);font-weight:500;font-size:clamp(36px,6vw,92px);line-
   body.lock .fab,body.menu .fab{display:none}
   .tile.off{display:none!important}
 }
+/* 右下角導覽員小點 */
+#dg{position:fixed;right:20px;bottom:18px;z-index:70;display:flex;flex-direction:column;align-items:flex-end;gap:6px;pointer-events:none;opacity:0;transform:translateY(30px);transition:opacity .5s,transform .6s var(--ease),bottom .4s var(--ease)}
+#dg.on{opacity:1;transform:none}
+#dg.on>*{pointer-events:auto}
+body.lock #dg,body.menu #dg{display:none}
+.dg-me{width:76px;height:86px;background:none;border:0;padding:0;cursor:pointer;animation:dgBob 2.4s ease-in-out infinite}
+.dg-me svg{width:100%;height:100%;overflow:visible}
+.dg-arm{transform-origin:58px 40px;animation:dgWave 1.2s ease-in-out infinite}
+@keyframes dgBob{50%{transform:translateY(-6px)}}
+@keyframes dgWave{0%,100%{transform:rotate(0)}50%{transform:rotate(-22deg)}}
+.dg-bub{position:relative;width:min(280px,calc(100vw - 40px));background:var(--paper);color:var(--ink);border-radius:16px;padding:16px 16px 14px;box-shadow:0 10px 30px rgba(0,0,0,.28);transform-origin:85% 100%;transition:transform .45s cubic-bezier(.2,1.6,.4,1),opacity .25s;margin-right:6px}
+.dg-bub::after{content:"";position:absolute;right:30px;bottom:-9px;border:9px solid transparent;border-top:10px solid var(--paper);border-bottom:0}
+#dg:not(.open) .dg-bub{opacity:0;transform:scale(.5);pointer-events:none}
+.dg-bub b{display:block;font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:.04em;padding-right:22px}
+.dg-bub span{display:block;font-size:13px;line-height:1.7;color:#55524c;margin:6px 0 12px}
+.dg-bub div{display:flex;gap:8px}
+.dg-go{flex:1;text-align:center;background:var(--dot);color:#fff;border-radius:99px;padding:10px 12px;font-size:14px;letter-spacing:.06em}
+.dg-go:hover{filter:brightness(1.08)}
+.dg-no{background:none;border:1px solid rgba(0,0,0,.18);border-radius:99px;padding:10px 14px;font-size:13px;color:#55524c;cursor:pointer}
+.dg-x{position:absolute;right:8px;top:6px;width:28px;height:28px;background:none;border:0;font-size:18px;color:#8a8780;cursor:pointer}
+@media (max-width:860px){#dg{right:12px;bottom:12px}.dg-me{width:62px;height:70px}body.fabon #dg{bottom:76px}}
 </style>
 </head>
 <body class="lock">
 
 <div id="loader"><div class="mark">賣點設計<i></i></div><div class="pct"><span id="pct">0</span><small>%</small></div></div>
 <div id="cursor"><span></span></div>
+<div id="dg" aria-live="polite">
+  <div class="dg-bub" role="dialog" aria-label="導覽員小點">
+    <button class="dg-x" type="button" aria-label="關閉">×</button>
+    <b>要不要我帶你逛逛？</b>
+    <span>我是導覽員小點，帶你在小鎮地圖裡看我們能做的事，還藏了彩蛋喔。</span>
+    <div><a class="dg-go" href="guide.html">好啊，帶我逛</a><button class="dg-no" type="button">先不用</button></div>
+  </div>
+  <button class="dg-me" type="button" aria-label="導覽員小點：要不要我帶你逛逛？"><svg viewBox="0 0 80 90" aria-hidden="true"><ellipse cx="40" cy="86" rx="18" ry="3.5" fill="rgba(0,0,0,.28)"/><g class="dg-legs" stroke="#2a2420" stroke-width="3.4" stroke-linecap="round" fill="none"><path d="M33 62v14l-4 6"/><path d="M45 62v14l5 6"/></g><g class="dg-body"><path class="dg-arm" d="M58 40l9-10l6-4" stroke="#2a2420" stroke-width="3" stroke-linecap="round" fill="none"/><circle cx="73" cy="25" r="3" fill="#2a2420" class="dg-arm"/><circle cx="40" cy="40" r="23" fill="#ff4a1c"/><ellipse cx="32" cy="34" rx="7" ry="4.5" fill="#fff" opacity=".22"/><ellipse cx="45" cy="37" rx="3" ry="4" fill="#fff"/><ellipse cx="54" cy="37.5" rx="2.7" ry="3.7" fill="#fff"/><path d="M44 47q5.5 4 11-.5" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/><path d="M22 44l-8 6" stroke="#2a2420" stroke-width="3" stroke-linecap="round"/></g></svg></button>
+</div>
 <a class="fab hide" id="fab" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener" aria-label="用 LINE 聯絡賣點設計"><i></i>LINE 聊聊</a>
 
 <header>
@@ -789,7 +819,7 @@ $('#clGrid').innerHTML=CLIENTS.filter(c=>!HIDE_CLIENTS.includes(c.logo)).map(c=>
 $$('.cl img').forEach(i=>{const f=()=>{if(i.naturalWidth/i.naturalHeight<1.9)i.parentElement.classList.add('sq')};i.complete?f():i.addEventListener('load',f)});
 
 /* 手機的撥號鈕：離開首頁後出現，捲到聯絡區就收起來（那裡本來就有電話） */
-{const fab=$('#fab');const upd=()=>{const c=$('#contact').getBoundingClientRect();fab.classList.toggle('hide',scrollY<innerHeight*.6||c.top<innerHeight*.75)};addEventListener('scroll',upd,{passive:true});upd()}
+{const fab=$('#fab');const upd=()=>{const c=$('#contact').getBoundingClientRect();fab.classList.toggle('hide',scrollY<innerHeight*.6||c.top<innerHeight*.75);document.body.classList.toggle('fabon',!fab.classList.contains('hide')&&getComputedStyle(fab).display!=='none')};addEventListener('scroll',upd,{passive:true});upd()}
 
 /* cursor */
 const cur=$('#cursor'),curT=$('span',cur);let cx=innerWidth/2,cy=innerHeight/2,ex=cx,ey=cy,seen=false;
@@ -926,11 +956,17 @@ $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const t=$(a.getAttr
 $('#yr').textContent=new Date().getFullYear();
 const ck=()=>$('#clock').textContent=new Date().toLocaleTimeString('zh-TW',{timeZone:'Asia/Taipei',hour:'2-digit',minute:'2-digit',hour12:false});ck();setInterval(ck,20000);
 
+/* 右下角小點：載入完 2.5 秒後出來問要不要導覽；按「先不用」這次瀏覽就不再主動問，點小點可以再打開 */
+{const dg=$('#dg');const ss=(k,v)=>{try{return v===undefined?sessionStorage.getItem(k):sessionStorage.setItem(k,v)}catch(e){return null}};
+  const open=v=>dg.classList.toggle('open',v);
+  window.dgStart=()=>setTimeout(()=>{dg.classList.add('on');if(ss('dgNo')!=='1')setTimeout(()=>open(true),500)},2500);
+  $('.dg-me',dg).addEventListener('click',()=>open(!dg.classList.contains('open')));
+  const no=()=>{open(false);ss('dgNo','1')};$('.dg-no',dg).addEventListener('click',no);$('.dg-x',dg).addEventListener('click',no);}
 /* loader */
 (function(){const el=$('#pct'),ld=$('#loader'),t0=performance.now(),dur=reduce?200:1700;
   (function tick(now){const p=Math.min(1,(now-t0)/dur);el.textContent=Math.round((1-Math.pow(1-p,2))*100);
     if(p<1)return requestAnimationFrame(tick);
-    setTimeout(()=>{startHero();ld.classList.add('out');document.body.classList.remove('lock');document.body.classList.add('ready');setTimeout(()=>ld.remove(),1200)},250)})(t0)})();
+    setTimeout(()=>{startHero();if(window.dgStart)dgStart();ld.classList.add('out');document.body.classList.remove('lock');document.body.classList.add('ready');setTimeout(()=>ld.remove(),1200)},250)})(t0)})();
 /* 從導覽頁跳過來：#w=作品編號 直接開作品，#cat=類別 直接篩選作品區 */
 (()=>{const h=decodeURIComponent(location.hash);let m;
   if((m=h.match(/^#w=(.+)$/))){const i=WORKS.findIndex(w=>w.id===m[1]);if(i>=0)setTimeout(()=>openWork(i),1700)}
