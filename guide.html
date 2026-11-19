@@ -71,6 +71,7 @@ a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;backgroun
 #banner.long{padding:0 34px}#banner.long b{font-size:clamp(17px,4.8vw,34px);padding:9px 22px 11px;letter-spacing:.05em}
 @keyframes ban{0%{opacity:0;transform:translate(-50%,-10px) scale(.96)}10%{opacity:1;transform:translate(-50%,0) scale(1.03)}16%{transform:translate(-50%,0) scale(1)}82%{opacity:1}100%{opacity:0}}
 #panel{position:fixed;z-index:7;right:20px;top:76px;bottom:20px;width:var(--panel);background:rgba(11,11,11,.95);border:1px solid var(--edge);display:flex;flex-direction:column;padding:26px 28px 22px;overflow-y:auto;scrollbar-width:thin}
+#panel>*{flex-shrink:0}
 #panel::before{content:"";position:absolute;inset:7px;border:1px solid rgba(58,55,50,.6);pointer-events:none}
 .who{display:flex;align-items:center;gap:16px;width:100%;text-align:left;cursor:default}
 #peek,.chev{display:none}
@@ -276,6 +277,62 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 #lucky b{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(19px,5vw,26px);letter-spacing:.04em;line-height:1.35;color:#2a1c10}
 #lucky span{display:block;font-family:var(--serif);font-weight:700;font-size:15px;color:var(--dot);margin-top:2px}
 @media (min-width:1000px){#lucky{left:calc((100% - var(--panel) - 40px)/2)}}
+/* 幸運轉盤 */
+#treasure .card,#wheel .card{max-height:calc(100svh - 32px);overflow-y:auto}
+#treasure .spin-go{display:block;width:100%;margin-top:16px;padding:14px;background:linear-gradient(#ffe08a,#e9a62a);color:#3b2210;font-family:var(--serif);font-weight:900;font-size:18px;letter-spacing:.1em;border-radius:6px;box-shadow:0 5px 0 #8a5a12;animation:spinGlow 1.6s ease-in-out infinite}
+#treasure .spin-go img,.wh-btn img{vertical-align:-5px;margin-right:2px}#treasure .spin-go img:nth-child(2),.wh-btn img:nth-child(2){margin-right:8px;margin-left:-10px}
+#treasure .spin-go:active{transform:translateY(3px);box-shadow:0 2px 0 #8a5a12}
+@keyframes spinGlow{50%{filter:brightness(1.12);box-shadow:0 5px 0 #8a5a12,0 0 18px rgba(246,196,69,.8)}}
+#wheel{position:fixed;inset:0;z-index:31;display:grid;place-items:center;padding:16px;background:rgba(6,12,24,.78);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .4s}
+#wheel.on{opacity:1;pointer-events:auto}
+#wheel .card{position:relative;width:min(400px,100%);background:var(--parch);color:var(--ink2);border:3px solid var(--brown);outline:1.5px solid var(--parch);outline-offset:4px;border-radius:6px;padding:26px 20px 20px;text-align:center;transform:scale(.8);transition:transform .5s cubic-bezier(.2,1.6,.4,1)}
+#wheel.on .card{transform:none}
+#wheel small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.26em;color:var(--brown)}
+#wheel h2{font-family:var(--serif);font-weight:900;font-size:24px;letter-spacing:.08em;margin:6px 0 12px;color:#2a1c10}
+#wheel .x{position:absolute;right:10px;top:8px;width:36px;height:36px;font-size:22px;color:var(--brown)}
+.wh-box{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:0 auto}
+#whSvg{width:100%;height:100%;filter:drop-shadow(0 6px 0 rgba(59,34,16,.35))}
+#whSvg .rot{transition:transform 5s cubic-bezier(.12,.75,.12,1)}
+.wh-pin{position:absolute;left:50%;top:-6px;width:28px;height:36px;margin-left:-14px;background:#ff4a1c;clip-path:polygon(0 0,100% 0,50% 100%);filter:drop-shadow(0 2px 0 #7a1f08)}
+.wh-pin::after{content:"";position:absolute;left:9px;top:6px;width:10px;height:10px;border-radius:50%;background:#fff}
+.wh-btn{margin-top:14px;padding:12px 28px;font-size:18px!important;letter-spacing:.08em!important;background:var(--dot);color:#fff;font-family:var(--serif);font-weight:900;font-size:20px;letter-spacing:.2em;border-radius:6px;box-shadow:0 5px 0 #a82a0c}
+.wh-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #a82a0c}
+.wh-btn[disabled]{opacity:.45;pointer-events:none}
+.wh-note{font-family:var(--serif);font-size:12px;color:var(--brown);margin-top:10px}
+#whRes:empty{display:none}
+#whRes{margin-top:14px;animation:rise .5s ease both}
+#whRes .lose{font-family:var(--serif);font-size:16px;line-height:1.8;color:#2a1c10}
+#whRes .lose b{display:block;font-size:20px;font-weight:900}
+.coupon{position:relative;display:flex;align-items:stretch;text-align:left;background:#fffaf0;border:2px dashed #e9a62a;border-radius:8px;overflow:hidden}
+.coupon .cl{flex:none;width:92px;display:grid;place-items:center;background:var(--dot);color:#fff;font-family:var(--serif);font-weight:900;font-size:26px;line-height:1.1;text-align:center;padding:10px 4px}
+#wheel .coupon .cl small{display:block;font-family:var(--serif);font-size:13px;font-weight:700;letter-spacing:.1em;color:#fff;margin-top:4px}
+.coupon .cr{padding:10px 12px;font-family:var(--serif);color:#2a1c10}
+.coupon .cr b{display:block;font-size:18px;font-weight:900}
+.coupon .cr code{display:inline-block;margin:4px 0;font-family:var(--mono);font-size:15px;font-weight:700;letter-spacing:.1em;background:#f4ead3;border:1px solid var(--parch2);border-radius:4px;padding:2px 8px;user-select:all}
+.coupon .cr span{display:block;font-size:12px;line-height:1.6;color:var(--brown)}
+#whRes .use{display:block;margin-top:12px;padding:13px;background:var(--lg);color:#fff;font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:.1em;border-radius:6px;box-shadow:0 5px 0 #048a3b}
+#whRes .tip{font-family:var(--serif);font-size:13px;color:var(--brown);margin-top:8px}
+#wheel .wh-dot{display:flex;align-items:center;justify-content:center;gap:2px;margin:-4px 0 6px}
+#wheel .wh-dot svg{width:64px;height:58px;flex:none;color:#3b2a1c}
+#whSay{position:relative;font-family:var(--serif);font-weight:900;font-size:16px;color:#2a1c10;background:#fffaf0;border:2px solid var(--brown);border-radius:10px;padding:6px 12px}
+#whSay::before{content:"";position:absolute;left:-9px;top:50%;margin-top:-6px;border:6px solid transparent;border-right:8px solid var(--brown);border-left:0}
+#whSay.pop{animation:sayPop .35s ease-out}@keyframes sayPop{0%{transform:scale(.6)}60%{transform:scale(1.08)}}
+.op-choice{display:grid;gap:12px;margin-top:22px}
+.op-choice button{padding:14px 20px;font-family:var(--serif);font-weight:900;font-size:17px;letter-spacing:.12em;border-radius:4px}
+.op-tour{background:var(--dot);color:#fff;box-shadow:0 5px 0 #a82a0c}
+.op-free{border:2px solid var(--cream);color:#fff}
+.op-choice button:active{transform:translateY(3px)}
+#opening.last .op-next{display:none}
+#ask{position:fixed;z-index:11;left:0;top:0;width:min(290px,calc(100vw - 32px));transform:translate(-50%,calc(-100% - 14px)) scale(.6);transform-origin:50% 100%;background:var(--parch);color:var(--ink2);border:3px solid var(--brown);border-radius:12px;padding:14px 14px 12px;text-align:center;box-shadow:0 6px 0 rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .3s,transform .45s cubic-bezier(.2,1.6,.4,1)}
+#ask.on{opacity:1;pointer-events:auto;transform:translate(-50%,calc(-100% - 14px)) scale(1)}
+#ask::after{content:"";position:absolute;left:50%;bottom:-13px;margin-left:-10px;border:10px solid transparent;border-top:12px solid var(--brown);border-bottom:0}
+#ask b{display:block;font-family:var(--serif);font-weight:900;font-size:19px;letter-spacing:.06em;color:#2a1c10}
+#ask span{display:block;font-family:var(--serif);font-size:13px;line-height:1.7;color:var(--brown);margin:4px 0 10px}
+#ask div{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#ask button{padding:10px 6px;font-family:var(--serif);font-weight:900;font-size:14px;letter-spacing:.04em;border-radius:6px}
+#ask .a-tour{background:var(--dot);color:#fff;box-shadow:0 4px 0 #a82a0c}
+#ask .a-free{background:#fffaf0;color:var(--ink2);border:2px solid var(--parch2);box-shadow:0 4px 0 var(--parch2)}
+#ask button:active{transform:translateY(2px)}
 </style>
 </head>
 <body>
@@ -294,6 +351,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 <div id="keys"><kbd>←</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>→</kbd><em>方向鍵移動</em>・<kbd>Space</kbd><em>進入</em></div>
 <div id="zoom" aria-label="地圖縮放"><button type="button" data-z="in" aria-label="放大">＋</button><button type="button" data-z="out" aria-label="縮小">－</button></div>
 <div id="banner"><small></small><b></b></div>
+<div id="ask" role="dialog" aria-label="小點的問題" aria-hidden="true"><b>要怎麼逛呢？</b><span>我可以帶你七棟全部走一遍，也可以讓你自己慢慢逛。</span><div><button class="a-tour" type="button">帶我全部逛一圈</button><button class="a-free" type="button">我自己逛逛</button></div></div>
 <div id="lucky" role="status" aria-live="polite"><img src="guide-assets/item-coin.webp" width="40" height="45" alt=""><div><small>金幣 ×1</small><b>你是全世界最幸運的人！</b><span>繼續探索吧</span></div></div>
 <aside id="panel" aria-live="polite">
   <button class="who" id="grab" type="button" aria-expanded="true"><svg id="portrait" viewBox="0 0 110 100" aria-hidden="true"></svg><div><b>小點</b><small id="loc">GUIDE · 賣點設計導覽員</small><span id="peek"></span></div><i class="chev" aria-hidden="true"></i></button>
@@ -315,11 +373,24 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
     <button class="x" type="button" aria-label="關閉">×</button>
     <small>TREASURE · 隱藏寶箱</small>
     <h2 id="trT">寶箱打開了！<br>裡面是我們的 LINE</h2>
-    <p>逛完七棟、還跳到金幣，你是真的有在玩。<br>最後的寶物就是直接找到我們，哈哈哈。</p>
+    <p>逛完七棟、還跳到金幣，你是真的有在玩。<br>寶箱裡還有第二枚金幣，湊滿兩枚可以去轉轉盤！</p>
     <img src="logos/line-qr.png" alt="賣點設計 LINE QR Code" width="150" height="150">
+    <button class="spin-go" type="button"><img src="guide-assets/item-coin.webp" width="22" height="25" alt=""><img src="guide-assets/item-coin.webp" width="22" height="25" alt="">拿兩枚金幣去轉轉盤</button>
     <a class="go" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">加入賣點設計 LINE</a>
     <p class="lol">加好友時跟我們說「我開到寶箱了」</p>
     <div class="bye"><svg id="trDot" viewBox="0 0 110 100" aria-hidden="true"></svg><span>下次再來找我玩唷！</span></div>
+  </div>
+</div>
+<div id="wheel" role="dialog" aria-modal="true" aria-labelledby="whT" aria-hidden="true">
+  <div class="card">
+    <button class="x" type="button" aria-label="關閉">×</button>
+    <small>LUCKY WHEEL · 幸運轉盤</small>
+    <h2 id="whT">轉一次，看看運氣</h2>
+    <div class="wh-dot"><svg id="whDot" viewBox="0 0 110 100" aria-hidden="true"></svg><span id="whSay">轉轉看！</span></div>
+    <div class="wh-box"><svg id="whSvg" viewBox="-160 -160 320 320" aria-hidden="true"></svg><i class="wh-pin" aria-hidden="true"></i></div>
+    <button class="wh-btn" type="button"><img src="guide-assets/item-coin.webp" width="22" height="25" alt=""><img src="guide-assets/item-coin.webp" width="22" height="25" alt="">投入 2 枚金幣</button>
+    <div id="whRes" aria-live="polite"></div>
+    <p class="wh-note">兩枚金幣可以轉一次，每台手機或電腦限一次</p>
   </div>
 </div>
 <section id="show" aria-hidden="true" tabindex="-1">
@@ -452,7 +523,7 @@ const setTip=(a,b)=>{if(k1.textContent!==a)k1.textContent=a;if(k2.textContent!==
 
 /* ---------- 金幣方塊：活動會場和噴泉中間，小點在下面跳 10 下就掉出金幣 ---------- */
 const QB={x:592,y:522,lift:60,hits:0,need:10,done:false,bump:0};
-const qbShadow=el('ellipse',{cx:QB.x,cy:QB.y,rx:13,ry:4,fill:'#000',opacity:.3},actors);
+
 const qbG=el('g',{id:'qb',style:'cursor:pointer'},actors);
 const qbBox=el('g',{},qbG);
 qbBox.innerHTML=`<defs><radialGradient id="qbglow"><stop offset="0" stop-color="#ffe08a" stop-opacity=".5"/><stop offset="1" stop-color="#ffe08a" stop-opacity="0"/></radialGradient></defs>
@@ -473,7 +544,7 @@ function getCoin(){QB.done=true;sfx('coin');qbBox.querySelector('.face').setAttr
   const c=coinSvg(fx),x=QB.x,y0=QB.y-QB.lift-30;const t0=performance.now();
   const spin=now=>{const k=Math.min(1,(now-t0)/900),y=y0-70*Math.sin(k*Math.PI*.75)+(k>.75?0:0);c.setAttribute('transform',`translate(${x} ${y.toFixed(1)}) scale(${Math.cos(k*Math.PI*6).toFixed(2)} 1)`);c.setAttribute('opacity',k<.8?1:(1-k)*5);if(k<1)requestAnimationFrame(spin);else c.remove()};
   requestAnimationFrame(spin);sparks(x,y0-40,'#ffe08a',10);
-  const ci=$('#stD .coin');ci.classList.add('on');ci.title='金幣：拿到了';
+  const ci=$('#stD .coin');ci.classList.add('on');ci.title='第一枚金幣：拿到了';
   const lk=$('#lucky');lk.classList.add('on');clearTimeout(lk._t);lk._t=setTimeout(()=>lk.classList.remove('on'),5200);lk.onclick=()=>lk.classList.remove('on');
   setTimeout(()=>{if(showing)return;if(got.size===7)showChest();else peek('你是全世界最幸運的人！繼續探索吧');if(got.size!==7)say('叮！你是全世界最幸運的人！\n繼續探索吧。',()=>opts([{t:'繼續探索',cls:'main',fn:explore}]))},900)}
 qbG.addEventListener('click',e=>{e.stopPropagation();if(dragged){dragged=false;return}begin();tour=-1;autoEnter=null;
@@ -492,7 +563,70 @@ function showChest(){if(CH.on)return;CH.on=true;chG.style.display='';chG.setAttr
   pan=[CH.x,CH.y-30];setTimeout(()=>pan=null,1800);
   say('咦？噴泉前面掉下來一個寶箱！\n'+(touch?'帶我走過去，點一下寶箱打開。':'帶我走過去，按空白鍵打開。'),()=>opts([{t:'帶我去開寶箱',cls:'main',fn:()=>{begin();autoAct=openChest;go([CH.x,CH.y+14])}}]))}
 function openChest(){if(!CH.on)return;CH.open=true;talk('下次再來找我玩唷！');chG.querySelector('.shut').style.display='none';chG.querySelector('.open').style.display='';chG.animate([{transform:`translate(${CH.x}px,${CH.y}px) scale(1)`},{transform:`translate(${CH.x}px,${CH.y}px) scale(1.15,.9)`,offset:.3},{transform:`translate(${CH.x}px,${CH.y}px) scale(1)`}],{duration:380,easing:'ease-out'});sparks(CH.x,CH.y-28,'#fff3c4',12);
-  setTimeout(()=>{const tr=$('#treasure');tr.classList.add('on');tr.setAttribute('aria-hidden','false');tr.querySelector('.go').focus({preventScroll:true})},650)}
+  /* 寶箱裡跳出第二枚金幣 */
+  {const c=coinSvg(fx),x=CH.x,y0=CH.y-40,t0=performance.now();sfx('coin');
+   const go=now=>{const k=Math.min(1,(now-t0)/900),y=y0-60*Math.sin(k*Math.PI*.8);c.setAttribute('transform',`translate(${x} ${y.toFixed(1)}) scale(${Math.cos(k*Math.PI*6).toFixed(2)} 1)`);c.setAttribute('opacity',k<.8?1:(1-k)*5);if(k<1)requestAnimationFrame(go);else c.remove()};requestAnimationFrame(go);
+   const c2=$('#stD .c2');c2.classList.add('on');c2.title='第二枚金幣：拿到了'}
+  setTimeout(()=>{const tr=$('#treasure');tr.classList.add('on');tr.setAttribute('aria-hidden','false');tr.querySelector('.spin-go').focus({preventScroll:true})},1100)}
+/* ---------- 幸運轉盤：先決定結果（中獎 20%），再讓轉盤停到那一格；每台裝置只能轉一次 ---------- */
+const LINE_URL='https://line.me/ti/p/UplDc9NA68';
+const SEGS=[
+ {k:'poster',t:['海報印刷','95 折'],bg:'#ff4a1c',fg:'#fff',win:{name:'海報印刷 95 折券',big:'95折',small:'海報印刷'}},
+ {k:'n1',t:['小點的','抱抱'],bg:'#f4ead3',fg:'#3b2a1c'},
+ {k:'poster98',t:['海報印刷','98 折'],bg:'#ff8a3d',fg:'#fff',win:{name:'海報印刷 98 折券',big:'98折',small:'海報印刷'}},
+ {k:'n3',t:['好運','存起來'],bg:'#f4ead3',fg:'#3b2a1c'},
+ {k:'design',t:['設計費','98 折'],bg:'#f6c445',fg:'#3b2210',win:{name:'設計費 98 折券',big:'98折',small:'設計費'}},
+ {k:'n4',t:['下次','會更好'],bg:'#e8d9b8',fg:'#3b2a1c'},
+ {k:'chat',t:['免費聊聊','想法'],bg:'#06c755',fg:'#fff',win:{name:'免費聊聊想法',big:'免費',small:'聊聊想法'}},
+ {k:'n6',t:['再逛','一圈'],bg:'#e8d9b8',fg:'#3b2a1c'}];
+const ODDS={poster:.04,poster98:.06,design:.05,chat:.05};/* 合計 20%，其餘 80% 沒中 */
+const LOSE_SAY={n1:'送你一個小點的抱抱！',n3:'好運先存起來，下次用。',n4:'下次一定會更好！',n6:'再去小鎮逛一圈吧！'};
+const N=SEGS.length,STEP=360/N;
+{const g=['<g class="rot" id="whRot">'];
+ SEGS.forEach((s,i)=>{const a0=(i*STEP-90)*Math.PI/180,a1=((i+1)*STEP-90)*Math.PI/180,R=150;
+  g.push(`<path d="M0 0L${(R*Math.cos(a0)).toFixed(2)} ${(R*Math.sin(a0)).toFixed(2)}A${R} ${R} 0 0 1 ${(R*Math.cos(a1)).toFixed(2)} ${(R*Math.sin(a1)).toFixed(2)}Z" fill="${s.bg}" stroke="#6b4a2b" stroke-width="2"/>`);
+  const mid=i*STEP+STEP/2;g.push(`<g transform="rotate(${mid}) translate(0 -96)"><text text-anchor="middle" font-family="Noto Serif TC,serif" font-weight="900" fill="${s.fg}"><tspan x="0" y="-4" font-size="${s.win?17:15}">${s.t[0]}</tspan><tspan x="0" y="16" font-size="${s.win?19:15}">${s.t[1]}</tspan></text></g>`)});
+ for(let i=0;i<N;i++){const a=(i*STEP-90)*Math.PI/180;g.push(`<circle cx="${(150*Math.cos(a+Math.PI/N)).toFixed(1)}" cy="${(150*Math.sin(a+Math.PI/N)).toFixed(1)}" r="4" fill="#ffe08a" stroke="#8a5a12"/>`)}
+ g.push('</g><circle r="154" fill="none" stroke="#8a5a12" stroke-width="7"/><circle r="30" fill="#f6c445" stroke="#8a5a12" stroke-width="4"/><circle r="22" fill="#ff4a1c" stroke="#7a1f08" stroke-width="2"/><ellipse cx="-7" cy="-4" rx="3" ry="4" fill="#fff"/><ellipse cx="7" cy="-4" rx="3" ry="4" fill="#fff"/><circle cx="-6.4" cy="-3.2" r="1.5" fill="#3b2a1c"/><circle cx="7.6" cy="-3.2" r="1.5" fill="#3b2a1c"/><path d="M-7 6Q0 12 7 6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/><ellipse cx="-13" cy="5" rx="3" ry="2" fill="#ffb199" opacity=".7"/><ellipse cx="13" cy="5" rx="3" ry="2" fill="#ffb199" opacity=".7"/>');
+ $('#whSvg').innerHTML=g.join('')}
+const spinKey='mdSpin';
+const getSpin=()=>{try{return JSON.parse(getS(spinKey)||'null')}catch(e){return null}};
+function pickResult(){const r=Math.random();let acc=0;for(const k in ODDS){acc+=ODDS[k];if(r<acc)return SEGS.findIndex(s=>s.k===k)}
+  const lose=SEGS.map((s,i)=>s.win?-1:i).filter(i=>i>=0);return lose[Math.floor(Math.random()*lose.length)]}
+const fmtDate=d=>`${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}`;
+function showSpinResult(res,fresh){const s=SEGS[res.i],box=$('#whRes');
+  if(s.win){const w=s.win;
+    box.innerHTML=`<div class="coupon"><div class="cl" style="background:${s.bg};color:${s.fg}"><div>${w.big}<small style="color:${s.fg}">${w.small}</small></div></div><div class="cr"><b>恭喜抽中 ${w.name}！</b><span>使用期限：${res.until} 前</span><span>領獎方式：截圖這個畫面，加 LINE 傳給我們就可以。每人限用一次，不和其他優惠合併。</span></div></div><p class="tip">① 先截圖這個畫面　② 加 LINE 傳給我們</p><a class="use" href="${LINE_URL}" target="_blank" rel="noopener">加 LINE 領取優惠</a>`;
+    whSay('恭喜你！快截圖！');if(fresh){sfx('coin');talk('哇！你抽中'+w.name+'了！')}}
+  else{box.innerHTML=`<p class="lose"><b>${s.t.join('')}</b>${LOSE_SAY[s.k]}<br>有想做的東西，還是可以直接找我們聊聊。</p><a class="use" href="${LINE_URL}" target="_blank" rel="noopener">加 LINE 聊聊</a>`;whSay('下次再來找我玩唷！');if(fresh)sfx('voice')}
+  $('.wh-btn').disabled=true;$('.wh-btn').textContent='金幣用完囉'}
+let spinning=false;const COIN_BTN='<img src="guide-assets/item-coin.webp" width="22" height="25" alt=""><img src="guide-assets/item-coin.webp" width="22" height="25" alt="">投入 2 枚金幣';
+/* 投幣：兩枚金幣從按鈕飛進轉盤中間的小點，再開始轉 */
+function insertCoins(){if(spinning||(getSpin()&&!q.has('respin')))return;const btn=$('.wh-btn');btn.disabled=true;whSay('叮！叮！');
+  const from=btn.querySelectorAll('img'),hub=$('#whSvg').getBoundingClientRect(),hx=hub.left+hub.width/2,hy=hub.top+hub.height/2;
+  from.forEach((im,i)=>{const r=im.getBoundingClientRect(),c=im.cloneNode();c.style.cssText=`position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;z-index:40;pointer-events:none;margin:0`;document.body.appendChild(c);im.style.visibility='hidden';
+    const dx=hx-(r.left+r.width/2),dy=hy-(r.top+r.height/2);
+    c.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${dx*.5}px,${dy*.5-60}px) scale(1.6)`,offset:.5},{transform:`translate(${dx}px,${dy}px) scale(.3)`,opacity:.2}],{duration:620,delay:i*380,easing:'ease-in',fill:'forwards'});
+    setTimeout(()=>{c.remove();sfx('hit');const h=$('#whSvg');h.animate([{transform:'scale(1)'},{transform:'scale(1.04)'},{transform:'scale(1)'}],{duration:220})},620+i*380)});
+  setTimeout(()=>{spin(true)},620+380+350)}
+function whSay(s){const e=$('#whSay');e.textContent=s;e.classList.remove('pop');void e.offsetWidth;e.classList.add('pop')}
+function openWheel(){const w=$('#wheel');closeChest();w.classList.add('on');w.setAttribute('aria-hidden','false');
+  const old=getSpin();const rot=$('#whRot');
+  if(old&&!q.has('respin')){rot.style.transition='none';rot.style.transform=`rotate(${-(old.i*STEP+STEP/2)}deg)`;showSpinResult(old,false)}
+  else{$('#whRes').innerHTML='';$('.wh-btn').disabled=false;$('.wh-btn').innerHTML=COIN_BTN;whSay('把兩枚金幣投進來！')}}
+function closeWheel(){if(spinning)return;const w=$('#wheel');w.classList.remove('on');w.setAttribute('aria-hidden','true')}
+function spin(fromCoins){if(fromCoins!==true)return insertCoins();if(spinning||(getSpin()&&!q.has('respin')))return;spinning=true;$('.wh-btn').disabled=true;whSay('轉呀轉，好緊張！');
+  const i=pickResult(),jit=(Math.random()-.5)*STEP*.6,deg=360*6-(i*STEP+STEP/2)+jit;
+  const rot=$('#whRot');rot.style.transition='none';rot.style.transform='rotate(0deg)';void rot.getBoundingClientRect();
+  rot.style.transition='';rot.style.transform=`rotate(${deg}deg)`;
+  /* 轉的時候每過一格響一下 */
+  let last=0;const t0=performance.now();const tick=()=>{const m=getComputedStyle(rot).transform;if(m&&m!=='none'){const v=m.match(/matrix\(([^,]+),([^,]+)/);if(v){const a=(Math.atan2(+v[2],+v[1])*180/Math.PI+360)%360,seg=Math.floor(a/STEP);if(seg!==last){last=seg;sfx('hit')}}}if(performance.now()-t0<4600)requestAnimationFrame(tick)};requestAnimationFrame(tick);
+  setTimeout(()=>{spinning=false;const s=SEGS[i],until=new Date(Date.now()+10*864e5);
+    const res={i,k:s.k,at:Date.now(),until:fmtDate(until)};
+    setS(spinKey,JSON.stringify(res));showSpinResult(res,true)},5100)}
+$('#treasure .spin-go').addEventListener('click',openWheel);
+$('.wh-btn').addEventListener('click',()=>spin());
+$('#wheel .x').addEventListener('click',closeWheel);$('#wheel').addEventListener('click',e=>{if(e.target.id==='wheel')closeWheel()});
 function closeChest(){const tr=$('#treasure');tr.classList.remove('on');tr.setAttribute('aria-hidden','true')}
 $('#treasure .x').addEventListener('click',closeChest);$('#treasure').addEventListener('click',e=>{if(e.target.id==='treasure')closeChest()});
 chG.addEventListener('click',e=>{e.stopPropagation();if(dragged){dragged=false;return}begin();tour=-1;autoEnter=null;
@@ -516,9 +650,14 @@ function talk(text,quiet){if(!text){let i;do{i=Math.floor(Math.random()*LINES.le
   bubT.textContent=text;const w=Math.max(70,text.length*15.5+26);bubR.setAttribute('x',-w/2);bubR.setAttribute('width',w);
   bub.setAttribute('opacity',1);bubIn.animate([{transform:'scale(.4)',opacity:0},{transform:'scale(1.08)',opacity:1,offset:.6},{transform:'scale(1)'}],{duration:320,easing:'ease-out'});
   bubOn=true;clearTimeout(bubTimer);bubTimer=setTimeout(()=>{bub.setAttribute('opacity',0);bubOn=false},2600);if(!quiet)sfx('voice')}
+/* 一進地圖，小點在頭上問要怎麼逛 */
+function askShow(){if(showing)return;askOn=true;const a=$('#ask');a.classList.add('on');a.setAttribute('aria-hidden','false');sfx('voice')}
+function askHide(){askOn=false;const a=$('#ask');a.classList.remove('on');a.setAttribute('aria-hidden','true')}
+$('#ask .a-tour').addEventListener('click',()=>{askHide();say('好！跟著我，從活動會場開始。');startTour()});
+$('#ask .a-free').addEventListener('click',()=>{askHide();setTimeout(()=>{if(!dotTapped&&!bubOn)talk(CALLS[callN++%CALLS.length],true)},900)});
 /* 還沒被點過：小點每隔一陣子主動喊一聲，讓大家知道可以點他 */
-let dotTapped=false,callN=0;const CALLS=['點我一下看看！','嘿，我在這裡，點我嘛！','點我會說話喔！'];
-setInterval(()=>{if(dotTapped||opOn||showing||bubOn||path.length||(!QB.done&&Math.hypot(me.x-QB.x,me.y-QB.y)<70)||$('#treasure').classList.contains('on'))return;talk(CALLS[callN++%CALLS.length],true)},7000);
+let dotTapped=false,callN=0,askOn=false;const CALLS=['點我一下看看！','嘿，我在這裡，點我嘛！','點我會說話喔！'];
+setInterval(()=>{if(dotTapped||askOn||opOn||showing||bubOn||path.length||(!QB.done&&Math.hypot(me.x-QB.x,me.y-QB.y)<70)||$('#treasure').classList.contains('on'))return;talk(CALLS[callN++%CALLS.length],true)},7000);
 /* 音效（之後換成 Magnific 的檔案） */
 const SFX_SRC={hit:'guide-assets/sfx-coin-hit.mp3',coin:'guide-assets/sfx-coin.mp3',voice:'guide-assets/sfx-voice.mp3'},SFX={},SFXB={};
 for(const k in SFX_SRC){SFX[k]=new Audio(SFX_SRC[k]);SFX[k].preload='auto'}
@@ -570,12 +709,13 @@ const PHONE=()=>innerWidth<1000;
 function setMin(v){if(!PHONE())v=false;$('#panel').classList.toggle('min',v);$('#grab').setAttribute('aria-expanded',String(!v))}
 $('#grab').addEventListener('click',()=>{if(PHONE())setMin(!$('#panel').classList.contains('min'))});
 function peek(s){$('#peek').textContent=s}
-function begin(){if(!started){started=true;$('#title').classList.add('hide')}follow=true;pan=null;setMin(true)}
+function begin(){if(askOn)askHide();if(!started){started=true;$('#title').classList.add('hide')}follow=true;pan=null;setMin(true)}
 addEventListener('keydown',e=>{
   if(opOn){if(e.key==='Enter'||e.code==='Space'){e.preventDefault();opNext()}if(e.key==='Escape')opClose();return}
   if(showing){if(e.key==='Escape')closeShow();return}
   if(KMAP[e.code]){keys.add(KMAP[e.code]);path=[];autoEnter=null;tour=-1;begin();e.preventDefault();return}
   const tagN=document.activeElement&&document.activeElement.tagName;
+  if($('#wheel').classList.contains('on')){if(e.key==='Escape')closeWheel();return}
   if($('#treasure').classList.contains('on')){if(e.key==='Escape')closeChest();return}
   if((e.code==='Space'||e.code==='Enter')&&near&&near!==inside&&tagN!=='BUTTON'&&tagN!=='A'){e.preventDefault();enter(near);return}
   if(e.code==='Space'&&tagN!=='BUTTON'&&tagN!=='A'){e.preventDefault();begin();if(CH.on&&Math.hypot(me.x-CH.x,me.y-CH.y)<36)openChest();else jump();return}
@@ -641,6 +781,7 @@ function loop(dt,t){
   place(fig,me.x,me.y-me.jz,me.dir,SC);
   shadow.setAttribute('cx',me.x);shadow.setAttribute('cy',me.y+1);shadow.setAttribute('rx',(15-me.jz*.15).toFixed(1));
   tip.setAttribute('transform',`translate(${me.x.toFixed(1)} ${(me.y-66-me.jz).toFixed(1)})`);
+  if(askOn){const sp=new DOMPoint(me.x,me.y-58-me.jz).matrixTransform(svg.getScreenCTM()),a=$('#ask'),w=a.offsetWidth/2;a.style.left=Math.max(w+12,Math.min(innerWidth-w-12,sp.x))+'px';a.style.top=Math.max(a.offsetHeight+70,sp.y)+'px'}
   bub.setAttribute('transform',`translate(${me.x.toFixed(1)} ${(me.y-44-me.jz).toFixed(1)}) scale(${bubScale})`);
   /* 走到門口：建築點亮、地上出現光圈 */
   let nb=null,best=46;for(const b of B){const d=Math.hypot(b.door[0]-me.x,b.door[1]-me.y);if(d<best){best=d;nb=b}}
@@ -656,6 +797,7 @@ function loop(dt,t){
   if(opOn)opLoop(dt,t);
   if(showing)shDot.draw(RUN.pose(0,0),0,Math.sin(t*5)*22);
   if(CH.open)trDot.draw(RUN.pose(0,0),0,Math.sin(t*6)*24);
+  if($('#wheel').classList.contains('on')){const hop=spinning?Math.abs(Math.sin(t*9))*8:0;whG.setAttribute('transform',`translate(14 ${-32-hop}) scale(1.05)`);whDotF.draw(RUN.pose(spinning?t*2.5:0,spinning?1:0),spinning?1:0,spinning?null:Math.sin(t*6)*24)}
   if(!PHONE())mini();
   const tg=followBox();const k=Math.min(1,dt*3.2);let mv=0;vb=vb.map((v,i)=>{const d=(tg[i]-v)*k;mv+=Math.abs(d);return v+d});if(mv>0.04||!vbSet){vbSet=true;svg.setAttribute('viewBox',vb.map(n=>n.toFixed(2)).join(' '))}
   /* 建築名稱在螢幕上維持固定大小，不跟著鏡頭縮放 */
@@ -675,7 +817,7 @@ function home(){follow=true;if(PHONE())return;pan=[MW/2+120,MH/2];Z=cover()/base
 addEventListener('resize',()=>setZ(Z));
 
 /* ---------- 小地圖、集章、橫幅 ---------- */
-$('#stD').innerHTML=B.map(b=>`<i data-k="${b.k}" title="${b.zh}"></i>`).join('')+'<i class="coin" title="金幣：還沒找到"></i>';
+$('#stD').innerHTML=B.map(b=>`<i data-k="${b.k}" title="${b.zh}"></i>`).join('')+'<i class="coin" title="第一枚金幣：還沒找到"></i><i class="coin c2" title="第二枚金幣：還沒找到"></i>';
 const MS=150/MW,MX=88-MW*MS/2,MY=88-MH*MS/2;
 $('#mini').innerHTML=`<defs><clipPath id="miniC"><circle cx="88" cy="88" r="80"/></clipPath></defs><circle cx="88" cy="88" r="86" fill="#0b0b0b" stroke="#efe6d4" stroke-width="1.5"/><g clip-path="url(#miniC)"><image href="${IMG}" x="${MX}" y="${MY}" width="${MW*MS}" height="${MH*MS}" opacity=".7"/>${B.map(b=>`<circle id="mk-${b.k}" cx="${MX+b.door[0]*MS}" cy="${MY+b.door[1]*MS}" r="3.4" fill="none" stroke="#efe6d4" stroke-width="1.2"/>`).join('')}<path id="mMe" d="M0 -7L5 5L0 2L-5 5Z" fill="#ff4a1c"/></g><circle cx="88" cy="88" r="80" fill="none" stroke="#efe6d4" stroke-width=".8" opacity=".6"/><text x="88" y="20" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="12" fill="#efe6d4">N</text>`;
 let lastX=me.x,lastY=me.y,heading=0;
@@ -803,10 +945,12 @@ const HOW=touch?[
 $('#howto').innerHTML=HOW.map(h=>`<li>${h[0]}<div><b>${h[1]}</b><span>${h[2]}</span></div></li>`).join('');
 /* 隱藏彩蛋：金幣方塊和寶箱 */
 const COIN_ICON='<img src="guide-assets/item-qb.webp" width="40" height="41" alt="">';
+const WHEEL_ICON='<svg width="40" height="40" viewBox="-20 -20 40 40"><circle r="18" fill="#f4ead3" stroke="#8a5a12" stroke-width="3"/><path d="M0 0L0-18A18 18 0 0 1 12.7-12.7Z" fill="#ff4a1c"/><path d="M0 0L18 0A18 18 0 0 1 12.7 12.7Z" fill="#f6c445"/><path d="M0 0L-12.7 12.7A18 18 0 0 1-18 0Z" fill="#06c755"/><circle r="6" fill="#ff4a1c" stroke="#8a5a12" stroke-width="1.5"/></svg>';
 const CHEST_ICON='<img src="guide-assets/item-chest.webp" width="42" height="37" alt="">';
 $('#eggs').innerHTML=[
   [COIN_ICON,'金色方塊','活動會場前面浮著一個，'+(touch?'點方塊讓我在下面跳，':'站到下面按空白鍵跳，')+'撞滿 10 下會掉出金幣'],
-  [CHEST_ICON,'神秘寶箱','七個章都蓋滿，再拿到金幣，噴泉前面會掉下一個寶箱']
+  [CHEST_ICON,'神秘寶箱','七個章都蓋滿，再拿到金幣，噴泉前面會掉下寶箱，打開還有第二枚金幣'],
+  [WHEEL_ICON,'幸運轉盤','兩枚金幣投進轉盤轉一次，有機會抽到海報印刷、設計費折扣']
 ].map(h=>`<li>${h[0]}<div><b>${h[1]}</b><span>${h[2]}</span></div></li>`).join('');
 const OP_N=document.querySelectorAll('.op-step').length;
 function opNext(){if(opStep<OP_N-1){opStep++;document.querySelectorAll('.op-step').forEach((s,i)=>s.classList.toggle('on',i===opStep));document.querySelectorAll('.op-dots i').forEach((s,i)=>s.classList.toggle('on',i===opStep));$('.op-next').textContent=opStep===OP_N-1?'開始探索':'下一步'}else opClose()}
@@ -823,14 +967,17 @@ $('#bgm').addEventListener('click',()=>bgmSet($('#bgm').getAttribute('aria-press
 document.addEventListener('visibilitychange',()=>{if(document.hidden)bgm.pause();else if($('#bgm').getAttribute('aria-pressed')==='true')bgm.play().catch(()=>{})});
 /* 沒開場（?debug）時，第一次點畫面才開始 */
 const bgmFirst=()=>{if(getS('bgm')!=='0'&&$('#bgm').getAttribute('aria-pressed')!=='true')bgmSet(true,false)};
-function opClose(){if(!opOn)return;bgmFirst();setTimeout(()=>{if(!dotTapped&&!bubOn)talk(CALLS[callN++%CALLS.length],true)},2200);setS('guideSeen','1');const o=$('#opening');o.classList.add('out');setTimeout(()=>{o.hidden=true;opOn=false},600);intro()}
-$('.op-next').addEventListener('click',opNext);$('#opening .skip').addEventListener('click',opClose);
+function opClose(){if(!opOn)return;bgmFirst();setTimeout(askShow,900);setS('guideSeen','1');const o=$('#opening');o.classList.add('out');setTimeout(()=>{o.hidden=true;opOn=false},600);intro()}
+$('.op-next').addEventListener('click',opNext);
+$('#opening .skip').addEventListener('click',opClose);
 const shSvg=$('#shDot');shSvg.style.color='#efe6d4';shSvg.style.setProperty('--paper','#0b0b0b');
 {const s3=document.createElementNS('http://www.w3.org/2000/svg','style');s3.textContent='.pp{fill:var(--paper)}';shSvg.appendChild(s3)}
 const shDot=makeDot(el('g',{transform:'translate(14 -32) scale(1.05)'},shSvg));
 const trSvg=$('#trDot');trSvg.style.setProperty('--paper','#f4ead3');{const s4=document.createElementNS('http://www.w3.org/2000/svg','style');s4.textContent='.pp{fill:var(--paper)}';trSvg.appendChild(s4)}
 const trDot=makeDot(el('g',{transform:'translate(14 -32) scale(1.05)'},trSvg));
-window.__g={talk,me,walkTo,enter,B,got,closeShow,opNext,opClose,QB,CH,jump,go,findPath,free,showChest,openChest,stamp};
+const whSvgD=$('#whDot');whSvgD.style.setProperty('--paper','#f4ead3');{const s5=document.createElementNS('http://www.w3.org/2000/svg','style');s5.textContent='.pp{fill:var(--paper)}';whSvgD.appendChild(s5)}
+const whG=el('g',{},whSvgD);const whDotF=makeDot(whG);
+window.__g={openWheel,spin,pickResult,SEGS,talk,me,walkTo,enter,B,got,closeShow,opNext,opClose,QB,CH,jump,go,findPath,free,showChest,openChest,stamp};
 if(q.has('debug')){let tt=0;loop(1/60,0);window.__step=(sec=1)=>{for(let i=0,n=Math.round(sec*60);i<n;i++){tt+=1/60;loop(1/60,tt)}return tt}}
 else{const t0=performance.now();let prev=t0;const tick=now=>{loop(Math.min(0.05,(now-prev)/1000),(now-t0)/1000);prev=now;requestAnimationFrame(tick)};requestAnimationFrame(tick)}
 if(opOn)$('#opening').hidden=false;else intro();
