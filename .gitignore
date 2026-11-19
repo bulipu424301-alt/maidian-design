@@ -1,2 +1,8 @@
-.netlify/
-.DS_Store
+# 不上傳的雜檔（瀏覽器下載、截圖、原始音檔）
+*.mp3
+!guide-assets/*.mp3
+截圖*
+IMG_*
+images.jpeg
+images.png
+*.PNG
