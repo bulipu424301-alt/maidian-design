@@ -944,7 +944,8 @@ function intro(){home();$('#loc').textContent='GUIDE · 賣點設計導覽員';p
     {t:'我也不確定，幫我推薦',cls:'wide',fn:()=>walkTo('line')}],true))}
 
 /* 作品資料從首頁讀（index.html?data） */
-$('#src').addEventListener('load',()=>{const f=$('#src').contentWindow;let n=0;const wait=()=>{if(f.__PUBLIC){WORKS=f.__PUBLIC;$('#src').remove()}else if(n++<40)setTimeout(wait,150)};wait()});
+/* 不等 load 事件：頁面腳本跑起來時 iframe 可能已經載好了，直接檢查，還沒好就每 0.2 秒再看一次 */
+{let n=0;const grab=()=>{const fr=$('#src');try{if(fr&&fr.contentWindow&&fr.contentWindow.__PUBLIC){WORKS=fr.contentWindow.__PUBLIC;fr.remove();return}}catch(e){}if(n++<75)setTimeout(grab,200)};grab()}
 
 /* ---------- 開場：小點跑進來自我介紹，再說明怎麼玩 ---------- */
 const getS=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
