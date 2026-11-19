@@ -353,9 +353,9 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 </head>
 <body>
 <header class="top">
-  <a class="logo" href="index.html">賣點設計<i></i></a>
+  <a class="logo" href="./">賣點設計<i></i></a>
   <span class="mid">Service Map</span>
-  <nav class="nav"><button id="bgm" type="button" aria-pressed="false" aria-label="配樂：關" title="配樂"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"/><path class="w" d="M13 7c1.2 1.5 1.2 4.5 0 6M15.5 5c2.4 2.8 2.4 7.2 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="x" d="M13 7.5l5 5M18 7.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>配樂</span></button><s></s><a href="index.html">回首頁</a><s></s><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></nav>
+  <nav class="nav"><button id="bgm" type="button" aria-pressed="false" aria-label="配樂：關" title="配樂"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"/><path class="w" d="M13 7c1.2 1.5 1.2 4.5 0 6M15.5 5c2.4 2.8 2.4 7.2 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="x" d="M13 7.5l5 5M18 7.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>配樂</span></button><s></s><a href="./">回首頁</a><s></s><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></nav>
 </header>
 <svg id="map" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice" role="img" aria-label="賣點設計服務小鎮地圖"></svg>
 <div id="title"><h1>服務地圖<i></i></h1><p>賣點設計的服務小鎮・走進每一棟看看</p></div>
@@ -429,6 +429,8 @@ const $=s=>document.querySelector(s);
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const touch=matchMedia('(pointer:coarse)').matches;
 const q=new URLSearchParams(location.search);
+/* 網址不顯示 .html：從 guide.html 進來就把網址列改成 /guide */
+if(/\/guide\.html$/.test(location.pathname)&&location.protocol==='https:')history.replaceState(null,'',location.pathname.replace(/\.html$/,'')+location.search+location.hash);
 const IMG='guide-assets/map-d.jpg',MW=1536,MH=1024;
 const svg=$('#map');
 
@@ -860,7 +862,7 @@ function worksFor(b,n=6){if(!WORKS.length||b.cat==='line')return[];
   if(b.k==='print')return WORKS.filter(w=>/手冊|桌曆|型錄|年報|摺頁|月曆|Handout/.test(w.nm)).slice(0,n);
   return WORKS.filter(w=>w.tags.includes(b.cat)).slice(0,n)}
 const th=p=>'thumbs/'+p.replace(/\//g,'_');
-function strip(list){$('#strip').innerHTML=list.map(w=>`<a href="index.html#w=${encodeURIComponent(w.id)}"><img loading="lazy" src="${th(w.img)}" alt="">${w.vid?'<em>▶</em>':''}<span>${w.nm.replace(/</g,'&lt;')}</span></a>`).join('')}
+function strip(list){$('#strip').innerHTML=list.map(w=>`<a href="./#w=${encodeURIComponent(w.id)}"><img loading="lazy" src="${th(w.img)}" alt="">${w.vid?'<em>▶</em>':''}<span>${w.nm.replace(/</g,'&lt;')}</span></a>`).join('')}
 
 /* ---------- 進建築：拉近、從門口擴散黑圓、進作品展示間 ---------- */
 let showing=null,pendingFinale=false;
@@ -878,11 +880,11 @@ function openShow(b){const sh=$('#show');
   $('#shSay').textContent=b.say;
   $('#quiz').hidden=b.k!=='line';if(b.k==='line')quizStart();
   const list=worksFor(b,9);
-  $('#shGrid').innerHTML=list.map((w,i)=>`<a href="index.html#w=${encodeURIComponent(w.id)}" style="animation-delay:${.35+i*.06}s"><div class="im"><img loading="lazy" src="${th(w.img)}" alt="">${w.vid?'<em>▶ 動畫</em>':''}</div><p>${w.nm.replace(/</g,'&lt;')}</p></a>`).join('');
+  $('#shGrid').innerHTML=list.map((w,i)=>`<a href="./#w=${encodeURIComponent(w.id)}" style="animation-delay:${.35+i*.06}s"><div class="im"><img loading="lazy" src="${th(w.img)}" alt="">${w.vid?'<em>▶ 動畫</em>':''}</div><p>${w.nm.replace(/</g,'&lt;')}</p></a>`).join('');
   const o=[];
   if(tour>=0){const nx=TOUR[tour+1];if(nx)o.push({t:'下一站：'+B.find(x=>x.k===nx).zh,cls:'main',fn:()=>{closeShow(()=>{tour++;walkTo(nx)})}});else o.push({t:'逛完了',cls:'main',fn:()=>{tour=-1;closeShow()}})}
   if(b.cat==='line')o.push({t:'加 LINE 聊聊',cls:'lg main',href:LINE,ext:true});
-  else{if(b.cat)o.push({t:`看全部${b.cat}作品`,cls:tour<0?'main':'',href:'index.html#cat='+encodeURIComponent(b.cat)});o.push({t:'LINE 問問看',cls:'lg',href:LINE,ext:true})}
+  else{if(b.cat)o.push({t:`看全部${b.cat}作品`,cls:tour<0?'main':'',href:'./#cat='+encodeURIComponent(b.cat)});o.push({t:'LINE 問問看',cls:'lg',href:LINE,ext:true})}
   o.push({t:'回到小鎮',fn:()=>closeShow()});
   const box=$('#shOpts');box.innerHTML='';o.forEach(x=>{const e=document.createElement(x.href?'a':'button');e.className='k '+(x.cls||'');e.textContent=x.t;if(x.href){e.href=x.href;if(x.ext){e.target='_blank';e.rel='noopener'}}else e.onclick=x.fn;box.appendChild(e)});
   sh.scrollTop=0;sh.classList.add('on');sh.setAttribute('aria-hidden','false');sh.focus({preventScroll:true});
@@ -921,7 +923,7 @@ function startTour(){tour=0;walkTo(TOUR[0])}
 function finale(){$('#loc').textContent='ALL STAMPS · 集滿了';strip([]);setMin(false);peek('七個章集滿了・加 LINE 聊聊');
   if(QB.done){showChest();return}
   if(!QB.done)return say('七個章都蓋滿了，整座小鎮都亮起來了！\n不過還差一樣：活動會場前面有個金色方塊，在下面跳三下看看。',()=>opts([{t:'帶我去方塊下面',cls:'main',fn:()=>{begin();autoAct=jump;go([QB.x,QB.y])}},{t:'加 LINE 聊聊',cls:'lg',href:LINE,ext:true},{t:'再逛逛',fn:explore}]));
-  say('七個章都蓋滿了，整座小鎮都亮起來了！謝謝你逛完。有想做的事，傳個 LINE 給我們聊聊吧。',()=>opts([{t:'加 LINE 聊聊',cls:'lg',href:LINE,ext:true},{t:'回首頁看作品',href:'index.html#works'},{t:'再逛逛',fn:explore}]))}
+  say('七個章都蓋滿了，整座小鎮都亮起來了！謝謝你逛完。有想做的事，傳個 LINE 給我們聊聊吧。',()=>opts([{t:'加 LINE 聊聊',cls:'lg',href:LINE,ext:true},{t:'回首頁看作品',href:'./#works'},{t:'再逛逛',fn:explore}]))}
 function intro(){home();$('#loc').textContent='GUIDE · 賣點設計導覽員';peek('點地圖走走看・點這裡選目的地');setMin(true);
   say(touch?'嗨，我是小點，賣點設計的導覽員。\n點地圖我就會走過去，走到門口點一下就能進去。每一棟都是我們能幫你做的事。':'嗨，我是小點，賣點設計的導覽員。\n用方向鍵或 WASD 帶我走，走到門口按空白鍵就能進去。每一棟都是我們能幫你做的事。',()=>opts([
     {t:'帶我逛一圈',cls:'main wide',fn:startTour},
