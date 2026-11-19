@@ -360,13 +360,17 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
   #badge[hidden]{display:none}
   @keyframes bdg{from{transform:scale(0)}}
 }
+.diy{margin-top:12px;padding-top:10px;border-top:1px dashed #d8c7a3;font-size:13px;line-height:1.7;color:#6b4a2b;text-align:center}.diy a{color:#d23b1f;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.nav .swap{border:1px solid currentColor;border-radius:99px;padding:3px 10px;font-size:.92em}
+.nav a,.logo{white-space:nowrap}
+@media (max-width:420px){.logo{font-size:16px!important;letter-spacing:.08em!important}.nav{gap:8px!important;font-size:12px!important;letter-spacing:.04em!important}.nav s{display:none}.nav .swap{padding:3px 8px}}
 </style>
 </head>
 <body>
 <header class="top">
   <a class="logo" href="./">賣點設計<i></i></a>
   <span class="mid">Service Map</span>
-  <nav class="nav"><button id="bgm" type="button" aria-pressed="false" aria-label="配樂：關" title="配樂"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"/><path class="w" d="M13 7c1.2 1.5 1.2 4.5 0 6M15.5 5c2.4 2.8 2.4 7.2 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="x" d="M13 7.5l5 5M18 7.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>配樂</span></button><s></s><a href="./">回首頁</a><s></s><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></nav>
+  <nav class="nav"><button id="bgm" type="button" aria-pressed="false" aria-label="配樂：關" title="配樂"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"/><path class="w" d="M13 7c1.2 1.5 1.2 4.5 0 6M15.5 5c2.4 2.8 2.4 7.2 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="x" d="M13 7.5l5 5M18 7.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>配樂</span></button><s></s><a class="swap" href="street" title="換成線稿街景版">換另一個遊戲風格</a><s></s><a href="./">回首頁</a><s></s><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></nav>
 </header>
 <svg id="map" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice" role="img" aria-label="賣點設計服務小鎮地圖"></svg>
 <div id="title"><h1>服務地圖<i></i></h1><p>賣點設計的服務小鎮・走進每一棟看看</p></div>
@@ -406,6 +410,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
     <a class="go" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">加入賣點設計 LINE</a>
     <p class="lol">加好友時跟我們說「我開到寶箱了」</p>
     <div class="bye"><svg id="trDot" viewBox="0 0 110 100" aria-hidden="true"></svg><span>下次再來找我玩唷！</span></div>
+    <p class="diy">想要一個像這樣的遊戲網站嗎？<a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">私訊我們聊聊</a></p>
   </div>
 </div>
 <div id="wheel" role="dialog" aria-modal="true" aria-labelledby="whT" aria-hidden="true">

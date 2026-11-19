@@ -239,12 +239,16 @@ svg.street.drag{cursor:grabbing}
 #iris{position:fixed;inset:0;z-index:19;background:#0e1222;clip-path:circle(0 at var(--x,50%) var(--y,50%));transition:clip-path .6s cubic-bezier(.6,0,.3,1);pointer-events:none}
 #iris.on{clip-path:circle(150vmax at var(--x,50%) var(--y,50%))}
 @media (max-width:900px){#menuBtn{top:14px;left:12px}}
+.diy{margin-top:12px;padding-top:10px;border-top:1px dashed #d8c7a3;font-size:13px;line-height:1.7;color:#6b4a2b;text-align:center}.diy a{color:#d23b1f;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+#swapBtn{position:absolute;left:104px;top:12px;z-index:3;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--ink);background:rgba(10,12,22,.35);border:1px solid currentColor;border-radius:99px;padding:6px 12px;text-decoration:none}
+@media (max-width:900px){#swapBtn{top:14px;left:100px}}
+@media (max-width:560px){#stamps{top:54px!important;right:8px!important}}
 </style>
 </head>
 <body>
 <div id="card">
   <div id="scroll"></div>
-  <button id="menuBtn" type="button" aria-label="打開選單"><i><b></b><b></b><b></b></i>選單</button>
+  <button id="menuBtn" type="button" aria-label="打開選單"><i><b></b><b></b><b></b></i>選單</button><a id="swapBtn" href="guide" title="換成小鎮地圖版">換另一個遊戲風格</a>
   <div id="ask" role="dialog" aria-label="小點的問題"><b>要怎麼逛呢？</b><span>我可以帶你把七間店全部走一遍，也可以讓你自己慢慢逛。</span><div><button class="a-tour" type="button">帶我全部逛一圈</button><button class="a-free" type="button">我自己逛逛</button></div></div>
   <div id="stamps"><span>集章 <b id="stN">0/7</b></span><span id="stD"></span></div>
   <div id="bub"></div>
@@ -277,6 +281,7 @@ svg.street.drag{cursor:grabbing}
     <a class="go" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">加入賣點設計 LINE</a>
     <p class="lol">加好友時跟我們說「我開到寶箱了」</p>
     <div class="bye"><svg id="trDot" viewBox="0 0 110 100" aria-hidden="true"></svg><span>下次再來找我玩唷！</span></div>
+    <p class="diy">想要一個像這樣的遊戲網站嗎？<a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">私訊我們聊聊</a></p>
   </div>
 </div>
 <div id="wheel" role="dialog" aria-modal="true" aria-labelledby="whT" aria-hidden="true">
@@ -292,7 +297,7 @@ svg.street.drag{cursor:grabbing}
   </div>
 </div>
 <div id="iris" aria-hidden="true"></div>
-<div id="menu" role="dialog" aria-modal="true" aria-label="選單"><div class="card"><small>MENU · 選單</small><h3>賣點老街</h3><div id="mnShops"></div><div class="acts"><button class="main" type="button" id="mnTour">帶我全部逛一圈</button><button type="button" id="mnPass">看集點卡</button><a href="guide">換成小鎮地圖版</a><a href="./">回首頁看作品</a><a class="lg" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></div></div></div>
+<div id="menu" role="dialog" aria-modal="true" aria-label="選單"><div class="card"><small>MENU · 選單</small><h3>賣點老街</h3><div id="mnShops"></div><div class="acts"><button class="main" type="button" id="mnTour">帶我全部逛一圈</button><button type="button" id="mnPass">看集點卡</button><a href="guide">換另一個遊戲風格</a><a href="./">回首頁看作品</a><a class="lg" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></div><p class="diy">想要一個像這樣的遊戲網站嗎？<a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">私訊我們聊聊</a></p></div></div>
 <div id="pass" role="dialog" aria-modal="true" aria-labelledby="psT"><div class="card"><button class="x" type="button" aria-label="關閉">×</button><small>STAMP CARD · 集點卡</small><h3 id="psT">賣點老街 集章</h3><div class="grid" id="psGrid"></div><div class="next" id="psNext"></div></div></div>
 <div id="show" role="dialog" aria-modal="true" aria-labelledby="shT">
   <div class="card"><small id="shNo"></small><h2 id="shT"></h2><p id="shSay"></p><div id="quiz" hidden></div><div id="shGrid"></div><div id="shBtns"></div></div>
