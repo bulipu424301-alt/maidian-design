@@ -828,7 +828,7 @@ const CLIENTS=[
  {n:'AsiaKOL',s:'品牌與企業',logo:'asiakol'},{n:'season.co',s:'品牌與企業',logo:'fourseason'},{n:'永苑行',s:'品牌與企業',logo:'yongyuan'},{n:'將軍村',s:'品牌與企業',logo:'generalvillage'},{n:'HFX Taipei',s:'品牌與企業',logo:'hfx'}
 ];
 /* 暫時不放在合作夥伴牆的 Logo（填 logo 名稱），拿掉就會回來 */
-const HIDE_CLIENTS=['hermes','quandela'];
+const HIDE_CLIENTS=['quandela'];
 $('#clGrid').innerHTML=CLIENTS.filter(c=>!HIDE_CLIENTS.includes(c.logo)).map(c=>`<div class="cl" title="${c.n}">${c.logo?`<img src="logos/${c.logo.includes('.')?c.logo:c.logo+'.png'}" alt="${c.n}">`:`<b>${c.n}</b>`}<small>${c.n}</small></div>`).join('');
 /* 接近正方形的徽章類 Logo 放大一點，跟橫式 Logo 看起來才一樣大 */
 $$('.cl img').forEach(i=>{const f=()=>{if(i.naturalWidth/i.naturalHeight<1.9)i.parentElement.classList.add('sq')};i.complete?f():i.addEventListener('load',f)});
