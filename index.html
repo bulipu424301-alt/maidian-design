@@ -878,7 +878,7 @@ let hi=-1,hTimer;
 function advance(x,y){
   hi=(hi+1)%FEAT.length;const w=FEAT[hi],el=document.createElement('div'),old=[...stage.children];
   el.className='slide';el.style.backgroundImage=`url('${md(w.img)}')`;
-  if(w.vid){const v=document.createElement('video');v.muted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.src=w.vid;el.appendChild(v)}
+  if(w.vid){const v=document.createElement('video');['muted','loop','playsinline','autoplay'].forEach(a=>v.setAttribute(a,''));v.muted=true;v.playsInline=true;v.preload='auto';v.src=w.vid;el.appendChild(v);kick(v)}
   const R=Math.hypot(Math.max(x,hero.clientWidth-x),Math.max(y,hero.clientHeight-y))+40;
   el.style.clipPath=`circle(0px at ${x}px ${y}px)`;stage.appendChild(el);
   requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.clipPath=`circle(${R}px at ${x}px ${y}px)`;el.classList.add('in')}));
@@ -891,6 +891,12 @@ function advance(x,y){
 }
 /* 自動換下一件：每 4.5 秒從畫面上隨機一個點展開，不用點 */
 const HOLD=4500;
+/* 首頁影片保險：建立後主動播放；被瀏覽器暫停的（分頁看不到、手機省電），回到分頁或第一次點、滑螢幕時再播一次 */
+function kick(v){if(!v)return;v.muted=true;const p=v.play();if(p&&p.catch)p.catch(()=>{})}
+const kickHero=()=>stage.querySelectorAll('video').forEach(v=>{if(v.paused)kick(v)});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)kickHero()});
+['pointerdown','touchstart','scroll'].forEach(ev=>addEventListener(ev,kickHero,{passive:true,once:true}));
+setInterval(()=>{if(!document.hidden&&hero.getBoundingClientRect().bottom>0)kickHero()},1500);
 function autoNext(){const w=hero.clientWidth,h=hero.clientHeight;advance(w*(.25+Math.random()*.5),h*(.3+Math.random()*.4))}
 $('#htot').textContent=pad(FEAT.length);
 /* 載入畫面跑到 100% 之後才開始輪播，第一件從畫面中間展開 */
