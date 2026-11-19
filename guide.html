@@ -363,6 +363,25 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 .diy{margin-top:12px;padding-top:10px;border-top:1px dashed #d8c7a3;font-size:13px;line-height:1.7;color:#6b4a2b;text-align:center}.diy a{color:#d23b1f;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .nav .swap{border:1px solid currentColor;border-radius:99px;padding:3px 10px;font-size:.92em}
 .nav a,.logo{white-space:nowrap}
+#diyBtn{font:inherit;font-weight:900;color:#fff;background:#ff4a1c;border:1px solid #ff4a1c;border-radius:99px;padding:3px 10px;font-size:.92em;cursor:pointer;box-shadow:0 2px 0 #a82a0c;white-space:nowrap}
+/* 想做一樣的遊戲 */
+#gm{position:fixed;inset:0;z-index:26;display:grid;place-items:center;padding:16px;background:rgba(10,12,22,.6);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .3s}
+#gm.on{opacity:1;pointer-events:auto}
+#gm .card{position:relative;width:min(380px,calc(100vw - 32px));background:#fbf6ea;color:#2a1c10;border:2px solid #6b4a2b;outline:1.5px dashed #c9b48c;outline-offset:-9px;border-radius:14px;padding:20px 22px 18px;text-align:center;transform:scale(.9) rotate(-1deg);transition:transform .4s cubic-bezier(.2,1.6,.4,1)}
+#gm.on .card{transform:none}
+#gm small{display:block;font:11px/1 var(--mono);letter-spacing:.3em;color:#a0522d}
+#gm h2{font-weight:900;font-size:24px;letter-spacing:.1em;margin:8px 0 10px}
+#gm .say{display:flex;align-items:flex-end;gap:6px;text-align:left}
+#gm .say svg{width:78px;height:72px;flex:none}
+#gm .say p{position:relative;flex:1;font-size:14.5px;line-height:1.75;font-weight:700;background:#fffaf0;border:2px solid #6b4a2b;border-radius:12px;padding:10px 12px;margin:0 0 6px}
+#gm .say p::before{content:"";position:absolute;left:-9px;bottom:16px;border:6px solid transparent;border-right:8px solid #6b4a2b;border-left:0}
+#gm .use{display:flex;justify-content:center;gap:8px;margin:14px 0 16px;flex-wrap:wrap}
+#gm .use span{font-size:13px;font-weight:900;letter-spacing:.06em;color:#a82a0c;background:#ffe9df;border:1.5px solid #ffb59e;border-radius:99px;padding:5px 12px}
+#gm .go{display:block;padding:13px;background:#06c755;color:#fff;border-radius:99px;font-weight:900;font-size:17px;letter-spacing:.1em;text-decoration:none;box-shadow:0 4px 0 #048a3b}
+#gm .go:active{transform:translateY(3px);box-shadow:0 1px 0 #048a3b}
+#gm .lol{font-size:12.5px;color:#8a6a4a;margin:9px 0 0}
+#gm .x{position:absolute;right:8px;top:6px;width:32px;height:32px;border:0;background:none;font-size:20px;color:#6b4a2b;cursor:pointer}
+@media (max-width:560px){#diyBtn{position:fixed;top:calc(68px + env(safe-area-inset-top));right:12px;z-index:7;font-size:12px;padding:5px 11px}.nav #diyBtn+s{display:none}}
 @media (max-width:420px){.logo{font-size:16px!important;letter-spacing:.08em!important}.nav{gap:8px!important;font-size:12px!important;letter-spacing:.04em!important}.nav s{display:none}.nav .swap{padding:3px 8px}}
 </style>
 </head>
@@ -370,7 +389,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 <header class="top">
   <a class="logo" href="./">賣點設計<i></i></a>
   <span class="mid">Service Map</span>
-  <nav class="nav"><button id="bgm" type="button" aria-pressed="false" aria-label="配樂：關" title="配樂"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"/><path class="w" d="M13 7c1.2 1.5 1.2 4.5 0 6M15.5 5c2.4 2.8 2.4 7.2 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="x" d="M13 7.5l5 5M18 7.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>配樂</span></button><s></s><a class="swap" href="street" title="換成線稿街景版">換另一個遊戲風格</a><s></s><a href="./">回首頁</a><s></s><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></nav>
+  <nav class="nav"><button id="bgm" type="button" aria-pressed="false" aria-label="配樂：關" title="配樂"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"/><path class="w" d="M13 7c1.2 1.5 1.2 4.5 0 6M15.5 5c2.4 2.8 2.4 7.2 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="x" d="M13 7.5l5 5M18 7.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span>配樂</span></button><s></s><a class="swap" href="street" title="換成線稿街景版">換另一個遊戲風格</a><s></s><button class="diyb" id="diyBtn" type="button">想做一樣的遊戲</button><s></s><a href="./">回首頁</a><s></s><a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></nav>
 </header>
 <svg id="map" viewBox="0 0 1536 1024" preserveAspectRatio="xMidYMid slice" role="img" aria-label="賣點設計服務小鎮地圖"></svg>
 <div id="title"><h1>服務地圖<i></i></h1><p>賣點設計的服務小鎮・走進每一棟看看</p></div>
@@ -399,6 +418,14 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
   <div class="op-foot"><span class="op-dots"><i class="on"></i><i></i><i></i></span><button class="op-next" type="button">下一步</button></div>
 </div>
 <div id="iris" aria-hidden="true"></div>
+<div id="gm" role="dialog" aria-modal="true" aria-label="想做一樣的遊戲"><div class="card">
+  <button class="x" type="button" aria-label="關閉">×</button>
+  <small>GAME SITE · 客製遊戲網站</small><h2>想做一樣的遊戲嗎？</h2>
+  <div class="say"><svg id="gmDot" viewBox="0 0 110 100" aria-hidden="true"></svg><p>這種邊玩邊逛的網站，可以用在活動、教學，或做成你自己的網站，比一般網頁更有趣、更吸睛！</p></div>
+  <div class="use"><span>活動</span><span>教學</span><span>自己的網站</span></div>
+  <a class="go" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">私訊 LINE 免費洽詢</a>
+  <p class="lol">傳訊息時說「我想做遊戲網站」就可以了</p>
+</div></div>
 <div id="treasure" role="dialog" aria-modal="true" aria-labelledby="trT" aria-hidden="true">
   <div class="card">
     <button class="x" type="button" aria-label="關閉">×</button>
@@ -834,6 +861,7 @@ function loop(dt,t){
   if(opOn)opLoop(dt,t);
   if(showing)shDot.draw(RUN.pose(0,0),0,Math.sin(t*5)*22);
   if(CH.open)trDot.draw(RUN.pose(0,0),0,Math.sin(t*6)*24);
+  if(typeof gmDot!=='undefined'&&$('#gm').classList.contains('on'))gmDot.draw(RUN.pose(0,0),0,Math.sin(t*6)*24);
   if($('#wheel').classList.contains('on')){const hop=spinning?Math.abs(Math.sin(t*9))*8:0;whG.setAttribute('transform',`translate(14 ${-32-hop}) scale(1.05)`);whDotF.draw(RUN.pose(spinning?t*2.5:0,spinning?1:0),spinning?1:0,spinning?null:Math.sin(t*6)*24)}
   if(!PHONE())mini();
   const tg=followBox();const k=Math.min(1,dt*3.2);let mv=0;vb=vb.map((v,i)=>{const d=(tg[i]-v)*k;mv+=Math.abs(d);return v+d});if(mv>0.04||!vbSet){vbSet=true;svg.setAttribute('viewBox',vb.map(n=>n.toFixed(2)).join(' '))}
@@ -1013,6 +1041,11 @@ const shSvg=$('#shDot');shSvg.style.color='#efe6d4';shSvg.style.setProperty('--p
 const shDot=makeDot(el('g',{transform:'translate(14 -32) scale(1.05)'},shSvg));
 const trSvg=$('#trDot');trSvg.style.setProperty('--paper','#f4ead3');{const s4=document.createElementNS('http://www.w3.org/2000/svg','style');s4.textContent='.pp{fill:var(--paper)}';trSvg.appendChild(s4)}
 const trDot=makeDot(el('g',{transform:'translate(14 -32) scale(1.05)'},trSvg));
+const gmSvg=$('#gmDot');gmSvg.style.color='#3b2a1c';gmSvg.style.setProperty('--paper','#fbf6ea');{const s5=document.createElementNS('http://www.w3.org/2000/svg','style');s5.textContent='.pp{fill:var(--paper)}';gmSvg.appendChild(s5)}
+const gmDot=makeDot(el('g',{transform:'translate(14 -32) scale(1.05)'},gmSvg));
+function openGm(){$('#gm').classList.add('on')}function closeGm(){$('#gm').classList.remove('on')}
+$('#diyBtn').addEventListener('click',openGm);$('#gm .x').addEventListener('click',closeGm);$('#gm').addEventListener('click',e=>{if(e.target.id==='gm')closeGm()});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeGm()});
 const whSvgD=$('#whDot');whSvgD.style.setProperty('--paper','#f4ead3');{const s5=document.createElementNS('http://www.w3.org/2000/svg','style');s5.textContent='.pp{fill:var(--paper)}';whSvgD.appendChild(s5)}
 const whG=el('g',{},whSvgD);const whDotF=makeDot(whG);
 window.__g={openWheel,spin,pickResult,SEGS,talk,me,walkTo,enter,B,got,closeShow,opNext,opClose,QB,CH,jump,go,findPath,free,showChest,openChest,stamp};

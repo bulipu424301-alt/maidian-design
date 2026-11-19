@@ -242,6 +242,9 @@ svg.street.drag{cursor:grabbing}
 .diy{margin-top:12px;padding-top:10px;border-top:1px dashed #d8c7a3;font-size:13px;line-height:1.7;color:#6b4a2b;text-align:center}.diy a{color:#d23b1f;font-weight:700;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 #swapBtn{position:absolute;left:104px;top:12px;z-index:3;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--ink);background:rgba(10,12,22,.35);border:1px solid currentColor;border-radius:99px;padding:6px 12px;text-decoration:none}
 @media (max-width:900px){#swapBtn{top:14px;left:100px}}
+#diyBtn{font-family:inherit;cursor:pointer;position:absolute;left:252px;top:12px;z-index:3;font-size:13px;font-weight:900;letter-spacing:.08em;color:#fff;background:#ff4a1c;border:1px solid #ff4a1c;border-radius:99px;padding:6px 13px;text-decoration:none;box-shadow:0 2px 0 #a82a0c}
+@media (max-width:900px){#diyBtn{top:14px;left:248px}}
+@media (max-width:560px){#diyBtn{top:54px;left:12px;font-size:12px;padding:5px 11px}}
 @media (max-width:560px){#stamps{top:54px!important;right:8px!important}}
 /* 寶箱卡片（街景版） */
 #treasure .card.tc{background:#fbf6ea;color:#2a1c10;border:2px solid #6b4a2b;outline:1.5px dashed #c9b48c;outline-offset:-9px;border-radius:14px;padding:18px 22px 18px;width:min(380px,calc(100vw - 32px))}
@@ -262,12 +265,29 @@ svg.street.drag{cursor:grabbing}
 #treasure .tc .lol{font-size:12.5px;color:#8a6a4a;margin-top:8px}
 #treasure .tc .bye{margin-top:12px;padding-top:12px;border-top:1px dashed #d8c7a3}
 #treasure .tc .diy{border-top:0;padding-top:0;margin-top:8px}
+/* 想做一樣的遊戲 */
+#gm{position:fixed;inset:0;z-index:26;display:grid;place-items:center;padding:16px;background:rgba(10,12,22,.6);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .3s}
+#gm.on{opacity:1;pointer-events:auto}
+#gm .card{position:relative;width:min(380px,calc(100vw - 32px));background:#fbf6ea;color:#2a1c10;border:2px solid #6b4a2b;outline:1.5px dashed #c9b48c;outline-offset:-9px;border-radius:14px;padding:20px 22px 18px;text-align:center;transform:scale(.9) rotate(-1deg);transition:transform .4s cubic-bezier(.2,1.6,.4,1)}
+#gm.on .card{transform:none}
+#gm small{display:block;font:11px/1 var(--mono);letter-spacing:.3em;color:#a0522d}
+#gm h2{font-weight:900;font-size:24px;letter-spacing:.1em;margin:8px 0 10px}
+#gm .say{display:flex;align-items:flex-end;gap:6px;text-align:left}
+#gm .say svg{width:78px;height:72px;flex:none}
+#gm .say p{position:relative;flex:1;font-size:14.5px;line-height:1.75;font-weight:700;background:#fffaf0;border:2px solid #6b4a2b;border-radius:12px;padding:10px 12px;margin:0 0 6px}
+#gm .say p::before{content:"";position:absolute;left:-9px;bottom:16px;border:6px solid transparent;border-right:8px solid #6b4a2b;border-left:0}
+#gm .use{display:flex;justify-content:center;gap:8px;margin:14px 0 16px;flex-wrap:wrap}
+#gm .use span{font-size:13px;font-weight:900;letter-spacing:.06em;color:#a82a0c;background:#ffe9df;border:1.5px solid #ffb59e;border-radius:99px;padding:5px 12px}
+#gm .go{display:block;padding:13px;background:#06c755;color:#fff;border-radius:99px;font-weight:900;font-size:17px;letter-spacing:.1em;text-decoration:none;box-shadow:0 4px 0 #048a3b}
+#gm .go:active{transform:translateY(3px);box-shadow:0 1px 0 #048a3b}
+#gm .lol{font-size:12.5px;color:#8a6a4a;margin:9px 0 0}
+#gm .x{position:absolute;right:8px;top:6px;width:32px;height:32px;border:0;background:none;font-size:20px;color:#6b4a2b;cursor:pointer}
 </style>
 </head>
 <body>
 <div id="card">
   <div id="scroll"></div>
-  <button id="menuBtn" type="button" aria-label="打開選單"><i><b></b><b></b><b></b></i>選單</button><a id="swapBtn" href="guide" title="換成小鎮地圖版">換另一個遊戲風格</a>
+  <button id="menuBtn" type="button" aria-label="打開選單"><i><b></b><b></b><b></b></i>選單</button><a id="swapBtn" href="guide" title="換成小鎮地圖版">換另一個遊戲風格</a><button id="diyBtn" type="button">想做一樣的遊戲</button>
   <div id="ask" role="dialog" aria-label="小點的問題"><b>要怎麼逛呢？</b><span>我可以帶你把七間店全部走一遍，也可以讓你自己慢慢逛。</span><div><button class="a-tour" type="button">帶我全部逛一圈</button><button class="a-free" type="button">我自己逛逛</button></div></div>
   <div id="stamps"><span>集章 <b id="stN">0/7</b></span><span id="stD"></span></div>
   <div id="bub"></div>
@@ -317,6 +337,14 @@ svg.street.drag{cursor:grabbing}
   </div>
 </div>
 <div id="iris" aria-hidden="true"></div>
+<div id="gm" role="dialog" aria-modal="true" aria-label="想做一樣的遊戲"><div class="card">
+  <button class="x" type="button" aria-label="關閉">×</button>
+  <small>GAME SITE · 客製遊戲網站</small><h2>想做一樣的遊戲嗎？</h2>
+  <div class="say"><svg id="gmDot" viewBox="0 0 110 100" aria-hidden="true"></svg><p>這種邊玩邊逛的網站，可以用在活動、教學，或做成你自己的網站，比一般網頁更有趣、更吸睛！</p></div>
+  <div class="use"><span>活動</span><span>教學</span><span>自己的網站</span></div>
+  <a class="go" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">私訊 LINE 免費洽詢</a>
+  <p class="lol">傳訊息時說「我想做遊戲網站」就可以了</p>
+</div></div>
 <div id="menu" role="dialog" aria-modal="true" aria-label="選單"><div class="card"><small>MENU · 選單</small><h3>老街導覽</h3><div id="mnShops"></div><div class="acts"><button class="main" type="button" id="mnTour">帶我全部逛一圈</button><button type="button" id="mnWheel" hidden>幸運轉盤</button><button type="button" id="mnPass">看集點卡</button><a href="guide">換另一個遊戲風格</a><a href="./">回首頁看作品</a><a class="lg" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></div><p class="diy">想要一個像這樣的遊戲網站嗎？<a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">私訊我們聊聊</a></p></div></div>
 <div id="pass" role="dialog" aria-modal="true" aria-labelledby="psT"><div class="card"><button class="x" type="button" aria-label="關閉">×</button><small>STAMP CARD · 集點卡</small><h3 id="psT">老街導覽 集章</h3><div class="grid" id="psGrid"></div><div class="next" id="psNext"></div></div></div>
 <div id="show" role="dialog" aria-modal="true" aria-labelledby="shT">
@@ -620,10 +648,10 @@ const LINE_URL='https://line.me/ti/p/UplDc9NA68';
 
 /* ---------- 進店：展示作品 ---------- */
 let showing=null;
-function enter(b){const I=INFO[b.k];const isNew=stamp(b.k);showing=b;save();
-  say(isNew?`蓋章！${I.name}`:`歡迎回來${I.name}`,1.8);
-  if(isNew){setTimeout(()=>openPass(b.k),500);setTimeout(()=>{closePass();if(showing===b)goIn(b)},2300)}
-  else setTimeout(()=>goIn(b),500)}
+let pendStamp=null;
+function enter(b){const I=INFO[b.k];const isNew=stamp(b.k);showing=b;pendStamp=isNew?b.k:null;save();
+  say(isNew?`歡迎光臨${I.name}`:`歡迎回來${I.name}`,1.8);
+  setTimeout(()=>goIn(b),500)}
 /* 從店門口擴散的圓形過場 */
 const iris=$('#iris');
 function irisAt(b){const sp=new DOMPoint(b.door,BASE-40).matrixTransform(svg.getScreenCTM());iris.style.setProperty('--x',f(sp.x)+'px');iris.style.setProperty('--y',f(sp.y)+'px')}
@@ -641,7 +669,9 @@ function fillShow(b){const I=INFO[b.k];showing=b;{
     $('#shBtns').innerHTML=btn.join('');$('#shBack').onclick=()=>{tour=-1;closeShow()};
     if($('#shNext'))$('#shNext').onclick=()=>{const nx=TOUR[tour+1];closeShow();if(nx){tour++;setTimeout(()=>walkTo(SH.find(o=>o.k===nx)),450)}else{tour=-1;setTimeout(()=>say('一圈逛完了！有想做的就傳 LINE 給我們',3.5),500)}};
     $('#show').classList.add('on')}}
-function closeShow(){if(showing){irisAt(showing);iris.style.transition='none';iris.classList.add('on');void iris.offsetWidth;iris.style.transition='';setTimeout(()=>iris.classList.remove('on'),30)}$('#show').classList.remove('on');showing=null;save();if(got.size===7){if(QB.done)setTimeout(showChest,600);else setTimeout(()=>say('七個章蓋滿了！去活動會場旁的金色方塊跳 3 下',4),400)}}
+function closeShow(){if(showing){irisAt(showing);iris.style.transition='none';iris.classList.add('on');void iris.offsetWidth;iris.style.transition='';setTimeout(()=>iris.classList.remove('on'),30)}$('#show').classList.remove('on');showing=null;save();
+  let wait=0;if(pendStamp){const k=pendStamp;pendStamp=null;wait=2200;setTimeout(()=>{say(`蓋章！${INFO[k].name}`,1.8);openPass(k)},450);setTimeout(closePass,2400)}
+  if(got.size===7){if(QB.done)setTimeout(showChest,600+wait);else setTimeout(()=>say('七個章蓋滿了！去活動會場旁的金色方塊跳 3 下',4),400)}}
 $('#show').addEventListener('click',e=>{if(e.target.id==='show')closeShow()});
 addEventListener('keydown',e=>{if(e.key==='Escape'){if(showing)closeShow();closeChest();closeWheel();closePass();closeMenu()}
   if(showing||opOn||$('#treasure').classList.contains('on')||$('#wheel').classList.contains('on'))return;
@@ -707,8 +737,8 @@ function getCoin(){QB.done=true;save();qbUsed();qbN.classList.remove('on');sfx('
   lk.classList.add('on');clearTimeout(lk._t);lk._t=setTimeout(()=>lk.classList.remove('on'),7500);lk.onclick=()=>lk.classList.remove('on');
   if(got.size===7)setTimeout(showChest,1400);else setTimeout(()=>say('集滿 7 個章就能開寶箱！',3),1200)}
 
-/* ---------- 寶箱：七個章＋金幣都拿到，掉在服務台旁邊 ---------- */
-const CH={x:POS.line[1]+23,on:false,open:false};
+/* ---------- 寶箱：七個章＋金幣都拿到，掉在老街最尾端 ---------- */
+const CH={x:POS.gift[1]+70,on:false,open:false};
 const chG=el('g',{style:'cursor:pointer;display:none'},front);
 /* 線稿寶箱：紙色木箱、金色箍條、紅色鎖頭 */
 function chestBody(g){S(g,'M-24 -22 L24 -22 L24 -2 Q24 0 22 0 L-22 0 Q-24 0 -24 -2Z',SP);P(g,'M-24 -11 L24 -11',SP*.45);
@@ -729,7 +759,7 @@ P(chOpen,'M-14 -58 l-5 -9 M0 -61 l0 -11 M14 -58 l5 -9 M-24 -52 l-8 -4 M24 -52 l8
 function showChest(){if(CH.on)return;CH.on=true;save();chG.style.display='';
   chG.animate([{transform:`translate(${CH.x}px,${me.y-160}px)`},{transform:`translate(${CH.x}px,${me.y+2}px)`,offset:.6},{transform:`translate(${CH.x}px,${me.y-12}px)`,offset:.8},{transform:`translate(${CH.x}px,${me.y+2}px)`}],{duration:900,easing:'ease-in'});
   chG.setAttribute('transform',`translate(${CH.x} ${me.y+2})`);
-  say('咦？服務台旁邊掉下一個寶箱！',3.5);manual=3.5;camX=clamp(CH.x-VW*.5,0,W-VW)}
+  say('咦？老街最尾端掉下一個寶箱！',3.5);manual=3.5;camX=clamp(CH.x-VW*.5,0,W-VW)}
 /* 打開過的寶箱：再點一次就把寶箱卡片叫回來，可以去轉盤 */
 function showTreasure(){const tr=$('#treasure');tr.classList.add('on');tr.setAttribute('aria-hidden','false')}
 function openChest(){if(!CH.on)return;if(CH.open){showTreasure();return}CH.open=true;save();chShut.style.display='none';chOpen.style.display='';sfx('coin');coinPop(CH.x,me.y-46);
@@ -824,7 +854,10 @@ function quizDraw(){const z=$('#quiz');
 
 /* ---------- 線稿小點（開場、寶箱、轉盤裡的） ---------- */
 function miniDot(id){const s=$(id);s.style.color='#3b2a1c';s.style.setProperty('--paper','#fbf6ea');const st2=document.createElementNS('http://www.w3.org/2000/svg','style');st2.textContent='.pp{fill:var(--paper)}';s.appendChild(st2);const g=el('g',{transform:'translate(14 -32) scale(1.05)'},s);return{g,d:makeDot(g)}}
-const opD=miniDot('#opDot'),trD=miniDot('#trDot'),whD=miniDot('#whDot');
+const opD=miniDot('#opDot'),trD=miniDot('#trDot'),whD=miniDot('#whDot'),gmD=miniDot('#gmDot');
+function openGm(){$('#gm').classList.add('on')}function closeGm(){$('#gm').classList.remove('on')}
+$('#diyBtn').addEventListener('click',openGm);$('#gm .x').addEventListener('click',closeGm);$('#gm').addEventListener('click',e=>{if(e.target.id==='gm')closeGm()});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeGm()});
 
 /* ---------- 開場 ---------- */
 let opOn=!q.has('debug');
@@ -841,7 +874,7 @@ function stampSvg(k,on){const n=INFO[k].name,two=n.length>3,a=n.slice(0,Math.flo
 function nextHint(){const spun=(()=>{try{return !!localStorage.getItem('mdSpin')}catch(e){return false}})();
   if(got.size<7)return `還差 ${7-got.size} 個章，點店家我就帶你過去`+(QB.done?'':'<br>活動會場旁的金色方塊，跳 3 下有金幣');
   if(!QB.done)return '七個章都蓋滿了！<br>去活動會場旁的金色方塊跳 3 下';
-  if(!CH.open)return '寶箱在服務台旁邊，快去打開';
+  if(!CH.open)return '寶箱在老街最尾端（最右邊），快去打開';
   return spun?'全部完成！謝謝你逛完整條街':'兩枚金幣都拿到了！<br>去轉盤試試手氣';}
 function renderPass(fresh){$('#psGrid').innerHTML=ORDER.map(k=>`<div class="slot${k===fresh?' new':''}" title="${INFO[k].name}">${stampSvg(k,got.has(k))}</div>`).join('')+`<div class="slot"><div class="coins" style="flex-direction:column;gap:2px"><img src="street-assets/coin.svg" alt="第一枚金幣" class="${QB.done?'on':''}"><img src="street-assets/coin.svg" alt="第二枚金幣" class="${CH.open?'on':''}"></div></div>`;
   $('#psNext').innerHTML=nextHint()}
@@ -923,6 +956,7 @@ run((t,dt)=>{
   place(dotG,me.x,me.y-me.jz,me.dir,FS);
   if(opOn)opD.d.draw(RUN.pose(0,0),0,Math.sin(t*6)*24);
   if(CH.open)trD.d.draw(RUN.pose(0,0),0,Math.sin(t*6)*24);
+  if($('#gm').classList.contains('on'))gmD.d.draw(RUN.pose(0,0),0,Math.sin(t*6)*24);
   if($('#wheel').classList.contains('on')){const hop=spinning?Math.abs(Math.sin(t*9))*8:0;whD.g.setAttribute('transform',`translate(14 ${-32-hop}) scale(1.05)`);whD.d.draw(RUN.pose(spinning?t*2.5:0,spinning?1:0),spinning?1:0,spinning?null:Math.sin(t*6)*24)}dotShadow.setAttribute('cx',f(me.x));dotShadow.setAttribute('cy',f(me.y+1));
   // 鏡頭
   VW=FULL?W:Math.min(W,viewW());if(FULL)manual=99;manual=Math.max(0,manual-dt);
