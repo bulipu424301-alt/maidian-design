@@ -243,6 +243,25 @@ svg.street.drag{cursor:grabbing}
 #swapBtn{position:absolute;left:104px;top:12px;z-index:3;font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--ink);background:rgba(10,12,22,.35);border:1px solid currentColor;border-radius:99px;padding:6px 12px;text-decoration:none}
 @media (max-width:900px){#swapBtn{top:14px;left:100px}}
 @media (max-width:560px){#stamps{top:54px!important;right:8px!important}}
+/* 寶箱卡片（街景版） */
+#treasure .card.tc{background:#fbf6ea;color:#2a1c10;border:2px solid #6b4a2b;outline:1.5px dashed #c9b48c;outline-offset:-9px;border-radius:14px;padding:18px 22px 18px;width:min(380px,calc(100vw - 32px))}
+#treasure .tc .x{position:absolute;right:10px;top:8px;width:34px;height:34px;border:0;background:none;font-size:22px;color:#6b4a2b;cursor:pointer}
+#treasure .tc-art{display:block!important;width:150px;height:auto;margin:-4px auto 10px;border:0;box-shadow:none;animation:tcBob 2.4s ease-in-out infinite}
+@keyframes tcBob{50%{transform:translateY(-4px)}}
+#treasure .tc small{display:block;font:11px/1 var(--mono);letter-spacing:.3em;color:#a0522d}
+#treasure .tc h2{font-weight:900;font-size:26px;letter-spacing:.12em;line-height:1.3;margin:6px 0 4px;color:#2a1c10}
+#treasure .tc-sub{font-size:14px;line-height:1.7;color:#6b4a2b;margin:0 0 12px}
+#treasure .tc-coins{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:14px}
+#treasure .tc-coins img{display:inline-block!important;width:30px;height:30px;margin:0;border:0;box-shadow:none;animation:tcSpin 2.6s ease-in-out infinite}
+#treasure .tc-coins img+img{animation-delay:.3s}
+@keyframes tcSpin{0%,70%,100%{transform:scaleX(1)}85%{transform:scaleX(-1)}}
+#treasure .tc-coins span{font:700 13px var(--mono);color:#a0522d;margin-left:6px}
+#treasure .tc .spin-go{display:block;width:100%;margin:0;padding:14px;background:#ff4a1c;color:#fff;border:0;border-radius:99px;font-family:inherit;font-weight:900;font-size:17px;letter-spacing:.1em;box-shadow:0 4px 0 #a82a0c;animation:none;cursor:pointer}
+#treasure .tc .spin-go:active{transform:translateY(3px);box-shadow:0 1px 0 #a82a0c}
+#treasure .tc .go{display:block;margin-top:10px;padding:12px;background:#06c755;color:#fff;border-radius:99px;font-weight:900;font-size:16px;letter-spacing:.1em;text-decoration:none;box-shadow:0 4px 0 #048a3b}
+#treasure .tc .lol{font-size:12.5px;color:#8a6a4a;margin-top:8px}
+#treasure .tc .bye{margin-top:12px;padding-top:12px;border-top:1px dashed #d8c7a3}
+#treasure .tc .diy{border-top:0;padding-top:0;margin-top:8px}
 </style>
 </head>
 <body>
@@ -271,15 +290,16 @@ svg.street.drag{cursor:grabbing}
 <div id="lucky" role="status" aria-live="polite"><img src="street-assets/coin.svg" width="40" height="40" alt=""><div><small>金幣 ×1</small><b>你是全世界最幸運的人！</b><span id="luckyNext">繼續探索吧</span></div></div>
 
 <div id="treasure" role="dialog" aria-modal="true" aria-labelledby="trT" aria-hidden="true">
-  <div class="card">
+  <div class="card tc">
     <button class="x" type="button" aria-label="關閉">×</button>
+    <img class="tc-art" src="street-assets/chest-open.svg" alt="">
     <small>TREASURE · 隱藏寶箱</small>
-    <h2 id="trT">寶箱打開了！<br>裡面是我們的 LINE</h2>
-    <p>逛完七間店、還跳到金幣，你是真的有在玩。<br>寶箱裡還有第二枚金幣，湊滿兩枚可以去轉轉盤！</p>
-    <img src="logos/line-qr.png" alt="賣點設計 LINE QR Code" width="150" height="150">
-    <button class="spin-go" type="button"><img src="street-assets/coin.svg" width="22" height="22" alt=""><img src="street-assets/coin.svg" width="22" height="22" alt="">拿兩枚金幣去轉轉盤</button>
-    <a class="go" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">加入賣點設計 LINE</a>
-    <p class="lol">加好友時跟我們說「我開到寶箱了」</p>
+    <h2 id="trT">寶箱打開了！</h2>
+    <p class="tc-sub">逛完七間店又跳到金幣，最後兩樣寶物送給你</p>
+    <div class="tc-coins"><img src="street-assets/coin.svg" alt=""><img src="street-assets/coin.svg" alt=""><span>金幣 2/2</span></div>
+    <button class="spin-go" type="button">投入兩枚金幣，轉轉盤</button>
+    <a class="go" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">加入 LINE 好友</a>
+    <p class="lol">加好友時說「我開到寶箱了」</p>
     <div class="bye"><svg id="trDot" viewBox="0 0 110 100" aria-hidden="true"></svg><span>下次再來找我玩唷！</span></div>
     <p class="diy">想要一個像這樣的遊戲網站嗎？<a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">私訊我們聊聊</a></p>
   </div>
@@ -297,7 +317,7 @@ svg.street.drag{cursor:grabbing}
   </div>
 </div>
 <div id="iris" aria-hidden="true"></div>
-<div id="menu" role="dialog" aria-modal="true" aria-label="選單"><div class="card"><small>MENU · 選單</small><h3>老街導覽</h3><div id="mnShops"></div><div class="acts"><button class="main" type="button" id="mnTour">帶我全部逛一圈</button><button type="button" id="mnPass">看集點卡</button><a href="guide">換另一個遊戲風格</a><a href="./">回首頁看作品</a><a class="lg" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></div><p class="diy">想要一個像這樣的遊戲網站嗎？<a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">私訊我們聊聊</a></p></div></div>
+<div id="menu" role="dialog" aria-modal="true" aria-label="選單"><div class="card"><small>MENU · 選單</small><h3>老街導覽</h3><div id="mnShops"></div><div class="acts"><button class="main" type="button" id="mnTour">帶我全部逛一圈</button><button type="button" id="mnWheel" hidden>幸運轉盤</button><button type="button" id="mnPass">看集點卡</button><a href="guide">換另一個遊戲風格</a><a href="./">回首頁看作品</a><a class="lg" href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">LINE 聊聊</a></div><p class="diy">想要一個像這樣的遊戲網站嗎？<a href="https://line.me/ti/p/UplDc9NA68" target="_blank" rel="noopener">私訊我們聊聊</a></p></div></div>
 <div id="pass" role="dialog" aria-modal="true" aria-labelledby="psT"><div class="card"><button class="x" type="button" aria-label="關閉">×</button><small>STAMP CARD · 集點卡</small><h3 id="psT">老街導覽 集章</h3><div class="grid" id="psGrid"></div><div class="next" id="psNext"></div></div></div>
 <div id="show" role="dialog" aria-modal="true" aria-labelledby="shT">
   <div class="card"><small id="shNo"></small><h2 id="shT"></h2><p id="shSay"></p><div id="quiz" hidden></div><div id="shGrid"></div><div id="shBtns"></div></div>
@@ -426,8 +446,8 @@ function shophouse(x0,x1,o){
   S(shop,R(x0+8,arcTop+10,x1-8,BASE));
   o.front(shop,x0,x1,arcTop+10);
   // 騎樓拱與柱子
-  const cols=[x0+7,cx,x1-7];
-  for(let i=0;i<2;i++){const a=cols[i]+7,b=cols[i+1]-7,m=(a+b)/2;S(g,`M${a} ${arcTop} L${b} ${arcTop} L${b} ${arcTop+16} Q${m} ${arcTop+2} ${a} ${arcTop+16}Z`,SP)}
+  const cols=o.wide?[x0+7,x1-7]:[x0+7,cx,x1-7];
+  for(let i=0;i<cols.length-1;i++){const a=cols[i]+7,b=cols[i+1]-7,m=(a+b)/2;S(g,`M${a} ${arcTop} L${b} ${arcTop} L${b} ${arcTop+16} Q${m} ${arcTop+2} ${a} ${arcTop+16}Z`,SP)}
   cols.forEach(x=>{S(g,R(x-7,arcTop,x+7,BASE),SP);P(g,`M${x-7} ${arcTop+6} L${x+7} ${arcTop+6} M${x-7} ${BASE-10} L${x+7} ${BASE-10}`,SP*.5)});
   // 直立招牌
   if(o.sign){const sx=o.sign.x,sy=wallTop+6,sh=o.sign.text.length*16+16;P(g,`M${sx} ${sy-4} L${sx} ${sy}`,SP*.7);
@@ -459,7 +479,7 @@ const SH=[
    glass(g,x0+18,y+8,x0+140,BASE-6,4);door(g,x0+154,x0+200,y+6);
    P(g,`M${x1-50} ${BASE} L${x1-36} ${BASE-50} L${x1-22} ${BASE} M${x1-36} ${BASE-50} L${x1-36} ${BASE}`,SP*.8);
    const p=paint(g,'#ff4a1c',SP*.8);p.setAttribute('d',R(x1-52,BASE-46,x1-20,BASE-20));S(g,oval(x1-36,BASE-36,6,6),SP*.6)}},
- {k:'motion',ped:'tri',pedH:30,wins:3,sign:{side:1,text:'動畫影片'},front(g,x0,x1,y){
+ {k:'motion',ped:'tri',pedH:30,wins:3,wide:true,sign:{side:1,text:'動畫影片'},front(g,x0,x1,y){
    // 跑馬燈招牌
    S(g,R(x0+14,y+2,x1-14,y+20),SP);text(g,(x0+x1)/2,y+11,'本日放映',9,{weight:900});
    for(let x=x0+20;x<x1-16;x+=10){const b=el('circle',{cx:x,cy:y+24,r:1.6,fill:'#ffe08a'},g);bulbs.push(b)}
@@ -537,6 +557,8 @@ function makeDot(parent){
   }};
 }
 const WALK=gait({kind:'walk',thigh:10,shin:10,stride:15,lift:4,period:0.5,ankleY:118,ground:120,toe:3});
+/* 走路快一點：步伐頻率和移動速度一起乘上 PACE，腳才不會滑 */
+const PACE=1.6;
 const RUN=gait({kind:'run',thigh:10,shin:10,stride:20,lift:7,heelKick:2.5,period:0.36,ankleY:118,ground:120,toe:3});
 const dotShadow=el('ellipse',{rx:11,ry:3,fill:'#000',opacity:.25},walkers);
 const dotG=el('g',{},walkers);const dot=makeDot(dotG);
@@ -568,7 +590,7 @@ svg.addEventListener('pointercancel',()=>{drag=null;svg.classList.remove('drag')
 
 /* ---------- 點哪走哪：點店面就走過去、進門 ---------- */
 function tap(p){hintOff();tour=-1;if(askOn)askHide();
-  if(CH.on&&!CH.open&&Math.abs(p.x-CH.x)<36&&p.y>me.y-64&&p.y<me.y+8){if(Math.abs(me.x-CH.x)<44)openChest();else{me.target=CH.x-34;me.onArrive=openChest;manual=0}return}
+  if(CH.on&&Math.abs(p.x-CH.x)<36&&p.y>me.y-70&&p.y<me.y+8){const act=CH.open?showTreasure:openChest;if(Math.abs(me.x-CH.x)<44)act();else{me.target=CH.x-34;me.onArrive=act;manual=0}return}
   if(!QB.done&&Math.abs(p.x-QB.x)<28&&p.y>me.y-QB.lift-52&&p.y<me.y-QB.lift+8){if(Math.abs(me.x-QB.x)<8)jump();else{me.target=QB.x;me.onArrive=jump;manual=0}return}
   if(Math.hypot(p.x-me.x,p.y-(me.y-24))<26){if(!QB.done&&Math.abs(me.x-QB.x)<40){if(Math.abs(me.x-QB.x)>8){me.target=QB.x;me.onArrive=jump}else jump();return}say(pick(LINES));me.wave=1.6;jump();return}
   const b=SH.find(o=>p.x>=o.x0-6&&p.x<=o.x1+6&&p.y<BASE);
@@ -623,7 +645,7 @@ function closeShow(){if(showing){irisAt(showing);iris.style.transition='none';ir
 $('#show').addEventListener('click',e=>{if(e.target.id==='show')closeShow()});
 addEventListener('keydown',e=>{if(e.key==='Escape'){if(showing)closeShow();closeChest();closeWheel();closePass();closeMenu()}
   if(showing||opOn||$('#treasure').classList.contains('on')||$('#wheel').classList.contains('on'))return;
-  if(e.code==='Space'||e.key==='ArrowUp'){e.preventDefault();if(CH.on&&!CH.open&&Math.abs(me.x-CH.x)<44)openChest();else jump();return}
+  if(e.code==='Space'||e.key==='ArrowUp'){e.preventDefault();if(CH.on&&Math.abs(me.x-CH.x)<44)openChest();else jump();return}
   if(e.key==='ArrowRight'||e.key==='ArrowLeft'){me.target=clamp(me.x+(e.key==='ArrowRight'?120:-120),30,W-30);me.onArrive=null;manual=0;hintOff()}});
 
 const hintOff=()=>$('#hint').classList.add('gone');
@@ -708,7 +730,9 @@ function showChest(){if(CH.on)return;CH.on=true;save();chG.style.display='';
   chG.animate([{transform:`translate(${CH.x}px,${me.y-160}px)`},{transform:`translate(${CH.x}px,${me.y+2}px)`,offset:.6},{transform:`translate(${CH.x}px,${me.y-12}px)`,offset:.8},{transform:`translate(${CH.x}px,${me.y+2}px)`}],{duration:900,easing:'ease-in'});
   chG.setAttribute('transform',`translate(${CH.x} ${me.y+2})`);
   say('咦？服務台旁邊掉下一個寶箱！',3.5);manual=3.5;camX=clamp(CH.x-VW*.5,0,W-VW)}
-function openChest(){if(!CH.on||CH.open)return;CH.open=true;save();chShut.style.display='none';chOpen.style.display='';sfx('coin');coinPop(CH.x,me.y-46);
+/* 打開過的寶箱：再點一次就把寶箱卡片叫回來，可以去轉盤 */
+function showTreasure(){const tr=$('#treasure');tr.classList.add('on');tr.setAttribute('aria-hidden','false')}
+function openChest(){if(!CH.on)return;if(CH.open){showTreasure();return}CH.open=true;save();chShut.style.display='none';chOpen.style.display='';sfx('coin');coinPop(CH.x,me.y-46);
   $('#stD .c2').classList.add('on');say('下次再來找我玩唷！',3);
   setTimeout(()=>{const tr=$('#treasure');tr.classList.add('on');tr.setAttribute('aria-hidden','false')},1100)}
 function closeChest(){const tr=$('#treasure');tr.classList.remove('on');tr.setAttribute('aria-hidden','true')}
@@ -836,7 +860,7 @@ function askHide(){askOn=false;ask.classList.remove('on')}
 $('#ask .a-tour').addEventListener('click',tourStart);
 $('#ask .a-free').addEventListener('click',()=>{askHide();setTimeout(()=>say('點店家，我就走過去'),300)});
 /* ---------- 選單 ---------- */
-function openMenu(){$('#mnShops').innerHTML=ORDER.map(k=>`<button class="shop" type="button" data-k="${k}"><em>${INFO[k].no}</em><b>${INFO[k].name}</b><span class="${got.has(k)?'':'no'}">${got.has(k)?'已蓋章':'未蓋章'}</span></button>`).join('');
+function openMenu(){$('#mnWheel').hidden=!CH.open;$('#mnShops').innerHTML=ORDER.map(k=>`<button class="shop" type="button" data-k="${k}"><em>${INFO[k].no}</em><b>${INFO[k].name}</b><span class="${got.has(k)?'':'no'}">${got.has(k)?'已蓋章':'未蓋章'}</span></button>`).join('');
   $('#mnShops').querySelectorAll('.shop').forEach(b=>b.onclick=()=>{closeMenu();tour=-1;askHide();setTimeout(()=>walkTo(SH.find(o=>o.k===b.dataset.k)),250)});
   $('#menu').classList.add('on')}
 function closeMenu(){$('#menu').classList.remove('on')}
@@ -844,6 +868,7 @@ $('#menuBtn').addEventListener('click',openMenu);
 $('#menu').addEventListener('click',e=>{if(e.target.id==='menu')closeMenu()});
 $('#mnTour').addEventListener('click',tourStart);
 $('#mnPass').addEventListener('click',()=>{closeMenu();openPass()});
+$('#mnWheel').addEventListener('click',()=>{closeMenu();openWheel()});
 /* ---------- 記住進度：去看作品再按上一頁回來，接著玩 ---------- */
 function save(){try{sessionStorage.setItem('stSave',JSON.stringify({got:[...got],hits:QB.hits,qb:QB.done,chOn:CH.on,chOpen:CH.open,x:me.x,cam:camX,show:showing?showing.k:null}))}catch(e){}}
 addEventListener('pagehide',save);
@@ -884,9 +909,9 @@ run((t,dt)=>{
   // 小點：有目標就走過去，到了就做事
   if(me.target!==null){const dx=me.target-me.x;
     if(Math.abs(dx)<3){me.target=null;const fn=me.onArrive;me.onArrive=null;fn&&fn()}
-    else{me.dir=dx>0?1:-1;me.go=lerp(me.go,1,Math.min(1,dt*6));me.x+=me.dir*Math.min(Math.abs(dx),RUN.speed*FS*dt*me.go)}}
+    else{me.dir=dx>0?1:-1;me.go=lerp(me.go,1,Math.min(1,dt*6));me.x+=me.dir*Math.min(Math.abs(dx),RUN.speed*FS*PACE*dt*me.go)}}
   else me.go=lerp(me.go,0,Math.min(1,dt*8));
-  me.phase+=dt/RUN.period*Math.max(me.go,.0001);
+  me.phase+=dt*PACE/RUN.period*Math.max(me.go,.0001);
   me.wave=Math.max(0,me.wave-dt);
   if(me.jv||me.jz>0){const pz=me.jz;me.jz+=me.jv*dt;me.jv-=900*dt;
     if(!QB.done&&Math.abs(me.x-QB.x)<28&&me.jv>0&&pz<me.jz&&me.jz>=20){me.jv=-60;hitBlock()}
