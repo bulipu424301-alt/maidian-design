@@ -282,6 +282,9 @@ svg.street.drag{cursor:grabbing}
 #gm .go:active{transform:translateY(3px);box-shadow:0 1px 0 #048a3b}
 #gm .lol{font-size:12.5px;color:#8a6a4a;margin:9px 0 0}
 #gm .x{position:absolute;right:8px;top:6px;width:32px;height:32px;border:0;background:none;font-size:20px;color:#6b4a2b;cursor:pointer}
+#zoomB{position:absolute;right:16px;bottom:52px;z-index:3;display:flex;flex-direction:column;gap:6px}
+#zoomB button{width:38px;height:38px;border-radius:50%;border:1px solid currentColor;background:rgba(10,12,22,.45);color:var(--ink);font:900 20px/1 system-ui,sans-serif;cursor:pointer;display:grid;place-items:center;padding:0}
+#zoomB button:active{transform:scale(.92)}
 </style>
 </head>
 <body>
@@ -292,6 +295,7 @@ svg.street.drag{cursor:grabbing}
   <div id="stamps"><span>集章 <b id="stN">0/7</b></span><span id="stD"></span></div>
   <div id="bub"></div>
   <div id="qbN"></div>
+  <div id="zoomB"><button type="button" data-z="1.25" aria-label="放大">＋</button><button type="button" data-z="0.8" aria-label="縮小">－</button></div>
   <button id="bgm" type="button" aria-pressed="false" aria-label="聲音：關"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 7.5h3l4-3.5v12l-4-3.5H3z" fill="currentColor"/><path class="w" d="M13 7c1.2 1.5 1.2 4.5 0 6M15.5 5c2.4 2.8 2.4 7.2 0 10" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path class="x" d="M13 7.5l5 5M18 7.5l-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>聲音</button>
   <div id="hint">點店家，小點就會走過去・拖曳可以看整條街</div>
 </div>
@@ -386,7 +390,7 @@ grad('s-moon',[[0,'#fff6dc',.5],[1,'#fff6dc',0]],true);
 
 /* ---------- 圖層 ---------- */
 const L=(p=svg,a={})=>el('g',a,p);
-const skyL=L();const skyRect=el('rect',{x:0,y:0,width:W,height:H},skyL);
+const skyL=L();const skyRect=el('rect',{x:-W,y:-H*1.5,width:W*3,height:H*2.5},skyL);
 const skyG=el('linearGradient',{id:'s-sky',x1:0,y1:0,x2:0,y2:1},defs);const s0=el('stop',{offset:0},skyG),s1=el('stop',{offset:1},skyG);skyRect.setAttribute('fill','url(#s-sky)');
 const stars=L(skyL),moonL=L(skyL),sunL=L(skyL);
 const scene=L(svg,PHONE?{}:{filter:ink.filter});
@@ -606,7 +610,7 @@ const paints=[...svg.querySelectorAll('path[fill]')].filter(n=>/^#/.test(n.getAt
 paints.forEach(n=>n.dataset.base=n.getAttribute('fill'));
 
 /* ---------- 鏡頭：跟著小點；拖曳可以自己看整條街 ---------- */
-let camX=0,VW=1300,manual=0;
+let camX=0,VW=1300,manual=0,ZM=1,camY=0;
 const viewW=()=>{const r=svg.getBoundingClientRect();return r.height?H*r.width/r.height:1300};
 const toSvg=e=>new DOMPoint(e.clientX,e.clientY).matrixTransform(svg.getScreenCTM().inverse());
 let drag=null;
@@ -854,6 +858,8 @@ function quizDraw(){const z=$('#quiz');
 
 /* ---------- 線稿小點（開場、寶箱、轉盤裡的） ---------- */
 function miniDot(id){const s=$(id);s.style.color='#3b2a1c';s.style.setProperty('--paper','#fbf6ea');const st2=document.createElementNS('http://www.w3.org/2000/svg','style');st2.textContent='.pp{fill:var(--paper)}';s.appendChild(st2);const g=el('g',{transform:'translate(14 -32) scale(1.05)'},s);return{g,d:makeDot(g)}}
+document.querySelectorAll('#zoomB button').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();ZM=clamp(ZM*+b.dataset.z,.55,2)}));
+addEventListener('keydown',e=>{if(e.key==='+'||e.key==='=')ZM=clamp(ZM*1.25,.55,2);if(e.key==='-')ZM=clamp(ZM*.8,.55,2)});
 const opD=miniDot('#opDot'),trD=miniDot('#trDot'),whD=miniDot('#whDot'),gmD=miniDot('#gmDot');
 function openGm(){$('#gm').classList.add('on')}function closeGm(){$('#gm').classList.remove('on')}
 $('#diyBtn').addEventListener('click',openGm);$('#gm .x').addEventListener('click',closeGm);$('#gm').addEventListener('click',e=>{if(e.target.id==='gm')closeGm()});
@@ -959,9 +965,10 @@ run((t,dt)=>{
   if($('#gm').classList.contains('on'))gmD.d.draw(RUN.pose(0,0),0,Math.sin(t*6)*24);
   if($('#wheel').classList.contains('on')){const hop=spinning?Math.abs(Math.sin(t*9))*8:0;whD.g.setAttribute('transform',`translate(14 ${-32-hop}) scale(1.05)`);whD.d.draw(RUN.pose(spinning?t*2.5:0,spinning?1:0),spinning?1:0,spinning?null:Math.sin(t*6)*24)}dotShadow.setAttribute('cx',f(me.x));dotShadow.setAttribute('cy',f(me.y+1));
   // 鏡頭
-  VW=FULL?W:Math.min(W,viewW());if(FULL)manual=99;manual=Math.max(0,manual-dt);
-  if(!manual)camX=lerp(camX,clamp(me.x-VW*.42,0,W-VW),Math.min(1,dt*3));
-  svg.setAttribute('viewBox',`${f(camX)} 0 ${f(VW)} ${H}`);
+  {const base=viewW(),zm=Math.max(ZM,base/W);VW=FULL?W:Math.min(W,base/zm);var VH=FULL?H:H*VW/base}if(FULL)manual=99;manual=Math.max(0,manual-dt);
+  if(!manual)camX=lerp(camX,clamp(me.x-VW*.42,0,W-VW),Math.min(1,dt*3));else camX=clamp(camX,0,W-VW);
+  camY=lerp(camY,VH>=H?H-VH+(VH-H)*.35:clamp(me.y-VH*.62,0,H-VH),Math.min(1,dt*5));
+  svg.setAttribute('viewBox',`${f(camX)} ${f(camY)} ${f(VW)} ${f(VH)}`);
   // 對話框跟著小點
   if(askOn){const sp=new DOMPoint(me.x,me.y-50).matrixTransform(svg.getScreenCTM()),cr=card.getBoundingClientRect(),w=ask.offsetWidth/2;ask.style.left=f(clamp(sp.x-cr.left,w+8,cr.width-w-8))+'px';ask.style.top=f(sp.y-cr.top)+'px'}
   bubT-=dt;if(bubT<=0)bub.classList.remove('on');
