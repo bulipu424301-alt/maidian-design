@@ -275,7 +275,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 #lucky img{flex:none;animation:lspin 1.6s ease-in-out infinite}@keyframes lspin{50%{transform:scaleX(-1)}}
 #lucky small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--brown)}
 #lucky b{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(19px,5vw,26px);letter-spacing:.04em;line-height:1.35;color:#2a1c10}
-#lucky span{display:block;font-family:var(--serif);font-weight:700;font-size:15px;color:var(--dot);margin-top:2px}
+#lucky span{display:block;font-family:var(--serif);font-weight:700;font-size:14px;line-height:1.6;color:var(--dot);margin-top:3px}
 @media (min-width:1000px){#lucky{left:calc((100% - var(--panel) - 40px)/2)}}
 /* 幸運轉盤 */
 #treasure .card,#wheel .card{max-height:calc(100svh - 32px);overflow-y:auto}
@@ -368,7 +368,7 @@ body,.top{background-color:var(--navy);background-image:linear-gradient(rgba(140
 <div id="zoom" aria-label="地圖縮放"><button type="button" data-z="in" aria-label="放大">＋</button><button type="button" data-z="out" aria-label="縮小">－</button></div>
 <div id="banner"><small></small><b></b></div>
 <div id="ask" role="dialog" aria-label="小點的問題" aria-hidden="true"><b>要怎麼逛呢？</b><span>我可以帶你七棟全部走一遍，也可以讓你自己慢慢逛。</span><div><button class="a-tour" type="button">帶我全部逛一圈</button><button class="a-free" type="button">我自己逛逛</button></div></div>
-<div id="lucky" role="status" aria-live="polite"><img src="guide-assets/item-coin.webp" width="40" height="45" alt=""><div><small>金幣 ×1</small><b>你是全世界最幸運的人！</b><span>繼續探索吧</span></div></div>
+<div id="lucky" role="status" aria-live="polite"><img src="guide-assets/item-coin.webp" width="40" height="45" alt=""><div><small>金幣 ×1</small><b>你是全世界最幸運的人！</b><span id="luckyNext">繼續探索吧</span></div></div>
 <aside id="panel" aria-live="polite">
   <button class="who" id="grab" type="button" aria-expanded="true"><svg id="portrait" viewBox="0 0 110 100" aria-hidden="true"></svg><div><b>小點</b><small id="loc">GUIDE · 賣點設計導覽員</small><span id="peek"></span></div><i id="badge" aria-hidden="true" hidden>1</i><i class="chev" aria-hidden="true"></i><em class="opn" aria-hidden="true"><span class="o1">點開</span><span class="o2">收起</span></em></button>
   <p id="say"></p>
@@ -563,8 +563,8 @@ function getCoin(){QB.done=true;sfx('coin');qbBox.querySelector('.face').setAttr
   const spin=now=>{const k=Math.min(1,(now-t0)/900),y=y0-70*Math.sin(k*Math.PI*.75)+(k>.75?0:0);c.setAttribute('transform',`translate(${x} ${y.toFixed(1)}) scale(${Math.cos(k*Math.PI*6).toFixed(2)} 1)`);c.setAttribute('opacity',k<.8?1:(1-k)*5);if(k<1)requestAnimationFrame(spin);else c.remove()};
   requestAnimationFrame(spin);sparks(x,y0-40,'#ffe08a',10);
   const ci=$('#stD .coin');ci.classList.add('on');ci.title='第一枚金幣：拿到了';
-  const lk=$('#lucky');lk.classList.add('on');clearTimeout(lk._t);lk._t=setTimeout(()=>lk.classList.remove('on'),5200);lk.onclick=()=>lk.classList.remove('on');
-  setTimeout(()=>{if(showing)return;if(got.size===7)showChest();else peek('你是全世界最幸運的人！繼續探索吧');if(got.size!==7)say('叮！你是全世界最幸運的人！\n繼續探索吧。',()=>opts([{t:'繼續探索',cls:'main',fn:explore}]))},900)}
+  const lk=$('#lucky');$('#luckyNext').textContent=got.size===7?'寶箱要出現了！':`繼續探索，集滿 7 個章（還差 ${7-got.size} 個）就能開寶箱，再拿一枚金幣去轉盤抽獎唷！`;lk.classList.add('on');clearTimeout(lk._t);lk._t=setTimeout(()=>lk.classList.remove('on'),7500);lk.onclick=()=>lk.classList.remove('on');
+  setTimeout(()=>{if(showing)return;if(got.size===7)showChest();else peek('集滿 7 個章開寶箱，再拿一枚金幣去抽獎！');if(got.size!==7)say('叮！你是全世界最幸運的人！\n繼續探索、集滿 7 個章，就能打開寶箱拿到第二枚金幣。兩枚金幣可以去轉盤抽獎唷！',()=>opts([{t:'繼續探索',cls:'main',fn:explore}]))},900)}
 qbG.addEventListener('click',e=>{e.stopPropagation();if(dragged){dragged=false;return}begin();tour=-1;autoEnter=null;
   if(Math.hypot(me.x-QB.x,me.y-QB.y)<22){jump();return}autoAct=jump;go([QB.x,QB.y])});
 
@@ -761,7 +761,7 @@ document.querySelectorAll('#zoom button').forEach(b=>b.addEventListener('click',
 svg.addEventListener('click',e=>{
   if(dragged){dragged=false;return}
   const t=e.target.closest('.tag');if(t){walkTo(t.dataset.k);return}
-  const p=toMap(e);if(Math.hypot(p.x-me.x,p.y-(me.y-20))<28){begin();dotTapped=true;if(!QB.done&&Math.hypot(me.x-QB.x,me.y-QB.y)<70){jump();return}talk();jump();return}const hit=B.find(b=>inPoly(p.x,p.y,b.poly));
+  const p=toMap(e);if(Math.hypot(p.x-me.x,p.y-(me.y-20))<28){begin();dotTapped=true;if(!QB.done&&Math.hypot(me.x-QB.x,me.y-QB.y)<70){if(Math.hypot(me.x-QB.x,me.y-QB.y)>10){autoAct=jump;go([QB.x,QB.y])}else jump();return}talk();jump();return}const hit=B.find(b=>inPoly(p.x,p.y,b.poly));
   if(hit){if(near===hit&&inside!==hit){enter(hit);return}walkTo(hit.k);return}
   const c=free(p.x,p.y)?[p.x,p.y]:(()=>{const n=nearestFree(p.x,p.y,5);return n&&[n[0]*CELL+4,n[1]*CELL+4]})();if(!c)return;
   autoEnter=null;autoAct=null;tour=-1;begin();if(go(c))ripple(c[0],c[1])});
@@ -791,8 +791,9 @@ function loop(dt,t){
   me.phase+=dt/RUN.period*Math.max(me.go,0.0001);
   /* 跳躍 */
   if(me.jv||me.jz>0){const pz=me.jz;me.jz+=me.jv*dt;me.jv-=900*dt;
-    const head=me.y-33-me.jz,under=Math.abs(me.x-QB.x)<20&&Math.abs(me.y-QB.y)<16;
-    if(under&&me.jv>0&&pz<me.jz&&head<=QB.y-QB.lift-QB.bump*6){me.jz=me.y-33-(QB.y-QB.lift);me.jv=-60;hitBlock()}
+    /* 放寬：站在方塊附近（左右 28、前後 26 以內）跳到一半高度就算撞到 */
+    const under=!QB.done&&Math.abs(me.x-QB.x)<28&&Math.abs(me.y-QB.y)<26;
+    if(under&&me.jv>0&&pz<me.jz&&me.jz>=20){me.jv=-60;hitBlock()}
     if(me.jz<=0){me.jz=0;me.jv=0}}
   QB.bump=Math.max(0,QB.bump-dt*5);
   qbBox.setAttribute('transform',`translate(${QB.x} ${(QB.y-QB.lift-Math.sin(QB.bump*Math.PI)*8+(QB.done?0:Math.sin(t*2.4)*1.5)).toFixed(1)})`);
